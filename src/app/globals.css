@@ -1,26 +1,379 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --font-serif: var(--font-instrument-serif);
+
+  /* SDS Design Tokens */
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-card: var(--bg-card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-sds-accent: var(--sds-accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-fg: var(--accent-fg);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Layout */
+  --content-w: 1500px;
+  --content-px: clamp(20px, 4vw, 56px);
+
+  /* Typography scale — controlled by TypeScaleProvider */
+  --sz-h1:   clamp(56px, 7vw, 94px);
+  --sz-h2:   clamp(32px, 3.6vw, 52px);
+  --sz-h3:   clamp(22px, 2.2vw, 32px);
+  --sz-body: clamp(16px, 1.3vw, 20px);
+
+  /* SDS Surface */
+  --bg:        oklch(98.6% 0.004 80);
+  --bg-soft:   oklch(96.5% 0.005 80);
+  --bg-card:   oklch(99.5% 0.002 80);
+  --ink:       oklch(17% 0.012 60);
+  --ink-2:     oklch(35% 0.012 60);
+  --ink-3:     oklch(55% 0.010 60);
+  --ink-4:     oklch(72% 0.008 60);
+  --line:      oklch(90% 0.006 60);
+  --line-2:    oklch(94% 0.005 60);
+
+  /* SDS Accent (amber) */
+  --sds-accent:    oklch(70% 0.165 55);
+  --accent-ink:    oklch(28% 0.10 55);
+  --accent-soft:   oklch(95% 0.04 70);
+  --accent-fg:     #fff;
+
+  /* Status */
+  --ok:    oklch(62% 0.14 150);
+  --warn:  oklch(72% 0.16 75);
+  --bad:   oklch(60% 0.20 25);
+
+  /* shadcn defaults */
+  --background: oklch(98.6% 0.004 80);
+  --foreground: oklch(17% 0.012 60);
+  --card: oklch(99.5% 0.002 80);
+  --card-foreground: oklch(17% 0.012 60);
+  --popover: oklch(99.5% 0.002 80);
+  --popover-foreground: oklch(17% 0.012 60);
+  --primary: oklch(17% 0.012 60);
+  --primary-foreground: oklch(98.6% 0.004 80);
+  --secondary: oklch(96.5% 0.005 80);
+  --secondary-foreground: oklch(17% 0.012 60);
+  --muted: oklch(96.5% 0.005 80);
+  --muted-foreground: oklch(55% 0.010 60);
+  --accent: oklch(96.5% 0.005 80);
+  --accent-foreground: oklch(17% 0.012 60);
+  --destructive: oklch(60% 0.20 25);
+  --border: oklch(90% 0.006 60);
+  --input: oklch(90% 0.006 60);
+  --ring: oklch(70% 0.165 55);
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.005em;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-heading);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Page content wrapper — use className="page-wrap" */
+.page-wrap {
+  width: 100%;
+  max-width: var(--content-w);
+  margin-inline: auto;
+  padding-inline: var(--content-px);
+}
+
+/* Full-screen sections */
+section {
+  height: 100svh;
+  overflow: hidden;
+}
+
+section > .page-wrap {
+  height: 100%;
+  padding-block: clamp(24px, 3.5vh, 48px);
+}
+
+/* Split layout for demo sections */
+.section-split {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  gap: clamp(28px, 3vw, 52px);
+}
+
+.section-split__side {
+  width: min(360px, 34%);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.75rem;
+}
+
+.section-split__main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-frame {
+  flex: 1;
+  min-height: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.demo-frame > .demo-slide {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.demo-frame > .demo-slide > * {
+  height: 100%;
+}
+
+/* Scroll-driven carousel section */
+section#ai.ai-scroll-section {
+  height: calc(var(--ai-slide-count, 2) * 100svh);
+  overflow: visible;
+}
+
+.ai-scroll-pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.ai-scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--sds-accent);
+  transform-origin: left center;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 5;
+}
+
+section#ai.ai-scroll-section > .ai-scroll-pin > .page-wrap {
+  height: 100%;
+}
+
+/* Stacked carousel section — demo top, content below */
+.section-stack {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-stack__column {
+  width: 80%;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 2vh, 22px);
+  min-height: 0;
+}
+
+.demo-carousel-wrap {
+  width: 100%;
+  flex: 0 0 58%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-carousel-wrap .demo-frame {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.carousel-content {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.carousel-content__slide {
+  position: relative;
+  min-height: 120px;
+}
+
+.carousel-content__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Bella AI section */
+section#bella > .page-wrap {
+  padding-block: clamp(28px, 4vh, 48px);
+}
+
+.bella-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.bella-panel {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: clamp(40px, 5vw, 72px);
+  padding: clamp(36px, 5vh, 56px) clamp(40px, 5vw, 64px);
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+
+.bella-panel__copy {
+  min-width: 0;
+}
+
+.bella-panel__chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.bella-panel__chat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.bella-chat-wrap {
+  width: 360px;
+  height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  box-shadow: 0 8px 32px -8px oklch(20% 0.02 60 / 0.12);
+}
+
+.bella-chat-wrap > * {
+  height: 100%;
+}
+
+/* Selection */
+::selection {
+  background: var(--sds-accent);
+  color: var(--accent-fg);
+}
+
+/* Scroll fade-up animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal.in {
+  animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+/* Pulse animation */
+@keyframes pulse-dot {
+  0%   { box-shadow: 0 0 0 0 color-mix(in oklch, var(--sds-accent) 70%, transparent); }
+  70%  { box-shadow: 0 0 0 10px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* Chat animation */
+@keyframes chatIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Typing dots */
+@keyframes typingDot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
 }
