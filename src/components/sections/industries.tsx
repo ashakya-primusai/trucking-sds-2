@@ -1,5 +1,9 @@
+import Image from "next/image";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
+
+import lastMileScreenshot from "@/assets/screenshots/last_mile.png";
+import loadManagementScreenshot from "@/assets/screenshots/load-management.png";
 
 const INDUSTRIES = [
   {
@@ -7,6 +11,7 @@ const INDUSTRIES = [
     title: "Trucking Industry",
     tag: "For carriers & fleet operators",
     desc: "Full-truckload and LTL carriers run dispatch, tracking, billing, and fleet ops on one connected platform.",
+    dark: false,
     points: [
       "AI-powered dispatch",
       "Real-time load tracking",
@@ -19,6 +24,7 @@ const INDUSTRIES = [
     title: "Last Mile Delivery",
     tag: "For couriers & delivery fleets",
     desc: "Final-mile teams optimize routes, capture proof-of-delivery, and keep customers updated — without extra tools.",
+    dark: true,
     points: [
       "Route optimization",
       "Proof-of-delivery capture",
@@ -30,104 +36,26 @@ const INDUSTRIES = [
 
 function PreviewTrucking() {
   return (
-    <div
-      className="h-full rounded-xl p-4 flex flex-col gap-3 overflow-hidden bg-ink"
-      style={{ border: "1px solid color-mix(in oklch, white 8%, var(--ink))" }}
-    >
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">
-          Load L-4831 · En route
-        </span>
-        <span
-          className="w-1.5 h-1.5 rounded-full bg-sds-accent"
-          style={{ animation: "pulse-dot 1.8s ease-out infinite" }}
-        />
-      </div>
-      <div className="flex-1 flex flex-col justify-center gap-3">
-        <div className="flex items-center gap-2 text-[11px] font-mono">
-          <span className="text-white/90 font-semibold">Dallas, TX</span>
-          <span className="flex-1 h-px bg-white/15 relative">
-            <span className="absolute inset-y-0 left-[18%] right-[38%] bg-sds-accent/70 h-px" />
-          </span>
-          <span className="text-white/90 font-semibold">Chicago, IL</span>
-        </div>
-        <div className="grid grid-cols-3 gap-2 text-[10px] font-mono">
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
-            <p className="text-white/40">Miles</p>
-            <p className="text-white font-semibold mt-0.5">880</p>
-          </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
-            <p className="text-white/40">ETA</p>
-            <p className="text-white font-semibold mt-0.5">6h 12m</p>
-          </div>
-          <div className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
-            <p className="text-white/40">Driver</p>
-            <p className="text-white font-semibold mt-0.5">M. Reyes</p>
-          </div>
-        </div>
-      </div>
+    <div className="h-full rounded-xl overflow-hidden shadow-[0_1px_8px_-2px_oklch(20%_0.02_60/0.1)]">
+      <Image
+        src={loadManagementScreenshot}
+        alt="Load Management screenshot"
+        className="w-full h-full object-cover object-top"
+        placeholder="blur"
+      />
     </div>
   );
 }
 
 function PreviewLastMile() {
-  const stops = [
-    { n: 1, done: true },
-    { n: 2, done: true },
-    { n: 3, active: true },
-    { n: 4 },
-    { n: 5 },
-  ];
-
   return (
-    <div
-      className="h-full rounded-xl p-4 flex flex-col gap-3 overflow-hidden bg-ink"
-      style={{ border: "1px solid color-mix(in oklch, white 8%, var(--ink))" }}
-    >
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">
-          Route R-219 · 5 stops
-        </span>
-        <span className="text-[10px] font-mono text-sds-accent">On time</span>
-      </div>
-      <div className="flex-1 flex flex-col justify-center gap-2">
-        {stops.map((stop) => (
-          <div key={stop.n} className="flex items-center gap-2.5">
-            <span
-              className="w-5 h-5 rounded-full border grid place-items-center font-mono text-[8px] shrink-0"
-              style={
-                stop.done
-                  ? {
-                      background: "var(--sds-accent)",
-                      borderColor: "var(--sds-accent)",
-                      color: "white",
-                    }
-                  : stop.active
-                    ? {
-                        borderColor: "var(--sds-accent)",
-                        color: "var(--sds-accent)",
-                        background: "color-mix(in oklch, var(--sds-accent) 12%, transparent)",
-                      }
-                    : {
-                        borderColor: "rgba(255,255,255,0.15)",
-                        color: "rgba(255,255,255,0.35)",
-                      }
-              }
-            >
-              {stop.done ? "✓" : stop.n}
-            </span>
-            <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
-              <div
-                className="h-full rounded-full bg-sds-accent/80"
-                style={{ width: stop.done ? "100%" : stop.active ? "62%" : "0%" }}
-              />
-            </div>
-            <span className="font-mono text-[9px] text-white/35 w-8 text-right shrink-0">
-              {stop.done || stop.active ? "POD" : "—"}
-            </span>
-          </div>
-        ))}
-      </div>
+    <div className="h-full rounded-xl overflow-hidden shadow-[0_1px_8px_-2px_oklch(20%_0.02_60/0.1)]">
+      <Image
+        src={lastMileScreenshot}
+        alt="Last Mile Delivery screenshot"
+        className="w-full h-full object-cover object-top"
+        placeholder="blur"
+      />
     </div>
   );
 }
@@ -142,6 +70,7 @@ function IndustryCard({
   title,
   tag,
   desc,
+  dark,
   points,
   index,
 }: (typeof INDUSTRIES)[number] & { index: number }) {
@@ -149,8 +78,14 @@ function IndustryCard({
 
   return (
     <Reveal delay={index * 90} variant="scale" className="min-h-0 h-full">
-      <article className="industry-card group flex flex-col min-h-0 h-full rounded-[20px] border border-line bg-bg-card overflow-hidden transition-all duration-300 hover:border-ink-4 hover:-translate-y-1">
-        <div className="industry-card__preview p-4 pb-0 min-h-0">
+      <article
+        className={`industry-card group flex flex-col min-h-0 h-full rounded-[20px] overflow-hidden transition-all duration-300 hover:-translate-y-1.5 ${
+          dark
+            ? "bg-ink shadow-[0_2px_24px_-4px_oklch(10%_0.01_60/0.3)] hover:shadow-[0_12px_40px_-8px_oklch(10%_0.01_60/0.45)]"
+            : "bg-bg-card shadow-[0_2px_24px_-4px_oklch(20%_0.02_60/0.08),0_0_0_1px_oklch(20%_0.01_60/0.04)] hover:shadow-[0_12px_40px_-8px_oklch(20%_0.02_60/0.16),0_0_0_1px_oklch(20%_0.01_60/0.06)]"
+        }`}
+      >
+        <div className="industry-card__preview p-5 pb-0 min-h-0">
           <Preview />
         </div>
         <div className="flex flex-col flex-1 p-6 pt-5 gap-4 min-h-0">
@@ -159,16 +94,16 @@ function IndustryCard({
               {tag}
             </p>
             <h3
-              className="mt-2 font-semibold tracking-tight"
+              className={`mt-2 font-semibold tracking-tight ${dark ? "text-white" : ""}`}
               style={{ fontSize: "var(--sz-h3)", letterSpacing: "-0.02em", lineHeight: 1.1 }}
             >
               {title}
             </h3>
-            <p className="mt-2 text-ink-2 text-[15px] leading-relaxed">{desc}</p>
+            <p className={`mt-2 text-[15px] leading-relaxed ${dark ? "text-white/60" : "text-ink-2"}`}>{desc}</p>
           </div>
-          <ul className="mt-auto space-y-2">
+          <ul className="space-y-2">
             {points.map((point) => (
-              <li key={point} className="flex items-center gap-2.5 text-[14px] text-ink-2">
+              <li key={point} className={`flex items-center gap-2.5 text-[14px] ${dark ? "text-white/55" : "text-ink-2"}`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-sds-accent shrink-0" />
                 {point}
               </li>

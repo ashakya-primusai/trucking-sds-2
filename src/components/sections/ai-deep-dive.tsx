@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image, { type StaticImageData } from "next/image";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { AIChatDemo } from "./ai-chat-demo";
 
@@ -20,7 +19,7 @@ function ScreenshotSlide({ src, alt }: { src: StaticImageData; alt: string }) {
         src={src}
         alt={alt}
         placeholder="blur"
-        className="w-full h-full object-cover object-top"
+        className="w-full h-full object-contain object-top"
         sizes="(max-width: 768px) 100vw, 720px"
         priority
       />
@@ -312,60 +311,103 @@ export function AIDeepDive() {
   );
 }
 
+const BELLA_CAPABILITIES = [
+  {
+    problem: "Chasing rate confirmations",
+    solution: "Negotiates & locks rates",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M9 2v14M5.5 5.5C5.5 4.12 7.07 3 9 3s3.5 1.12 3.5 2.5S10.93 8 9 8s-3.5 1.12-3.5 2.5S7.07 14 9 14s3.5-1.12 3.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    problem: "Loads going silent",
+    solution: "Monitors every shipment",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M2 9c0 0 2.5-5 7-5s7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+  {
+    problem: "Driver assignment delays",
+    solution: "Dispatches the right driver",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <rect x="2" y="10" width="14" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M2 12l2-5h10l2 5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <circle cx="5.5" cy="15" r="1.5" fill="currentColor"/>
+        <circle cx="12.5" cy="15" r="1.5" fill="currentColor"/>
+        <path d="M9 3v4M7 5h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      </svg>
+    ),
+  },
+  {
+    problem: "Inbox overflow",
+    solution: "Replies around the clock",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M9 5.5V9l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+  },
+];
+
 export function BellaAISection() {
   return (
     <section id="bella" className="bg-bg border-b border-line">
       <div className="page-wrap bella-section">
         <Reveal variant="scale" className="bella-panel w-full">
+
+          {/* Left copy */}
           <div className="bella-panel__copy">
-            <Eyebrow>AI Assistant · Bella</Eyebrow>
+            <div className="flex items-center gap-2 mb-6">
+              <span className="w-2 h-2 rounded-full bg-sds-accent" style={{ animation: "pulse-dot 1.8s ease-out infinite" }} />
+              <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-white/40">AI Assistant</span>
+            </div>
+
             <h2
-              className="mt-5"
               style={{
-                fontSize: "var(--sz-h1)",
-                fontWeight: 640,
+                fontSize: "clamp(52px, 6vw, 88px)",
+                fontWeight: 700,
                 letterSpacing: "-0.04em",
-                lineHeight: 0.98,
-                textWrap: "balance",
+                lineHeight: 0.95,
               }}
             >
-              Talk to{" "}
-              <em className="italic font-[520] text-sds-accent">Bella.</em>
+              <span className="text-white/25 block text-[0.55em] font-[500] tracking-[-0.02em] mb-2" style={{ fontSize: "clamp(18px, 2vw, 28px)" }}>Meet</span>
+              <em className="not-italic text-white">Bella</em>{" "}
+              <em className="italic font-[500] text-sds-accent">AI.</em>
             </h2>
-            <p
-              className="mt-5 text-ink-2"
-              style={{ fontSize: "var(--sz-body)", lineHeight: 1.5, maxWidth: "38ch" }}
-            >
-              Bella AI is at the core of TruckDispatch Pro. She operates around the clock — handling negotiation, communication, coordination, and monitoring — so your team can focus on growth, not admin.
+
+            <p className="mt-5 text-white/50 text-[15px] leading-relaxed max-w-[28ch]">
+              The problems eating your margin — Bella solves them automatically.
             </p>
 
-            <ul className="mt-5 flex flex-col gap-1.5 text-ink-2" style={{ fontSize: "clamp(14px, 1.1vw, 17px)", lineHeight: 1.5 }}>
-              <li>Negotiates rates within your defined floor, target, and ceiling</li>
-              <li>Communicates with clients, carriers, and drivers automatically</li>
-              <li>Monitors every load for delays, issues, and opportunities</li>
-              <li>Surfaces critical alerts before they become problems</li>
-              <li>Coordinates driver assignments based on HOS and proximity</li>
-              <li>Handles follow-ups, confirmations, and document delivery</li>
-            </ul>
-
-            <div className="mt-8 flex flex-wrap gap-2">
-              {["Always on", "Negotiates rates", "Monitors loads", "Coordinates drivers"].map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[12px] font-medium py-1.5 px-3 rounded-full border border-line bg-bg text-ink-2"
-                >
-                  {tag}
-                </span>
+            <div className="mt-8 flex flex-col gap-2">
+              {BELLA_CAPABILITIES.map((cap) => (
+                <div key={cap.solution} className="bella-cap-card group flex items-center gap-4 rounded-xl px-4 py-3.5">
+                  <span className="shrink-0 w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-sds-accent group-hover:border-sds-accent/30 transition-colors duration-200">
+                    {cap.icon}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[11px] text-white/35 font-mono line-through leading-none mb-0.5">{cap.problem}</p>
+                    <p className="text-[14px] font-medium text-white/85 leading-none">{cap.solution}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
 
+          {/* Right chat */}
           <div className="bella-panel__chat">
-            <p className="bella-panel__chat-label">Live demo</p>
-            <div className="bella-chat-wrap">
+            <div className="bella-chat-wrap bella-chat-float">
               <AIChatDemo mobile />
             </div>
           </div>
+
         </Reveal>
       </div>
     </section>

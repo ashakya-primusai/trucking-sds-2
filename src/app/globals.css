@@ -224,7 +224,7 @@ section#bento.bento-scroll-section {
   top: 0;
   height: 100svh;
   overflow: hidden;
-  padding-block: clamp(64px, 9vh, 120px);
+  padding-block: clamp(40px, 5vh, 72px);
 }
 
 .bento-scroll-content {
@@ -234,7 +234,9 @@ section#bento.bento-scroll-section {
   min-height: 0;
 }
 
-section#about {
+section#about,
+section#pain,
+section#industries {
   height: auto;
   overflow: visible;
 }
@@ -301,6 +303,7 @@ section#ai.ai-scroll-section {
   top: 0;
   height: 100svh;
   overflow: hidden;
+  padding-block: clamp(24px, 3vh, 48px);
 }
 
 .ai-scroll-progress {
@@ -342,7 +345,7 @@ section#ai.ai-scroll-section > .ai-scroll-pin > .page-wrap {
 
 .demo-carousel-wrap {
   width: 100%;
-  flex: 0 0 58%;
+  flex: 0 0 65%;
   min-height: 0;
   display: flex;
   flex-direction: column;
@@ -379,18 +382,14 @@ section#ai.ai-scroll-section > .ai-scroll-pin > .page-wrap {
 .industries-section {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: clamp(28px, 4vh, 44px);
-  height: 100%;
+  padding-block: clamp(64px, 8vh, 128px);
 }
 
 .industries-section__grid {
-  flex: 1;
-  min-height: 0;
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(16px, 2.5vh, 24px);
-  max-height: min(560px, 62vh);
 }
 
 @media (min-width: 900px) {
@@ -427,10 +426,10 @@ section#bella > .page-wrap {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: clamp(40px, 5vw, 72px);
-  padding: clamp(36px, 5vh, 56px) clamp(40px, 5vw, 64px);
-  border-radius: 24px;
-  border: 1px solid var(--line);
-  background: var(--bg-soft);
+  padding: clamp(48px, 6vh, 72px) clamp(48px, 5vw, 72px);
+  border-radius: 28px;
+  background: var(--ink);
+  box-shadow: 0 32px 80px -20px oklch(10% 0.01 60 / 0.35);
 }
 
 .bella-panel__copy {
@@ -441,17 +440,7 @@ section#bella > .page-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
   flex-shrink: 0;
-}
-
-.bella-panel__chat-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin: 0;
 }
 
 .bella-chat-wrap {
@@ -466,6 +455,29 @@ section#bella > .page-wrap {
 
 .bella-chat-wrap > * {
   height: 100%;
+}
+
+.bella-chat-float {
+  animation: bellaFloat 4s ease-in-out infinite;
+}
+
+@keyframes bellaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.bella-cap-card {
+  transition: background 0.2s ease;
+}
+
+.bella-cap-card:hover {
+  background: color-mix(in oklch, white 5%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bella-chat-float {
+    animation: none;
+  }
 }
 
 /* Selection */
