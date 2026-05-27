@@ -234,6 +234,11 @@ section#bento.bento-scroll-section {
   min-height: 0;
 }
 
+section#about {
+  height: auto;
+  overflow: visible;
+}
+
 section > .page-wrap {
   height: 100%;
   padding-block: clamp(24px, 3.5vh, 48px);
@@ -271,8 +276,6 @@ section > .page-wrap {
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  perspective: 1200px;
-  transform-style: preserve-3d;
 }
 
 .demo-frame > .demo-slide {

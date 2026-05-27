@@ -1,10 +1,10 @@
 export type SolutionId =
-  | "load-planning"
-  | "live-stops"
-  | "live-board"
-  | "document-inbox"
-  | "ai-dispatch"
-  | "billing";
+  | "dashboard"
+  | "load-management"
+  | "load-tracking"
+  | "communication"
+  | "lead-management"
+  | "document-management";
 
 export type PainPoint = {
   id: string;
@@ -19,43 +19,43 @@ export const PAIN_POINTS: PainPoint[] = [
     id: "triple-entry",
     title: "Triple data entry",
     body: "Same load goes into your TMS, load board, and accounting — separately. Change one detail, update three systems.",
-    solutionId: "load-planning",
+    solutionId: "load-management",
     solutionLabel: "One load record",
   },
   {
     id: "phone-tag",
     title: "Status by phone tag",
     body: "Drivers skip the portal. You call, text, wait — then type it in yourself. Legacy TMS \"tracking\" is whatever you logged last.",
-    solutionId: "live-stops",
-    solutionLabel: "Live stop updates",
+    solutionId: "load-tracking",
+    solutionLabel: "Live map tracking",
   },
   {
     id: "stale-board",
-    title: "Stale dispatch board",
+    title: "No real-time visibility",
     body: "Other tools refresh every 15 minutes — if you're lucky. You're moving freight on yesterday's picture while customers ask where the truck is now.",
-    solutionId: "live-board",
-    solutionLabel: "Live fleet view",
+    solutionId: "dashboard",
+    solutionLabel: "Live dashboard",
+  },
+  {
+    id: "scattered-comms",
+    title: "Scattered communication",
+    body: "Calls, texts, emails, WhatsApp — conversations are everywhere. Context is lost, follow-ups slip, and nothing ties back to the load.",
+    solutionId: "communication",
+    solutionLabel: "Unified comm hub",
+  },
+  {
+    id: "lead-chaos",
+    title: "Leads fall through the cracks",
+    body: "New business comes in by email and phone. Without a pipeline, quotes go stale, follow-ups are missed, and revenue walks out the door.",
+    solutionId: "lead-management",
+    solutionLabel: "Lead pipeline",
   },
   {
     id: "rate-cons",
-    title: "Rate cons in the inbox",
-    body: "Signed PDFs, email threads, WhatsApp photos — nothing ties back to the load. Matching POD to invoice eats hours every week.",
-    solutionId: "document-inbox",
-    solutionLabel: "Linked doc inbox",
-  },
-  {
-    id: "tribal-knowledge",
-    title: "One dispatcher holds it all",
-    body: "Your best person runs the board from memory and sticky notes. The software captures none of it. Scaling means cloning them — which you can't.",
-    solutionId: "ai-dispatch",
-    solutionLabel: "AI dispatch memory",
-  },
-  {
-    id: "slow-billing",
-    title: "Billing waits on paperwork",
-    body: "Delivered Tuesday, invoiced next week. Accessorials, PODs, and rate cons live in different places — none of them talking to your TMS.",
-    solutionId: "billing",
-    solutionLabel: "Same-day invoicing",
+    title: "Documents buried in email",
+    body: "BOLs, rate cons, agreements, PODs — scattered across inboxes and folders. Matching the right doc to the right load eats hours every week.",
+    solutionId: "document-management",
+    solutionLabel: "Organized docs",
   },
 ];
 

@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { HeroBackgroundImage } from "@/components/hero-background-image";
 import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
 
-const HEADLINE = ["One", "Last", "TMS", "For", "Dispatchers"] as const;
+const HEADLINE = [ "AI", "TMS", "For", "Dispatchers"] as const;
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);

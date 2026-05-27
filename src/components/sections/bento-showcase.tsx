@@ -12,196 +12,346 @@ const BENTO_HEADLINE_LINES = [
 
 /* ── Mini UI components ──────────────────────────────────────────── */
 
-function CommodityRow({ name, sub }: { name: string; sub: string }) {
+function StatusBadge({ label, color }: { label: string; color: "green" | "amber" | "blue" | "red" | "gray" }) {
+  const colors = {
+    green: "bg-emerald-100 text-emerald-700 border-emerald-200",
+    amber: "bg-amber-100 text-amber-700 border-amber-200",
+    blue: "bg-blue-100 text-blue-700 border-blue-200",
+    red: "bg-red-100 text-red-700 border-red-200",
+    gray: "bg-neutral-100 text-neutral-500 border-neutral-200",
+  };
   return (
-    <div className="flex items-center gap-2 text-[11px]">
-      <span className="w-3.5 h-3.5 rounded-full bg-white/10 border border-white/20 shrink-0" />
-      <span className="text-white/80 font-medium truncate">{name}</span>
-      <span className="ml-auto text-white/40 font-mono shrink-0">{sub}</span>
-    </div>
+    <span className={`text-[8px] font-semibold px-1.5 py-0.5 rounded border ${colors[color]}`}>
+      {label}
+    </span>
   );
 }
 
-function StopDot({ active }: { active?: boolean }) {
+function PriorityDot({ level }: { level: "high" | "normal" }) {
   return (
     <span
-      className="w-4 h-4 rounded-full border grid place-items-center font-mono text-[8px] shrink-0"
-      style={
-        active
-          ? { background: "var(--sds-accent)", borderColor: "var(--sds-accent)", color: "white" }
-          : { background: "var(--bg-soft)", borderColor: "var(--line)", color: "var(--ink-3)" }
-      }
+      className="w-2 h-2 rounded-full shrink-0"
+      style={{ background: level === "high" ? "var(--bad)" : "var(--sds-accent)" }}
     />
   );
 }
 
-function MiniHosBar({ pct, warn }: { pct: number; warn?: boolean }) {
-  return (
-    <div className="h-1 bg-line rounded-full overflow-hidden">
-      <div
-        className="h-full rounded-full"
-        style={{ width: `${pct}%`, background: warn ? "var(--warn)" : "var(--sds-accent)" }}
-      />
-    </div>
-  );
-}
 
-function Thought({ done, live, text }: { done?: boolean; live?: boolean; text: string }) {
-  return (
-    <div className="flex gap-1.5 items-start text-[10px] font-mono leading-snug text-white/70">
-      <span
-        className="shrink-0 w-2.5 h-2.5 rounded-full border mt-px grid place-items-center text-[7px]"
-        style={
-          done
-            ? { background: "var(--sds-accent)", borderColor: "var(--sds-accent)", color: "var(--ink)" }
-            : live
-              ? { borderColor: "var(--sds-accent)", color: "var(--sds-accent)" }
-              : { borderColor: "rgba(255,255,255,0.2)", opacity: 0.4 }
-        }
-      >
-        {done ? "✓" : live ? <span className="w-[4px] h-[4px] rounded-full bg-sds-accent" style={{ animation: "pulse-dot 1.4s ease-out infinite" }} /> : ""}
-      </span>
-      <span style={{ opacity: done || live ? 1 : 0.4 }}>{text}</span>
-    </div>
-  );
-}
+/* ── Feature card previews (matching real product screens) ───────── */
 
-/* ── Feature card previews ───────────────────────────────────────── */
-
-function PreviewLoadPlanning() {
-  return (
-    <div className="h-full bg-ink rounded-xl p-4 flex flex-col gap-2.5 overflow-hidden"
-      style={{ border: "1px solid color-mix(in oklch, white 8%, var(--ink))" }}>
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">L-4831 · Live</span>
-        <span className="w-1.5 h-1.5 rounded-full bg-sds-accent" style={{ animation: "pulse-dot 1.8s ease-out infinite" }} />
-      </div>
-      <div className="flex flex-col gap-1.5 flex-1">
-        <CommodityRow name="Graphic GPUs" sub="12 skids" />
-        <CommodityRow name="Keyboards" sub="5 skids" />
-        <CommodityRow name="Monitors" sub="9 skids" />
-      </div>
-      <div className="border-t border-white/10 pt-2.5 grid grid-cols-2 gap-1.5 text-[10px] font-mono">
-        <div><span className="text-white/40">Miles</span> <span className="text-white font-semibold ml-1">880</span></div>
-        <div><span className="text-white/40">Margin</span> <span className="text-white font-semibold ml-1">$2,418</span></div>
-      </div>
-    </div>
-  );
-}
-
-function PreviewStops() {
-  return (
-    <div className="h-full bg-bg-card rounded-xl p-4 flex flex-col gap-2.5 border border-line overflow-hidden">
-      <span className="font-mono text-[9px] text-ink-3 uppercase tracking-widest">4 stops · Active</span>
-      <div className="flex flex-col gap-2 flex-1">
-        {[
-          { n: "01", city: "Toronto, ON", time: "Tue · 06:00", active: true },
-          { n: "02", city: "New York, NY", time: "Wed · 09:30" },
-          { n: "03", city: "New Jersey, NY", time: "Wed · 14:00" },
-          { n: "04", city: "Pittsburgh, PA", time: "Thu · 11:00" },
-        ].map((s) => (
-          <div key={s.n} className="flex items-center gap-2 text-[11px]">
-            <StopDot active={s.active} />
-            <span className="font-medium text-ink truncate">{s.city}</span>
-            <span className="ml-auto font-mono text-ink-3 shrink-0 text-[10px]">{s.time}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function PreviewDriverHOS() {
+/** Dashboard — Live Operations overview with load pipeline */
+function PreviewDashboard() {
   return (
     <div className="h-full bg-bg-card rounded-xl p-4 flex flex-col gap-3 border border-line overflow-hidden">
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-ink-3 uppercase tracking-widest">HOS Compliance</span>
-        <span className="inline-flex items-center gap-1 text-[9px] border border-line rounded-full px-1.5 py-0.5">
-          <span className="w-1 h-1 rounded-full bg-ok" /> On duty
-        </span>
+        <div>
+          <span className="font-mono text-[8px] text-ink-3 uppercase tracking-widest">Live Operations</span>
+          <div className="text-[13px] font-semibold text-ink mt-0.5">Here&apos;s what&apos;s moving today.</div>
+        </div>
+        <span className="w-1.5 h-1.5 rounded-full bg-ok" style={{ animation: "pulse-dot 1.8s ease-out infinite" }} />
       </div>
-      <div className="text-[13px] font-semibold text-ink">John Freightman</div>
-      <div className="flex flex-col gap-2.5 flex-1">
+
+      {/* Stats row */}
+      <div className="grid grid-cols-4 gap-1.5 text-center">
         {[
-          { label: "Driving", left: "4h 32m", pct: 56 },
-          { label: "Shift", left: "6h 15m", pct: 78 },
-          { label: "Cycle", left: "18h 20m", pct: 26 },
-        ].map((b) => (
-          <div key={b.label} className="flex flex-col gap-1">
-            <div className="flex justify-between text-[10px]">
-              <span className="text-ink-3">{b.label}</span>
-              <span className="font-mono tabular-nums text-ink-3">{b.left}</span>
+          { label: "On the Road", value: "9" },
+          { label: "Pickups Today", value: "5" },
+          { label: "Critical Alerts", value: "2", alert: true },
+          { label: "SLA at Risk", value: "22", alert: true },
+        ].map((s) => (
+          <div key={s.label} className="bg-bg-soft rounded-lg py-2 px-1 border border-line">
+            <div className={`text-[14px] font-bold ${s.alert ? "text-red-600" : "text-ink"}`}>{s.value}</div>
+            <div className="text-[7px] text-ink-3 uppercase tracking-wider mt-0.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Load Pipeline */}
+      <div>
+        <div className="text-[9px] font-medium text-ink-3 mb-1.5">Load Pipeline</div>
+        <div className="flex gap-1">
+          {[
+            { label: "Discovered", count: 2, color: "bg-neutral-200" },
+            { label: "Initiated", count: 1, color: "bg-blue-200" },
+            { label: "Negotiating", count: 1, color: "bg-amber-200" },
+            { label: "Approved", count: 1, color: "bg-emerald-200" },
+            { label: "Pmt Pending", count: 1, color: "bg-purple-200" },
+          ].map((s) => (
+            <div key={s.label} className="flex-1 text-center">
+              <div className={`${s.color} rounded py-1.5 text-[11px] font-bold text-ink`}>{s.count}</div>
+              <div className="text-[6px] text-ink-3 mt-0.5 truncate">{s.label}</div>
             </div>
-            <MiniHosBar pct={b.pct} warn={b.pct > 70} />
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
+
+      {/* Stuck loads alert */}
+      <div className="mt-auto bg-red-50 border border-red-200 rounded-lg px-3 py-2 flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+        <span className="text-[9px] text-red-700 font-medium">2 stuck loads in same stage for extended period</span>
       </div>
     </div>
   );
 }
 
-function PreviewBilling() {
+/** Load Management — Table of loads with routes, stages, rates */
+function PreviewLoadManagement() {
+  const loads = [
+    { id: "#A1BC07", origin: "Ottawa, ON", stage: "Docs Pending", stageBg: "amber", rate: "", driver: "" },
+    { id: "#AA41FF", origin: "Mississauga, ON", stage: "In Transit", stageBg: "blue", rate: "", driver: "Ryan Nobbs" },
+    { id: "#D26223", origin: "Sudbury, ON", stage: "Pickup Scheduled", stageBg: "green", rate: "$5,632", driver: "" },
+    { id: "#D26222", origin: "Thunder Bay, ON", stage: "Closed", stageBg: "gray", rate: "$7,095", driver: "" },
+    { id: "#D26221", origin: "Lethbridge, AB", stage: "Delivered", stageBg: "green", rate: "$8,405", driver: "" },
+  ];
   return (
-    <div className="h-full bg-ink rounded-xl p-4 flex flex-col gap-2.5 overflow-hidden"
-      style={{ border: "1px solid color-mix(in oklch, white 8%, var(--ink))" }}>
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">Week 12</span>
-        <span className="text-[10px] font-mono text-sds-accent">▲ 14%</span>
+    <div className="h-full bg-bg-card rounded-xl p-3 flex flex-col border border-line overflow-hidden">
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <span className="text-[13px] font-semibold text-ink">Load Management</span>
+          <span className="text-[8px] text-ink-3 ml-2">Confirmed loads → past settlement</span>
+        </div>
+        <div className="flex gap-1.5 text-[8px]">
+          {["Active: 18", "Drivers: 15", "On Road: 9"].map((s) => (
+            <span key={s} className="bg-bg-soft border border-line rounded px-1.5 py-0.5 text-ink-3 font-mono">{s}</span>
+          ))}
+        </div>
       </div>
-      <div className="flex items-end gap-1 h-10">
-        {[46, 58, 42, 74, 62, 38, 24].map((h, i) => (
-          <div key={i} className="flex-1 rounded-t" style={{
-            height: `${h}%`,
-            background: i === 3 ? "var(--sds-accent)" : "color-mix(in oklch, white 14%, transparent)"
-          }} />
-        ))}
-      </div>
-      <div className="border-t border-white/10 pt-2.5 grid grid-cols-3 gap-1 text-[10px] font-mono">
-        <div><div className="text-white/40">Revenue</div><div className="text-white font-semibold mt-0.5">$32.5k</div></div>
-        <div><div className="text-white/40">Cost</div><div className="text-white font-semibold mt-0.5">$17.5k</div></div>
-        <div><div className="text-white/40">Margin</div><div className="text-sds-accent font-semibold mt-0.5">$15k</div></div>
-      </div>
-    </div>
-  );
-}
 
-function PreviewAI({ tick }: { tick: number }) {
-  return (
-    <div className="h-full bg-ink rounded-xl p-4 flex flex-col gap-2 overflow-hidden"
-      style={{ border: "1px solid color-mix(in oklch, white 8%, var(--ink))" }}>
-      <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest">AI Dispatcher</span>
-      <div className="flex flex-col gap-1.5 flex-1">
-        <Thought done text="Checked driver HOS and 70-hr cycle" />
-        <Thought done text="Verified border docs (TOR → NY)" />
-        <Thought done text="Estimated drive time → 8h 40m" />
-        <Thought live={tick % 4 < 3} done={tick % 4 >= 3} text="Recalculating HOS for NJ leg…" />
-        <Thought text="Confirming Pittsburgh window…" />
+      {/* Table header */}
+      <div className="grid grid-cols-[1fr_0.7fr_0.8fr_0.5fr_0.5fr] gap-1 text-[7px] text-ink-3 uppercase tracking-wider pb-1 border-b border-line font-medium">
+        <span>Load</span><span>Route</span><span>Stage</span><span>Rate</span><span>Driver</span>
       </div>
-    </div>
-  );
-}
 
-function PreviewDocInbox() {
-  return (
-    <div className="h-full bg-bg-card rounded-xl p-4 flex flex-col gap-2 border border-line overflow-hidden">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-[9px] text-ink-3 uppercase tracking-widest">Document Inbox</span>
-        <span className="text-[9px] font-mono text-sds-accent">3 new</span>
-      </div>
+      {/* Table rows */}
       <div className="flex flex-col flex-1">
-        {[
-          { id: "DOC-2138", subject: "Rate con · DAL → SJC", unread: true },
-          { id: "DOC-3154", subject: "BOL · Order #004 · NorthCo", unread: false },
-          { id: "DOC-3123", subject: "Rate con · Order #002", unread: true },
-          { id: "DOC-3231", subject: "Invoice POD · Order #005", unread: false },
-          { id: "DOC-5323", subject: "Rate con · Order #001", unread: true },
-        ].map((row) => (
-          <div key={row.id} className="flex items-center gap-2 py-1.5 border-b border-dashed border-line last:border-0">
-            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: row.unread ? "var(--sds-accent)" : "var(--ink-4)" }} />
-            <span className="text-[10.5px] text-ink-2 truncate flex-1">{row.subject}</span>
-            <span className="font-mono text-[9px] text-ink-3 shrink-0">{row.id}</span>
+        {loads.map((l) => (
+          <div key={l.id} className="grid grid-cols-[1fr_0.7fr_0.8fr_0.5fr_0.5fr] gap-1 py-1.5 border-b border-dashed border-line last:border-0 items-center">
+            <div>
+              <span className="text-[10px] font-semibold text-ink">LOAD {l.id}</span>
+            </div>
+            <span className="text-[9px] text-ink-2 truncate">{l.origin}</span>
+            <StatusBadge label={l.stage} color={l.stageBg as "green" | "amber" | "blue" | "red" | "gray"} />
+            <span className="text-[9px] font-mono text-ink-2">{l.rate}</span>
+            <span className="text-[9px] text-ink-3 truncate">{l.driver}</span>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/** Load Tracking — Map with live route and load list */
+function PreviewLoadTracking() {
+  return (
+    <div className="h-full bg-bg-card rounded-xl flex flex-col border border-line overflow-hidden">
+      <div className="p-3 pb-2">
+        <span className="text-[13px] font-semibold text-ink">Load Tracking</span>
+        <span className="text-[8px] text-ink-3 ml-2">Routes, stops, and real-time progress</span>
+      </div>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Load list sidebar */}
+        <div className="w-[38%] border-r border-line p-2 flex flex-col gap-1 overflow-hidden">
+          {[
+            { id: "#A1BC07", status: "active", driver: "Dale Fenning" },
+            { id: "#AA41FF", status: "active", driver: "Ryan Nobbs" },
+            { id: "#D04180", status: "active", driver: "Daniel Roberta" },
+            { id: "#D04101", status: "", driver: "Marc B." },
+            { id: "#D041C4", status: "", driver: "Pickup Sched." },
+          ].map((l) => (
+            <div key={l.id} className={`flex items-center gap-1.5 px-1.5 py-1 rounded text-[9px] ${l.status === "active" ? "bg-bg-soft" : ""}`}>
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${l.status === "active" ? "bg-ok" : "bg-neutral-300"}`} />
+              <div className="min-w-0">
+                <div className="font-semibold text-ink truncate">LOAD {l.id}</div>
+                <div className="text-[7px] text-ink-3 truncate">{l.driver}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Map area */}
+        <div className="flex-1 bg-neutral-900 relative overflow-hidden">
+          {/* Simulated map background */}
+          <div className="absolute inset-0 opacity-30" style={{
+            background: "radial-gradient(circle at 60% 40%, #1a3a2a 0%, #111 50%, #0a0a0a 100%)"
+          }} />
+          {/* Route line */}
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200" preserveAspectRatio="none">
+            <path d="M60,160 Q80,100 100,80 T140,30" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4,2" />
+            <circle cx="60" cy="160" r="4" fill="#3b82f6" />
+            <circle cx="140" cy="30" r="4" fill="#ef4444" />
+            <circle cx="100" cy="80" r="3" fill="#3b82f6" opacity="0.6" />
+          </svg>
+          {/* Map labels */}
+          <span className="absolute bottom-3 left-3 text-[7px] text-white/40 font-mono">CVL-2026223 · In Transit</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Communication Hub — Unified messaging with conversations */
+function PreviewCommunication() {
+  return (
+    <div className="h-full bg-bg-card rounded-xl flex flex-col border border-line overflow-hidden">
+      <div className="p-3 pb-2 border-b border-line">
+        <span className="text-[13px] font-semibold text-ink">Communication Hub</span>
+        <div className="flex gap-2 mt-1.5 text-[8px]">
+          {[
+            { label: "Total", value: "8" },
+            { label: "Critical", value: "2", alert: true },
+            { label: "Pending", value: "8" },
+            { label: "Resolved", value: "0" },
+          ].map((s) => (
+            <span key={s.label} className={`font-mono ${s.alert ? "text-red-600 font-bold" : "text-ink-3"}`}>
+              {s.label}: {s.value}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Conversation list */}
+        <div className="w-[45%] border-r border-line flex flex-col">
+          {[
+            { name: "Derek Chamberlain", preview: "Arrived at gas, waiting for loading bay to open.", time: "1m", unread: true },
+            { name: "Danielle Fontaine", preview: "Still waiting. Convoy should start in about 45 min…", time: "4m", badge: "Critical" },
+            { name: "orders@northandind.ca", preview: "Hi there, are you still at your previous…", time: "12m", badge: "Pending" },
+            { name: "Isabelle Paradis", preview: "Arrived at loads. Picking up in about 30 min…", time: "18m", badge: "Pending" },
+          ].map((c) => (
+            <div key={c.name} className={`px-2 py-1.5 border-b border-line last:border-0 ${c.unread ? "bg-blue-50/50" : ""}`}>
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-semibold text-ink truncate">{c.name}</span>
+                <span className="text-[7px] text-ink-3 shrink-0 ml-1">{c.time}</span>
+              </div>
+              <div className="text-[8px] text-ink-3 truncate mt-0.5">{c.preview}</div>
+              {c.badge && (
+                <span className={`text-[6px] font-semibold px-1 py-0.5 rounded mt-0.5 inline-block ${c.badge === "Critical" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"}`}>
+                  {c.badge}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Chat area */}
+        <div className="flex-1 p-2 flex flex-col gap-1.5 bg-bg-soft">
+          <div className="bg-blue-500 text-white rounded-lg rounded-bl-sm px-2 py-1.5 text-[8px] max-w-[85%]">
+            Hi Derek, you&apos;re dispatched for pickup at 3:00S Industrial Park Dr, Mississauga. Please confirm when you&apos;re en route.
+          </div>
+          <div className="bg-bg border border-line rounded-lg rounded-br-sm px-2 py-1.5 text-[8px] text-ink-2 max-w-[85%] self-end">
+            Confirmed. Leaving now, about 20 minutes out.
+          </div>
+          <div className="bg-emerald-500 text-white rounded-lg rounded-bl-sm px-2 py-1.5 text-[8px] max-w-[85%]">
+            Got it! Reminder: check in at Gate 2 with photo ID. Contact is Stacey. Call if you need anything.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Lead Management — Sales pipeline from discovery to agreement */
+function PreviewLeadManagement() {
+  const leads = [
+    { id: "CVL-2026206", customer: "NorthEnd Industrial Supply", route: "Prince George, BC → Windsor, ON", priority: "high", stage: "Agreement Pending", rate: "$7,620" },
+    { id: "CVL-2026205", customer: "Ridgeline Supply Chain Inc", route: "Sherbrooke, QC → Lethbridge, AB", priority: "high", stage: "Approved", rate: "$3,000" },
+    { id: "CVL-2026204", customer: "Canadian Fuel Corp", route: "Regina, SK → Abbotsford, BC", priority: "high", stage: "Negotiation", rate: "$3,300" },
+    { id: "CVL-2026203", customer: "Medicraft Pharma Logistics", route: "Brampton, ON → Sudbury, ON", priority: "high", stage: "Email Initiated", rate: "$5,900" },
+    { id: "CVL-2026202", customer: "Rig Solutions", route: "Regina, SK → Red Deer, AB", priority: "normal", stage: "Discovered", rate: "$6,900" },
+  ];
+  return (
+    <div className="h-full bg-bg-card rounded-xl p-3 flex flex-col border border-line overflow-hidden">
+      <div className="flex items-center justify-between mb-2">
+        <div>
+          <span className="text-[13px] font-semibold text-ink">Lead Management</span>
+          <span className="text-[8px] text-ink-3 ml-2">Sales pipeline — discovery through agreement</span>
+        </div>
+        <div className="flex gap-1.5 text-[8px]">
+          {["Total: 6", "Negotiating: 1", "Approved: 1"].map((s) => (
+            <span key={s} className="bg-bg-soft border border-line rounded px-1.5 py-0.5 text-ink-3 font-mono">{s}</span>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-[1.2fr_0.8fr_0.8fr_0.4fr] gap-1 text-[7px] text-ink-3 uppercase tracking-wider pb-1 border-b border-line font-medium">
+        <span>Lead</span><span>Route</span><span>Stage</span><span>Rate</span>
+      </div>
+
+      <div className="flex flex-col flex-1">
+        {leads.map((l) => (
+          <div key={l.id} className="grid grid-cols-[1.2fr_0.8fr_0.8fr_0.4fr] gap-1 py-1.5 border-b border-dashed border-line last:border-0 items-center">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1">
+                <span className="text-[9px] font-semibold text-ink">{l.id}</span>
+                <PriorityDot level={l.priority as "high" | "normal"} />
+              </div>
+              <div className="text-[7px] text-ink-3 truncate">{l.customer}</div>
+            </div>
+            <span className="text-[8px] text-ink-2 truncate">{l.route}</span>
+            <StatusBadge
+              label={l.stage}
+              color={l.stage === "Approved" ? "green" : l.stage === "Agreement Pending" ? "amber" : l.stage === "Negotiation" ? "blue" : l.stage === "Discovered" ? "gray" : "amber"}
+            />
+            <span className="text-[9px] font-mono text-ink-2">{l.rate}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Document Management — Documents organized by type and load */
+function PreviewDocManagement() {
+  const docTypes = [
+    { type: "Load Agreement", count: 3 },
+    { type: "Border / Crossing", count: 0 },
+    { type: "Bill of Lading (BOL)", count: 3 },
+    { type: "Rate Confirmation", count: 0 },
+    { type: "Proof of Delivery", count: 0 },
+    { type: "Insurance Certificate", count: 0 },
+  ];
+  const docs = [
+    { name: "Load Agreement", file: "test.py", date: "05/11/2026" },
+    { name: "Load Agreement", file: "test.py", date: "05/11/2026" },
+    { name: "Bill of Lading (BOL)", file: "bol.pdf", date: "04/23/2026" },
+    { name: "Bill of Lading (BOL)", file: "test.py", date: "04/16/2026" },
+  ];
+  return (
+    <div className="h-full bg-bg-card rounded-xl flex flex-col border border-line overflow-hidden">
+      <div className="p-3 pb-2 border-b border-line">
+        <span className="text-[13px] font-semibold text-ink">Document Management</span>
+        <span className="text-[8px] text-ink-3 ml-2">All documents uploaded against loads</span>
+      </div>
+
+      <div className="flex flex-1 min-h-0">
+        {/* Sidebar filter */}
+        <div className="w-[40%] border-r border-line p-2 flex flex-col gap-0.5">
+          <div className="text-[8px] text-ink-3 uppercase tracking-wider mb-1 font-medium">Filter by Type</div>
+          {docTypes.map((d) => (
+            <div key={d.type} className="flex items-center justify-between py-1 px-1.5 rounded text-[8px] hover:bg-bg-soft">
+              <span className="text-ink-2 truncate">{d.type}</span>
+              <span className="text-ink-3 font-mono text-[7px] shrink-0 ml-1">{d.count}</span>
+            </div>
+          ))}
+          <div className="mt-2 border-t border-line pt-2">
+            <div className="text-[8px] text-ink-3 mb-0.5">Quick Stats</div>
+            <div className="text-[8px] text-ink-2">Total Documents: <span className="font-semibold">6</span></div>
+          </div>
+        </div>
+
+        {/* Document grid */}
+        <div className="flex-1 p-2">
+          <div className="grid grid-cols-2 gap-1.5">
+            {docs.map((d, i) => (
+              <div key={i} className="border border-line rounded-lg p-2 bg-bg-soft">
+                <div className="text-[8px] font-medium text-ink truncate">{d.name}</div>
+                <div className="text-[7px] text-ink-3 mt-0.5">{d.file}</div>
+                <div className="text-[7px] text-ink-3">{d.date}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -241,13 +391,6 @@ function FeatureCard({ id, title, desc, index, children }: FeatureCardProps) {
 export function BentoShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => setTick((t) => t + 1), 1100);
-    return () => clearInterval(id);
-  }, []);
-
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
@@ -301,7 +444,7 @@ export function BentoShowcase() {
             }}
           />
           <p className="mt-5 text-ink-2 max-w-[560px]" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
-            Every dispatcher headache — load planning, stops, fleet, docs, AI, billing — solved in a single connected platform.
+            Dashboard, load management, tracking, communication, leads, and documents — every dispatcher need solved in one connected platform.
           </p>
         </div>
 
@@ -315,57 +458,57 @@ export function BentoShowcase() {
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
 
             <FeatureCard
-              id="load-planning"
+              id="dashboard"
               index={0}
-              title="Load Planning"
-              desc="Build loads instantly — AI reads rate cons, auto-fills fields, and calculates margin before you confirm."
+              title="Live Dashboard"
+              desc="Full lifecycle visibility across loads, dispatch, and delivery — everything that needs your attention, right now."
             >
-              <PreviewLoadPlanning />
+              <PreviewDashboard />
             </FeatureCard>
 
             <FeatureCard
-              id="live-stops"
+              id="load-management"
               index={1}
-              title="Stop Management"
-              desc="Every pickup and drop tracked live. Drivers update via app — no phone calls, no manual entry."
+              title="Load Management"
+              desc="Every confirmed load from creation to settlement. Track stages, rates, drivers, and actions — all in one table."
             >
-              <PreviewStops />
+              <PreviewLoadManagement />
             </FeatureCard>
 
             <FeatureCard
-              id="live-board"
+              id="load-tracking"
               index={2}
-              title="Driver Hours (HOS)"
-              desc="Hours-of-service tracked automatically. TOS never suggests a driver who'd violate — before you assign."
+              title="Load Tracking"
+              desc="See all loads on the map with routes, stops, and real-time progress. Select any load to view pickup and delivery status."
             >
-              <PreviewDriverHOS />
+              <PreviewLoadTracking />
             </FeatureCard>
 
             <FeatureCard
-              id="billing"
+              id="communication"
               index={3}
-              title="Billing & Revenue"
-              desc="Invoices go out the day loads deliver. PODs, rate cons, and accessorials all linked — nothing lost."
+              title="Communication Hub"
+              desc="Every conversation with clients, carriers, and drivers in one place. AI summarizes context so you never miss what matters."
             >
-              <PreviewBilling />
+              <PreviewCommunication />
             </FeatureCard>
 
             <FeatureCard
-              id="ai-dispatch"
+              id="lead-management"
               index={4}
-              title="AI Dispatcher"
-              desc="TOS AI thinks through HOS, docs, routes, and windows so your dispatchers make faster, smarter calls."
+              title="Lead Management"
+              desc="Track your sales pipeline from discovery through agreement. See every lead's priority, stage, and rate at a glance."
             >
-              <PreviewAI tick={tick} />
+              <PreviewLeadManagement />
             </FeatureCard>
 
             <FeatureCard
-              id="document-inbox"
+              id="document-management"
               index={5}
-              title="Document Inbox"
-              desc="Rate cons, BOLs, and PODs flow in automatically — parsed, linked to the right load, ready to invoice."
+              title="Document Management"
+              desc="BOLs, rate confirmations, agreements, and PODs — all organized by type and load. No more digging through email."
             >
-              <PreviewDocInbox />
+              <PreviewDocManagement />
             </FeatureCard>
 
           </div>
