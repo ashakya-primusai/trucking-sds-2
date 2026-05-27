@@ -22,7 +22,6 @@ export default function Home() {
           <Nav />
           <main>
             <Hero />
-            <SocialProof />
             <PainPoints />
             <BentoShowcase />
             <Industries />

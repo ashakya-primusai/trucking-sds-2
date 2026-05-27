@@ -16,8 +16,7 @@ const footerLinks = {
     { label: "Blog", href: "#" },
   ],
   "Get in touch": [
-    { label: "hello@sds-software.com", href: "mailto:hello@sds-software.com" },
-    { label: "1-800-SDS-HAUL", href: "tel:18007377428" },
+    { label: "mahluwalia@primustechnologiesai.onmicrosoft.com", href: "mailto:mahluwalia@primustechnologiesai.onmicrosoft.com" },
     { label: "System status", href: "#" },
     { label: "Docs & API", href: "#" },
     { label: "Security", href: "#" },
