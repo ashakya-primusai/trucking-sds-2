@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal } from "@/components/ui/reveal";
+import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
+
+const BENTO_HEADLINE_LINES = [
+  ["Your", "entire", "operation.", "One", "screen."],
+  ["No", "tab", "juggling."],
+] as const;
 
 /* ── Mini UI components ──────────────────────────────────────────── */
 
@@ -206,33 +213,34 @@ type FeatureCardProps = {
   id: string;
   title: string;
   desc: string;
+  index: number;
   children: React.ReactNode;
 };
 
-function FeatureCard({ id, title, desc, children }: FeatureCardProps) {
+function FeatureCard({ id, title, desc, index, children }: FeatureCardProps) {
   return (
-    <div
+    <Reveal
       id={id}
-      // 1.5x w-[280px] = w-[420px], gap-4 ~ gap-6
+      delay={index * 65}
+      variant="scale"
       className="scroll-mt-24 shrink-0 w-[420px] flex flex-col gap-6"
     >
-      {/* 1.5x h-[220px] = h-[330px] */}
       <div className="h-[330px] w-full">
         {children}
       </div>
       <div>
-        {/* 1.5x text-[16px] = text-[24px] */}
         <h3 className="text-[24px] font-semibold text-ink tracking-tight leading-snug">{title}</h3>
-        {/* 1.5x text-[13.5px] = text-[20.25px], mt-1 ~ mt-1.5 */}
         <p className="mt-1.5 text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
       </div>
-    </div>
+    </Reveal>
   );
 }
 
 /* ── Main section ────────────────────────────────────────────────── */
 
 export function BentoShowcase() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
@@ -240,14 +248,49 @@ export function BentoShowcase() {
     return () => clearInterval(id);
   }, []);
 
-  return (
-    <section className="bg-bg border-y border-line overflow-hidden" id="bento" style={{ paddingBlock: "clamp(64px, 9vh, 120px)" }}>
-      <div className="page-wrap">
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
 
-        {/* Heading */}
-        <div className="mb-12 max-w-[760px]">
+    const onScroll = () => {
+      const scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) {
+        setScrollProgress(0);
+        return;
+      }
+      const progress = Math.min(
+        1,
+        Math.max(0, (window.scrollY - section.offsetTop) / scrollable),
+      );
+      setScrollProgress(progress);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="bg-bg border-y border-line bento-scroll-section"
+      id="bento"
+    >
+      <div className="bento-scroll-pin">
+      <div className="page-wrap bento-scroll-content">
+
+        <div className="mb-12 max-w-[760px] shrink-0">
           <Eyebrow>With TOS</Eyebrow>
-          <h2
+          <ScrollHighlightHeading
+            lines={BENTO_HEADLINE_LINES}
+            progress={scrollProgress}
+            theme="light"
+            accentWords={["One"]}
+            as="h2"
             className="mt-4"
             style={{
               fontSize: "var(--sz-h2)",
@@ -256,16 +299,14 @@ export function BentoShowcase() {
               lineHeight: 1.05,
               textWrap: "balance",
             }}
-          >
-            Your entire operation. One screen. No tab juggling.
-          </h2>
+          />
           <p className="mt-5 text-ink-2 max-w-[560px]" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
             Every dispatcher headache — load planning, stops, fleet, docs, AI, billing — solved in a single connected platform.
           </p>
         </div>
 
         {/* Scrollable card row */}
-        <div className="relative">
+        <div className="relative min-h-0 flex-1 flex flex-col">
           {/* Fade edge right */}
           <div className="pointer-events-none absolute right-[-120px] top-0 bottom-0 w-24 z-10"
             style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} />
@@ -275,6 +316,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="load-planning"
+              index={0}
               title="Load Planning"
               desc="Build loads instantly — AI reads rate cons, auto-fills fields, and calculates margin before you confirm."
             >
@@ -283,6 +325,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="live-stops"
+              index={1}
               title="Stop Management"
               desc="Every pickup and drop tracked live. Drivers update via app — no phone calls, no manual entry."
             >
@@ -291,6 +334,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="live-board"
+              index={2}
               title="Driver Hours (HOS)"
               desc="Hours-of-service tracked automatically. TOS never suggests a driver who'd violate — before you assign."
             >
@@ -299,6 +343,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="billing"
+              index={3}
               title="Billing & Revenue"
               desc="Invoices go out the day loads deliver. PODs, rate cons, and accessorials all linked — nothing lost."
             >
@@ -307,6 +352,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="ai-dispatch"
+              index={4}
               title="AI Dispatcher"
               desc="TOS AI thinks through HOS, docs, routes, and windows so your dispatchers make faster, smarter calls."
             >
@@ -315,6 +361,7 @@ export function BentoShowcase() {
 
             <FeatureCard
               id="document-inbox"
+              index={5}
               title="Document Inbox"
               desc="Rate cons, BOLs, and PODs flow in automatically — parsed, linked to the right load, ready to invoice."
             >
@@ -323,6 +370,7 @@ export function BentoShowcase() {
 
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

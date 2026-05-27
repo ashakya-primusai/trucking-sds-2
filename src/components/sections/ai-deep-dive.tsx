@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { Reveal } from "@/components/ui/reveal";
 import { AIChatDemo } from "./ai-chat-demo";
 import { DispatchBoardDemo } from "./dispatch-board-demo";
 import { LiveMapDemo } from "./live-map-demo";
@@ -100,7 +101,7 @@ export function AIDeepDive() {
       style={{ "--ai-slide-count": count } as React.CSSProperties}
     >
       <div className="ai-scroll-pin">
-        <div className="page-wrap section-stack">
+        <Reveal className="page-wrap section-stack">
         <div className="section-stack__column">
           <div className="demo-carousel-wrap">
             <div className="demo-frame border border-line shadow-[0_24px_60px_-30px_oklch(20%_0.02_60/0.12)]">
@@ -233,7 +234,7 @@ export function AIDeepDive() {
           aria-hidden
           style={{ transform: `scaleX(${scrollProgress})` }}
         />
-      </div>
+      </Reveal>
     </div>
     </section>
   );
@@ -243,7 +244,7 @@ export function BellaAISection() {
   return (
     <section id="bella" className="bg-bg border-b border-line">
       <div className="page-wrap bella-section">
-        <div className="bella-panel">
+        <Reveal variant="scale" className="bella-panel w-full">
           <div className="bella-panel__copy">
             <Eyebrow>AI Assistant · Bella</Eyebrow>
             <h2
@@ -295,7 +296,7 @@ export function BellaAISection() {
               <AIChatDemo mobile />
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

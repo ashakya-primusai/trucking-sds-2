@@ -1,32 +1,77 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
 import { HeroBackgroundImage } from "@/components/hero-background-image";
+import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
+
+const HEADLINE = ["One", "Last", "TMS", "For", "Dispatchers"] as const;
 
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const onScroll = () => {
+      const scrollable = section.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) {
+        setProgress(0);
+        return;
+      }
+      setProgress(Math.min(1, Math.max(0, window.scrollY / scrollable)));
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  const subtextIn = Math.min(1, Math.max(0, (progress - 0.68) / 0.2));
+  const hintOpacity = Math.max(0, 1 - progress / 0.35);
+
   return (
-    <section className="relative isolate h-screen flex flex-col items-center justify-center">
-      <HeroBackgroundImage />
+    <section ref={sectionRef} id="hero" className="hero-scroll-section relative isolate">
+      <div className="hero-scroll-pin">
+        <HeroBackgroundImage />
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10"
-        style={{
-          background: "linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.50) 42%, rgba(0,0,0,0.0) 100%)",
-          height: "100%",
-          top: 0,
-        }}
-      />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.50) 42%, rgba(0,0,0,0.0) 100%)",
+          }}
+        />
 
-
-      <div
-        className="flex items-center justify-center overflow-hidden mb-[300px]"
-        style={{ maxWidth: "var(--content-w)", paddingInline: "var(--content-px)" }}
-      >
-        <div className="mx-auto w-full flex items-center flex-col relative z-10 text-white">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-sm px-4 py-1.5">
-            <span className="text-[14px] font-semibold tracking-[0.1em] uppercase text-white/50">What is TOS?</span>
+        <div
+          className="relative z-20 flex flex-col items-center justify-center w-full h-full mb-[200px]"
+          style={{ maxWidth: "var(--content-w)", paddingInline: "var(--content-px)", marginInline: "auto" }}
+        >
+          <div
+            className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.08] backdrop-blur-sm px-4 py-1.5"
+            style={{
+              opacity: 0.55 + progress * 0.45,
+              transform: `translateY(${(1 - Math.min(1, progress * 4)) * 8}px)`,
+            }}
+          >
+            <span className="text-[14px] font-semibold tracking-[0.1em] uppercase text-white/50">
+              Scroll to continue
+            </span>
           </div>
 
-          <h1
-            className="mt-6 font-medium text-white text-center"
+          <ScrollHighlightHeading
+            words={HEADLINE}
+            progress={progress}
+            theme="dark"
+            accentWords={["TMS"]}
+            as="h1"
+            className="mt-6 font-medium text-center"
             style={{
               fontSize: "var(--sz-h1)",
               fontWeight: 440,
@@ -34,11 +79,7 @@ export function Hero() {
               lineHeight: 1.05,
               textWrap: "balance",
             }}
-          >
-            One Last TMS  For Dispatchers
-          </h1>
-
-
+          />
 
           <p
             className="mt-6 text-white/85 text-center max-w-[900px] font-medium"
@@ -46,63 +87,29 @@ export function Hero() {
               fontSize: "var(--sz-body)",
               lineHeight: 1.45,
               letterSpacing: "-0.005em",
+              opacity: subtextIn,
+              transform: `translateY(${(1 - subtextIn) * 14}px)`,
             }}
           >
-            The AI-powered Transport Operating System for trucking teams who
-            need to move faster, with less. Dispatch, track, bill, and
-            forecast — on one screen.
+            The AI-powered Transport Operating System for trucking teams who need to move
+            faster, with less. Dispatch, track, bill, and forecast — on one screen.
           </p>
 
-          {/* <div className="flex gap-3 mt-[60px] flex-wrap justify-center" style={{ gap: "1.2em", marginTop: "1.2em" }}>
-            <a
-              href="#demo"
-              className="inline-flex items-center gap-[calc(2*1.2)] h-[calc(44px*1.2)] px-[calc(20px*1.2)] rounded-full bg-white text-[var(--ink)] text-[17.4px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-white/90 hover:-translate-y-px"
-              style={{ fontSize: "17.4px", height: "52.8px", paddingLeft: "24px", paddingRight: "24px", gap: "2.4px" }}
-            >
-              Book a 20-min demo
-              <span aria-hidden="true" style={{ fontSize: "120%" }}>→</span>
-            </a>
-            <a
-              href="#trial"
-              className="inline-flex items-center gap-[calc(2*1.2)] h-[calc(44px*1.2)] px-[calc(20px*1.2)] rounded-full bg-white/[0.06] text-white border border-white/40 text-[17.4px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-white/[0.14] hover:border-white/70 hover:-translate-y-px"
-              style={{ fontSize: "17.4px", height: "52.8px", paddingLeft: "24px", paddingRight: "24px", gap: "2.4px" }}
-            >
-              Start free trial
-            </a>
-          </div> */}
-
-
-
-          {/* <div className="flex gap-3 mt-9 flex-wrap justify-center">
-            <a
-              href="#demo"
-              className="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-white text-[var(--ink)] text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-white/90 hover:-translate-y-px"
-            >
-              Book a 20-min demo
-              <span aria-hidden="true">→</span>
-            </a>
-            <a
-              href="#trial"
-              className="inline-flex items-center gap-2 h-11 px-5 rounded-full bg-white/[0.06] text-white border border-white/40 text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-white/[0.14] hover:border-white/70 hover:-translate-y-px"
-            >
-              Start free trial
-            </a>
-          </div> */}
-
-          {/* <div className="flex flex-wrap gap-x-7 gap-y-3 mt-7 text-[13.5px] text-white/75">
-            <span className="inline-flex items-center gap-2">
-              <span className="inline-flex gap-0.5 text-sds-accent">
-                ★★★★★
-              </span>
-              <span>
-                <b className="text-white/90">4.8</b> on G2 · 240+ reviews
-              </span>
-            </span>
-            <span>14-day trial, no credit card</span>
-            <span>SOC 2 Type II</span>
-          </div> */}
-
+          <div
+            className="hero-scroll-hint"
+            aria-hidden={progress > 0.92}
+            style={{ opacity: hintOpacity }}
+          >
+            <span>Scroll to continue</span>
+            <span className="hero-scroll-hint__chevron">↓</span>
+          </div>
         </div>
+
+        <div
+          className="hero-scroll-progress"
+          aria-hidden
+          style={{ transform: `scaleX(${progress})` }}
+        />
       </div>
     </section>
   );

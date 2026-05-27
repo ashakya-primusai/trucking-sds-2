@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer";
 import { Hero } from "@/components/sections/hero";
 import { SocialProof } from "@/components/sections/social-proof";
 import { BentoShowcase } from "@/components/sections/bento-showcase";
+import { Industries } from "@/components/sections/industries";
 import { PainPoints } from "@/components/sections/pain-points";
 import { AIDeepDive, BellaAISection } from "@/components/sections/ai-deep-dive";
 import { StatsStrip } from "@/components/sections/stats-strip";
@@ -24,6 +25,7 @@ export default function Home() {
             <SocialProof />
             <PainPoints />
             <BentoShowcase />
+            <Industries />
             <AIDeepDive />
             <BellaAISection />
             <FinalCTA />
