@@ -50,7 +50,7 @@ export function Hero() {
         />
 
         <div
-          className="relative z-20 flex flex-col items-center justify-center w-full h-full mb-[200px]"
+          className="relative z-20 flex flex-col items-center justify-center w-full h-full px-4 pb-20 sm:pb-24 md:mb-[120px]"
           style={{ maxWidth: "var(--content-w)", paddingInline: "var(--content-px)", marginInline: "auto" }}
         >
           <div

@@ -373,14 +373,14 @@ function FeatureCard({ id, title, desc, index, children }: FeatureCardProps) {
       id={id}
       delay={index * 65}
       variant="scale"
-      className="scroll-mt-24 shrink-0 w-[420px] flex flex-col gap-6"
+      className="scroll-mt-24 shrink-0 sm:snap-start w-full sm:w-[min(420px,calc(100vw-80px))] flex flex-col gap-4 sm:gap-6 bento-feature-card"
     >
-      <div className="h-[330px] w-full">
+      <div className="h-[220px] sm:h-[280px] md:h-[330px] w-full">
         {children}
       </div>
       <div>
-        <h3 className="text-[24px] font-semibold text-ink tracking-tight leading-snug">{title}</h3>
-        <p className="mt-1.5 text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
+        <h3 className="bento-feature-card__title text-[18px] sm:text-[22px] md:text-[24px] font-semibold text-ink tracking-tight leading-snug">{title}</h3>
+        <p className="bento-feature-card__desc mt-1.5 text-[15px] sm:text-[17px] md:text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
       </div>
     </Reveal>
   );
@@ -426,7 +426,7 @@ export function BentoShowcase() {
       <div className="bento-scroll-pin">
       <div className="page-wrap bento-scroll-content">
 
-        <div className="mb-12 max-w-[760px] shrink-0">
+        <div className="mb-8 sm:mb-12 max-w-[760px] shrink-0">
           <Eyebrow>With TOS</Eyebrow>
           <ScrollHighlightHeading
             lines={BENTO_HEADLINE_LINES}
@@ -451,11 +451,11 @@ export function BentoShowcase() {
         {/* Scrollable card row */}
         <div className="relative min-h-0 flex-1 flex flex-col">
           {/* Fade edge right */}
-          <div className="pointer-events-none absolute right-[-120px] top-0 bottom-0 w-24 z-10"
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
             style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} />
 
-          <div className="flex gap-5 overflow-x-auto pb-6 -mx-[clamp(20px,4vw,56px)] px-[clamp(20px,4vw,56px)]"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          <div className="bento-card-row flex flex-col sm:flex-row gap-6 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:snap-x sm:snap-mandatory sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
 
             <FeatureCard
               id="dashboard"

@@ -3,7 +3,7 @@ import { Reveal } from "@/components/ui/reveal";
 
 export function FinalCTA() {
   return (
-    <section id="demo" className="bg-bg-soft border-t border-line" style={{ paddingBlock: "clamp(96px, 10vh, 128px)" }}>
+    <section id="demo" className="bg-bg-soft border-t border-line scroll-mt-16" style={{ paddingBlock: "clamp(64px, 8vh, 128px)" }}>
       <div className="page-wrap">
         <Reveal variant="fade">
           <Eyebrow>Demo · 20 minutes · live walkthrough</Eyebrow>

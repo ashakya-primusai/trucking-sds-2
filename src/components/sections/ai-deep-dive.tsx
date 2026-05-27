@@ -5,23 +5,34 @@ import Image, { type StaticImageData } from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { AIChatDemo } from "./ai-chat-demo";
 
-import screenshotDashboard from "@/assets/screenshots/dashboard.png";
-import screenshotLoadMgmt from "@/assets/screenshots/load-management.png";
-import screenshotTracking from "@/assets/screenshots/load-tracking.png";
-import screenshotLeads from "@/assets/screenshots/lead-management.png";
-import screenshotComms from "@/assets/screenshots/communication-hub.png";
-import screenshotDocs from "@/assets/screenshots/document-management.png";
+import screenshotDashboard from "@/assets/screenshots/load_dashboard.png";
+import screenshotLoadMgmt from "@/assets/screenshots/load_management.png";
+import screenshotTracking from "@/assets/screenshots/load_tracking.png";
+import screenshotLeads from "@/assets/screenshots/lead_management.png";
+import screenshotCreateLead from "@/assets/screenshots/create_lead.png";
+import screenshotComms from "@/assets/screenshots/communication_hub.png";
+import screenshotScheduling from "@/assets/screenshots/scheduling.png";
+import screenshotPdUpdates from "@/assets/screenshots/p&dupdates.png";
 
-function ScreenshotSlide({ src, alt }: { src: StaticImageData; alt: string }) {
+function ScreenshotSlide({
+  src,
+  alt,
+  priority = false,
+}: {
+  src: StaticImageData;
+  alt: string;
+  priority?: boolean;
+}) {
   return (
-    <div className="h-full w-full rounded-[20px] overflow-hidden border border-line bg-bg-card shadow-[0_24px_60px_-30px_oklch(20%_0.02_60/0.18)]">
+    <div className="screenshot-slide h-full w-full">
       <Image
         src={src}
         alt={alt}
+        fill
         placeholder="blur"
-        className="w-full h-full object-contain object-top"
-        sizes="(max-width: 768px) 100vw, 720px"
-        priority
+        priority={priority}
+        className="screenshot-slide__img rounded-2xl"
+        sizes="(max-width: 768px) 100vw, 900px"
       />
     </div>
   );
@@ -54,27 +65,43 @@ const DEMOS = [
   },
   {
     id: "leads",
-    label: "Leads",
+    label: "Lead Management",
     tag: "Sales pipeline",
     title: "No lead falls through the cracks.",
     desc: "Track every opportunity from discovery through agreement. Priority, stage, rate, and customer — all at a glance.",
     screenshot: screenshotLeads,
   },
   {
+    id: "create-lead",
+    label: "Create Lead",
+    tag: "Faster intake",
+    title: "New leads in seconds, not spreadsheets.",
+    desc: "Capture customer, route, equipment, and rate details in one form — ready for negotiation and dispatch.",
+    screenshot: screenshotCreateLead,
+  },
+  {
     id: "comms",
     label: "Comm Hub",
     tag: "Unified messaging",
     title: "Every conversation, one inbox.",
-    desc: "Clients, carriers, drivers — all channels flow into one hub. AI summarizes context, flags urgency, and suggests responses.",
+    desc: "Clients, carriers, drivers — all channels flow in one hub. AI summarizes context, flags urgency, and suggests responses.",
     screenshot: screenshotComms,
   },
   {
-    id: "docs",
-    label: "Documents",
-    tag: "Organized & linked",
-    title: "No more digging through email.",
-    desc: "BOLs, rate confirmations, agreements, PODs — automatically parsed, organized by type, and linked to the right load.",
-    screenshot: screenshotDocs,
+    id: "scheduling",
+    label: "Scheduling",
+    tag: "Smart planning",
+    title: "Plan pickups and deliveries with confidence.",
+    desc: "Visual scheduling across drivers and windows — see conflicts before they become late loads.",
+    screenshot: screenshotScheduling,
+  },
+  {
+    id: "pd-updates",
+    label: "P&D Updates",
+    tag: "Pickup & delivery",
+    title: "Stop-level visibility in real time.",
+    desc: "Pickup and delivery updates flow in automatically — status, exceptions, and proof tied to every stop.",
+    screenshot: screenshotPdUpdates,
   },
 ];
 
@@ -175,7 +202,7 @@ export function AIDeepDive() {
         <Reveal className="page-wrap section-stack">
         <div className="section-stack__column">
           <div className="demo-carousel-wrap">
-            <div className="demo-frame border border-line shadow-[0_24px_60px_-30px_oklch(20%_0.02_60/0.12)]">
+            <div className="demo-frame">
               {DEMOS.map((d, i) => {
                 const { opacity, translateY, scale } = slideMotion(i, "demo");
                 return (
@@ -191,7 +218,7 @@ export function AIDeepDive() {
                     }}
                     aria-hidden={opacity < 0.5}
                   >
-                    <ScreenshotSlide src={d.screenshot} alt={d.label} />
+                    <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
                   </div>
                 );
               })}
@@ -260,14 +287,15 @@ export function AIDeepDive() {
             </div>
 
             <div className="carousel-content__nav">
-              <div className="flex gap-1 rounded-full border border-line bg-bg-soft p-1">
+              <div className="carousel-content__nav-pills overflow-x-auto max-w-full pb-1 -mx-1 px-1">
+              <div className="flex gap-1 rounded-full border border-line bg-bg-soft p-1 w-max min-w-0">
                 {DEMOS.map((d, i) => (
                   <button
                     key={d.id}
                     type="button"
                     onClick={() => scrollToSlide(i)}
                     aria-pressed={i === active}
-                    className={`h-8 px-4 rounded-full text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap ${
+                    className={`h-8 px-3 sm:px-4 rounded-full text-[11px] sm:text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap ${
                       i === active
                         ? "bg-ink text-bg shadow-sm"
                         : "text-ink-3 hover:text-ink"
@@ -277,8 +305,9 @@ export function AIDeepDive() {
                   </button>
                 ))}
               </div>
+              </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
                   aria-label="Previous demo"
@@ -316,8 +345,8 @@ const BELLA_CAPABILITIES = [
     problem: "Chasing rate confirmations",
     solution: "Negotiates & locks rates",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M9 2v14M5.5 5.5C5.5 4.12 7.07 3 9 3s3.5 1.12 3.5 2.5S10.93 8 9 8s-3.5 1.12-3.5 2.5S7.07 14 9 14s3.5-1.12 3.5-2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M10 2v16M6 6c0-1.66 1.79-3 4-3s4 1.34 4 3-1.79 3-4 3-4 1.34-4 3 1.79 3 4 3 4-1.34 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
       </svg>
     ),
   },
@@ -325,9 +354,9 @@ const BELLA_CAPABILITIES = [
     problem: "Loads going silent",
     solution: "Monitors every shipment",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <circle cx="9" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M2 9c0 0 2.5-5 7-5s7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
       </svg>
     ),
   },
@@ -335,12 +364,11 @@ const BELLA_CAPABILITIES = [
     problem: "Driver assignment delays",
     solution: "Dispatches the right driver",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <rect x="2" y="10" width="14" height="5" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M2 12l2-5h10l2 5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        <circle cx="5.5" cy="15" r="1.5" fill="currentColor"/>
-        <circle cx="12.5" cy="15" r="1.5" fill="currentColor"/>
-        <path d="M9 3v4M7 5h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M3 13l2-6h10l2 6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <rect x="3" y="13" width="14" height="4" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+        <circle cx="6" cy="17" r="1.5" fill="currentColor"/>
+        <circle cx="14" cy="17" r="1.5" fill="currentColor"/>
       </svg>
     ),
   },
@@ -348,9 +376,9 @@ const BELLA_CAPABILITIES = [
     problem: "Inbox overflow",
     solution: "Replies around the clock",
     icon: (
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M9 5.5V9l2.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/>
+        <path d="M10 6v4l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
@@ -358,54 +386,53 @@ const BELLA_CAPABILITIES = [
 
 export function BellaAISection() {
   return (
-    <section id="bella" className="bg-bg border-b border-line">
+    <section id="bella" className="bg-bg-soft border-b border-line">
       <div className="page-wrap bella-section">
         <Reveal variant="scale" className="bella-panel w-full">
 
-          {/* Left copy */}
-          <div className="bella-panel__copy">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-sds-accent" style={{ animation: "pulse-dot 1.8s ease-out infinite" }} />
-              <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-white/40">AI Assistant</span>
+          {/* Top: heading row — text left, chat right on desktop; stacked on mobile */}
+          <div className="bella-panel__top">
+            <div className="bella-panel__copy">
+              <div className="flex items-center gap-2.5 mb-4">
+                <span className="w-2 h-2 rounded-full bg-sds-accent" style={{ animation: "pulse-dot 1.8s ease-out infinite" }} />
+                <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-ink-3">AI&nbsp;Assistant</span>
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(44px, 5.5vw, 80px)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.04em",
+                  lineHeight: 0.95,
+                }}
+              >
+                <em className="not-italic text-ink">Bella</em>{" "}
+                <em className="italic font-[500] text-sds-accent">AI.</em>
+              </h2>
+              <p className="mt-4 text-ink-2 leading-relaxed max-w-[30ch]" style={{ fontSize: "clamp(14px, 1.2vw, 17px)" }}>
+                The problems eating your margin — Bella solves them automatically.
+              </p>
             </div>
 
-            <h2
-              style={{
-                fontSize: "clamp(52px, 6vw, 88px)",
-                fontWeight: 700,
-                letterSpacing: "-0.04em",
-                lineHeight: 0.95,
-              }}
-            >
-              <span className="text-white/25 block text-[0.55em] font-[500] tracking-[-0.02em] mb-2" style={{ fontSize: "clamp(18px, 2vw, 28px)" }}>Meet</span>
-              <em className="not-italic text-white">Bella</em>{" "}
-              <em className="italic font-[500] text-sds-accent">AI.</em>
-            </h2>
-
-            <p className="mt-5 text-white/50 text-[15px] leading-relaxed max-w-[28ch]">
-              The problems eating your margin — Bella solves them automatically.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-2">
-              {BELLA_CAPABILITIES.map((cap) => (
-                <div key={cap.solution} className="bella-cap-card group flex items-center gap-4 rounded-xl px-4 py-3.5">
-                  <span className="shrink-0 w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/60 group-hover:text-sds-accent group-hover:border-sds-accent/30 transition-colors duration-200">
-                    {cap.icon}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[11px] text-white/35 font-mono line-through leading-none mb-0.5">{cap.problem}</p>
-                    <p className="text-[14px] font-medium text-white/85 leading-none">{cap.solution}</p>
-                  </div>
-                </div>
-              ))}
+            <div className="bella-panel__chat">
+              <div className="bella-chat-wrap bella-chat-float">
+                <AIChatDemo mobile />
+              </div>
             </div>
           </div>
 
-          {/* Right chat */}
-          <div className="bella-panel__chat">
-            <div className="bella-chat-wrap bella-chat-float">
-              <AIChatDemo mobile />
-            </div>
+          {/* Bottom: capability cards grid */}
+          <div className="bella-caps-grid">
+            {BELLA_CAPABILITIES.map((cap) => (
+              <div key={cap.solution} className="bella-cap-card group">
+                <span className="bella-cap-icon">
+                  {cap.icon}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] text-ink-4 font-mono line-through leading-tight">{cap.problem}</p>
+                  <p className="text-[14px] font-medium text-ink leading-tight mt-0.5">{cap.solution}</p>
+                </div>
+              </div>
+            ))}
           </div>
 
         </Reveal>

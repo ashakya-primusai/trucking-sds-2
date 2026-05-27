@@ -60,6 +60,11 @@ export const metadata: Metadata = {
     "The AI-powered Transport Operating System built for trucking teams who need to move faster, with less.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -12,7 +12,7 @@ export default function AboutPage() {
           <Nav />
           <main>
             {/* Hero */}
-            <section className="bg-bg border-b border-line" style={{ paddingBlock: "clamp(80px, 10vh, 140px)" }}>
+            <section className="bg-bg border-b border-line scroll-mt-16" style={{ paddingBlock: "clamp(56px, 8vh, 140px)" }}>
               <div className="page-wrap">
                 <div className="max-w-[800px]">
                   <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
@@ -197,7 +197,7 @@ export default function AboutPage() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {[
                       { badge: "SOC 2", desc: "Type II certified. Annual audits by independent third parties." },
                       { badge: "HIPAA-ready", desc: "Compliant infrastructure for sensitive logistics data." },

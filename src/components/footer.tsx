@@ -5,7 +5,7 @@ const footerLinks = {
     { label: "Dispatch board", href: "#" },
     { label: "Live tracking", href: "#" },
     { label: "Auto invoicing", href: "#" },
-    { label: "AI features", href: "#ai" },
+    { label: "AI features", href: "/#ai" },
     { label: "Integrations", href: "#integrations" },
   ],
   Company: [
@@ -26,9 +26,9 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-bg-soft" style={{ paddingBlock: "64px" }}>
+    <footer className="border-t border-line bg-bg-soft" style={{ paddingBlock: "clamp(40px, 8vh, 64px)" }}>
       <div className="page-wrap">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10 sm:gap-12">
           <div>
             <Logo />
             <p className="text-ink-3 max-w-[320px] mt-4 text-sm leading-relaxed">

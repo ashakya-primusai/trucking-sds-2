@@ -13,11 +13,11 @@ export function SocialProof() {
   return (
     <Reveal variant="fade">
       <div className="border-y border-line py-6 bg-bg">
-        <div className="page-wrap flex items-center gap-12 flex-wrap">
-          <span className="font-mono text-xs tracking-[0.08em] uppercase text-ink-3">
+        <div className="page-wrap flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 py-5 sm:py-6">
+          <span className="font-mono text-xs tracking-[0.08em] uppercase text-ink-3 shrink-0">
             Trusted by 10,000+ dispatchers
           </span>
-          <div className="flex flex-wrap gap-x-8 gap-y-3 flex-1 justify-end">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 sm:flex-1 sm:justify-end">
             {companies.map((name, i) => (
               <Reveal key={name} variant="fade" delay={80 + i * 40}>
                 <span className="font-medium text-[14.5px] text-ink-3 tracking-tight opacity-85">

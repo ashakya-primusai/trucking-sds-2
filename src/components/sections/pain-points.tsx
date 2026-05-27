@@ -5,7 +5,7 @@ import { PAIN_POINTS, solutionAnchor } from "./product-narrative";
 
 export function PainPoints() {
   return (
-    <section id="pain" style={{ paddingBlock: "var(--section-y, 128px)" }}>
+    <section id="pain" className="scroll-mt-16" style={{ paddingBlock: "clamp(64px, 8vh, 128px)" }}>
       <div className="page-wrap">
         <Reveal className="mb-14">
           <Eyebrow>Without TOS</Eyebrow>

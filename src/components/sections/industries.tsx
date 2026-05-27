@@ -3,7 +3,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 
 import lastMileScreenshot from "@/assets/screenshots/last_mile.png";
-import loadManagementScreenshot from "@/assets/screenshots/load-management.png";
+import loadManagementScreenshot from "@/assets/screenshots/load_management.png";
 
 const INDUSTRIES = [
   {
