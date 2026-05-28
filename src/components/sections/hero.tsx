@@ -91,7 +91,7 @@ export function Hero() {
               transform: `translateY(${(1 - subtextIn) * 14}px)`,
             }}
           >
-            The AI-powered Transport Operating System for trucking teams who need to move
+            Enrout.ai is the AI-powered dispatch platform for trucking teams who need to move
             faster, with less. Dispatch, track, bill, and forecast — on one screen.
           </p>
 

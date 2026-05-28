@@ -427,7 +427,7 @@ export function BentoShowcase() {
       <div className="page-wrap bento-scroll-content">
 
         <div className="mb-8 sm:mb-12 max-w-[760px] shrink-0">
-          <Eyebrow>With TOS</Eyebrow>
+          <Eyebrow>With Enrout.ai</Eyebrow>
           <ScrollHighlightHeading
             lines={BENTO_HEADLINE_LINES}
             progress={scrollProgress}

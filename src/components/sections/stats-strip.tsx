@@ -7,8 +7,8 @@ const stats = [
 
 const brand = [
   { big: "4.8", unit: "/ 5", label: "on G2 and Capterra. Rated by real dispatchers." },
-  { big: "10K", unit: "+", label: "dispatchers using SDS every single day.", dark: true },
-  { big: "$1.8", unit: "B", label: "in freight invoiced through SDS in 2025." },
+  { big: "10K", unit: "+", label: "dispatchers using Enrout.ai every single day.", dark: true },
+  { big: "$1.8", unit: "B", label: "in freight invoiced through Enrout.ai in 2025." },
   { big: "99.99", unit: "%", label: "uptime SLA on Enterprise. Every truck, always." },
 ];
 

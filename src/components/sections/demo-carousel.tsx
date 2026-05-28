@@ -20,7 +20,7 @@ const SLIDES: Slide[] = [
     demo: <DispatchBoardDemo />,
     eyebrow: "02 · Smart load matching",
     title: "The best driver for every load.",
-    desc: "HOS, location, load type, customer history, lane familiarity. TOS ranks every available driver against every open load — you make the call, or let it auto-assign.",
+    desc: "HOS, location, load type, customer history, lane familiarity. Enrout.ai ranks every available driver against every open load — you make the call, or let it auto-assign.",
   },
   {
     id: "etas",
@@ -28,7 +28,7 @@ const SLIDES: Slide[] = [
     demo: <LiveMapDemo />,
     eyebrow: "03 · Predictive ETAs",
     title: "Know what's late before it is.",
-    desc: "Traffic, weather, driver patterns, customer dwell time — TOS forecasts ETAs and flags risk while there's still time to act.",
+    desc: "Traffic, weather, driver patterns, customer dwell time — Enrout.ai forecasts ETAs and flags risk while there's still time to act.",
   },
 ];
 

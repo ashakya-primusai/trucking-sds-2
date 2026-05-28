@@ -5,16 +5,16 @@ export function Logo() {
     <Link
       href="/"
       className="inline-flex items-center gap-2.5 font-semibold tracking-tight text-base"
-      aria-label="SDS Software home"
+      aria-label="Enrout.ai home"
     >
       <span
-        className="w-7 h-7 rounded-lg bg-ink text-bg grid place-items-center font-mono text-[11px] font-semibold"
+        className="w-7 h-7 rounded-lg bg-ink text-bg grid place-items-center font-mono text-[10px] font-semibold"
         aria-hidden="true"
       >
-        SDS
+        E
       </span>
       <span>
-        SDS<span className="text-ink-3 font-[450]">·TOS</span>
+        Enrout<span className="text-sds-accent font-[520]">.ai</span>
       </span>
     </Link>
   );

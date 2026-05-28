@@ -116,7 +116,7 @@ export function Nav() {
       >
         <div className="page-wrap">
           <div className="h-14 sm:h-16 flex items-center justify-between gap-3">
-            <Link href={isHome ? "#hero" : "/"} aria-label="SDS home" onClick={closeMenu}>
+            <Link href={isHome ? "#hero" : "/"} aria-label="Enrout.ai home" onClick={closeMenu}>
               <Logo />
             </Link>
 

@@ -175,7 +175,7 @@ function ChatBubble({ who, blocks, mobile = false }: { who: "ai" | "user"; block
           className={`rounded-full bg-ink text-bg grid place-items-center shrink-0 ${mobile ? "w-[28px] h-[28px]" : "w-[30px] h-[30px]"
             }`}
         >
-          <span className={`font-mono font-semibold ${mobile ? "text-[8px]" : "text-[7px]"}`}>SDS</span>
+          <span className={`font-mono font-semibold ${mobile ? "text-[8px]" : "text-[7px]"}`}>E</span>
         </div>
       )}
       <div
@@ -316,7 +316,7 @@ export function AIChatDemo({ fill = false, mobile = false }: { fill?: boolean; m
       >
         <input
           type="text"
-          placeholder={mobile ? "Ask Bella anything…" : "Ask TOS about anything in your operation…"}
+          placeholder={mobile ? "Ask Bella anything…" : "Ask Enrout.ai about anything in your operation…"}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className={`flex-1 min-w-0 border border-line rounded-full bg-bg-card text-ink outline-none focus:border-ink-3 ${mobile ? "h-10 px-3.5 text-[14px]" : "h-10 px-3.5 text-sm"

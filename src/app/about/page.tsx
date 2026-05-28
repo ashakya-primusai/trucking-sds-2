@@ -16,7 +16,7 @@ export default function AboutPage() {
               <div className="page-wrap">
                 <div className="max-w-[800px]">
                   <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
-                    About SDS Software
+                    About Enrout.ai
                   </span>
                   <h1
                     className="mt-4"
@@ -35,9 +35,9 @@ export default function AboutPage() {
                     className="mt-6 text-ink-2 max-w-[640px]"
                     style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}
                   >
-                    SDS Software started on the dispatch floor — not in a boardroom. We saw teams
+                    Enrout.ai started on the dispatch floor — not in a boardroom. We saw teams
                     juggling spreadsheets, phone calls, and legacy TMS tools just to move one load.
-                    TruckDispatch Pro is the system we wished existed.
+                    Enrout.ai is the system we wished existed.
                   </p>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
                       document management, and settlement. All connected. All on one screen.
                     </p>
                     <p className="text-ink-2 m-0" style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}>
-                      Today, TruckDispatch Pro powers trucking carriers and last-mile fleets across
+                      Today, Enrout.ai powers trucking carriers and last-mile fleets across
                       North America. Our AI assistant Bella handles negotiation, communication,
                       and monitoring around the clock — so operators spend less time clicking and
                       more time moving freight.
@@ -92,7 +92,7 @@ export default function AboutPage() {
                   {[
                     { value: "10,000+", label: "Dispatchers on the platform" },
                     { value: "Founded 2019", label: "Built from real dispatch experience" },
-                    { value: "$1.8B+", label: "Freight moved through TOS" },
+                    { value: "$1.8B+", label: "Freight moved through Enrout.ai" },
                     { value: "99.99%", label: "Platform uptime" },
                   ].map((stat) => (
                     <div key={stat.label}>
@@ -224,7 +224,7 @@ export default function AboutPage() {
                     lineHeight: 1.1,
                   }}
                 >
-                  Ready to see TruckDispatch Pro in action?
+                  Ready to see Enrout.ai in action?
                 </h2>
                 <p className="mt-4 text-white/60 max-w-[480px] mx-auto" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
                   Book a 15-minute demo and see how your dispatch team can move more freight with less effort.
@@ -238,7 +238,7 @@ export default function AboutPage() {
                     <span aria-hidden="true">→</span>
                   </a>
                   <a
-                    href="mailto:hello@sds-software.com"
+                    href="mailto:hello@enrout.ai"
                     className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-white/20 text-white/80 text-[15px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:border-white/40 hover:text-white"
                   >
                     Contact us

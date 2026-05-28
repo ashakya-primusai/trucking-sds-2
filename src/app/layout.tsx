@@ -55,9 +55,9 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "SDS · TOS — Make your dispatchers superhuman",
+  title: "Enrout.ai — Make your dispatchers superhuman",
   description:
-    "The AI-powered Transport Operating System built for trucking teams who need to move faster, with less.",
+    "The AI-powered dispatch platform built for trucking teams who need to move faster, with less.",
 };
 
 export const viewport = {

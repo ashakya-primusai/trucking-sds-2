@@ -57,9 +57,8 @@ export function FinalCTA() {
 
         <Reveal delay={320} variant="fade">
           <div className="flex flex-wrap gap-x-7 gap-y-3 mt-9 text-[13px] text-ink-3">
-            <span>sds-software.com</span>
-            <span>hello@sds-software.com</span>
-            <span>1-800-SDS-HAUL</span>
+            <span>enrout.ai</span>
+            <span>hello@enrout.ai</span>
           </div>
         </Reveal>
       </div>
