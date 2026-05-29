@@ -7,8 +7,8 @@ import { Logo } from "./logo";
 
 const navLinks = [
   { href: "/about", label: "About Us", sectionId: "" },
-  { href: "/#bento", label: "Product", sectionId: "bento" },
-  { href: "/#industries", label: "Industries", sectionId: "industries" },
+  { href: "/#bento", label: "Features", sectionId: "bento" },
+  { href: "/#industries", label: "Products", sectionId: "industries" },
   { href: "/#ai", label: "AI", sectionId: "ai" },
   { href: "/#bella", label: "Bella", sectionId: "bella" },
 ] as const;
@@ -29,24 +29,21 @@ function NavLink({
       href={href}
       onClick={onNavigate}
       aria-current={isActive ? "page" : undefined}
-      className={`font-mono text-[13px] tracking-[0.02em] font-medium px-3 py-2.5 rounded-md transition-colors duration-150 group ${
-        isActive
-          ? "text-ink bg-bg-soft"
-          : "text-ink-2 hover:text-ink hover:bg-bg-soft"
-      }`}
+      className={`font-mono text-[13px] tracking-[0.02em] font-medium px-3 py-2.5 rounded-md transition-colors duration-150 group ${isActive
+        ? "text-ink bg-bg-soft"
+        : "text-ink-2 hover:text-ink hover:bg-bg-soft"
+        }`}
     >
       <span
-        className={`mr-0.5 transition-colors duration-150 ${
-          isActive ? "text-sds-accent" : "text-ink-4 group-hover:text-sds-accent"
-        }`}
+        className={`mr-0.5 transition-colors duration-150 ${isActive ? "text-sds-accent" : "text-ink-4 group-hover:text-sds-accent"
+          }`}
       >
         [
       </span>
       {label}
       <span
-        className={`ml-0.5 transition-colors duration-150 ${
-          isActive ? "text-sds-accent" : "text-ink-4 group-hover:text-sds-accent"
-        }`}
+        className={`ml-0.5 transition-colors duration-150 ${isActive ? "text-sds-accent" : "text-ink-4 group-hover:text-sds-accent"
+          }`}
       >
         ]
       </span>
@@ -106,9 +103,8 @@ export function Nav() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 backdrop-blur-[14px] backdrop-saturate-[160%] transition-[border-color] duration-200 border-b ${
-          scrolled || menuOpen ? "border-line" : "border-transparent"
-        }`}
+        className={`sticky top-0 z-50 backdrop-blur-[14px] backdrop-saturate-[160%] transition-[border-color] duration-200 border-b ${scrolled || menuOpen ? "border-line" : "border-transparent"
+          }`}
         style={{ background: "color-mix(in oklch, var(--bg) 78%, transparent)" }}
       >
         <div className="page-wrap">

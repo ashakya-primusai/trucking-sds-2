@@ -16,7 +16,7 @@ export default function AboutPage() {
               <div className="page-wrap">
                 <div className="max-w-[800px]">
                   <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
-                    About Enrout.ai
+                    About Enrout AI
                   </span>
                   <h1
                     className="mt-4"
@@ -35,9 +35,9 @@ export default function AboutPage() {
                     className="mt-6 text-ink-2 max-w-[640px]"
                     style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}
                   >
-                    Enrout.ai started on the dispatch floor — not in a boardroom. We saw teams
+                    Enrout AI started on the dispatch floor — not in a boardroom. We saw teams
                     juggling spreadsheets, phone calls, and legacy TMS tools just to move one load.
-                    Enrout.ai is the system we wished existed.
+                    Enrout AI is the system we wished existed.
                   </p>
                 </div>
               </div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
                       document management, and settlement. All connected. All on one screen.
                     </p>
                     <p className="text-ink-2 m-0" style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}>
-                      Today, Enrout.ai powers trucking carriers and last-mile fleets across
+                      Today, Enrout AI powers trucking carriers and last-mile fleets across
                       North America. Our AI assistant Bella handles negotiation, communication,
                       and monitoring around the clock — so operators spend less time clicking and
                       more time moving freight.
@@ -92,7 +92,7 @@ export default function AboutPage() {
                   {[
                     { value: "10,000+", label: "Dispatchers on the platform" },
                     { value: "Founded 2019", label: "Built from real dispatch experience" },
-                    { value: "$1.8B+", label: "Freight moved through Enrout.ai" },
+                    { value: "$1.8B+", label: "Freight moved through Enrout AI" },
                     { value: "99.99%", label: "Platform uptime" },
                   ].map((stat) => (
                     <div key={stat.label}>
@@ -224,7 +224,7 @@ export default function AboutPage() {
                     lineHeight: 1.1,
                   }}
                 >
-                  Ready to see Enrout.ai in action?
+                  Ready to see Enrout AI in action?
                 </h2>
                 <p className="mt-4 text-white/60 max-w-[480px] mx-auto" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
                   Book a 15-minute demo and see how your dispatch team can move more freight with less effort.

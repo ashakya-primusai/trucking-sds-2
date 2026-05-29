@@ -66,7 +66,7 @@ export function Footer() {
 
         <div className="mt-14 pt-6 border-t border-line flex flex-col sm:flex-row justify-between items-center gap-4 text-[13px] text-ink-3">
           <span className="font-mono text-xs">
-            © 2026 Enrout.ai · All rights reserved
+            © 2026 Enrout AI · All rights reserved
           </span>
           <span className="flex gap-5">
             <a href="#" className="hover:text-ink transition-colors">

@@ -55,7 +55,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Enrout.ai — Make your dispatchers superhuman",
+  title: "Enrout AI — Make your dispatchers superhuman",
   description:
     "The AI-powered dispatch platform built for trucking teams who need to move faster, with less.",
 };

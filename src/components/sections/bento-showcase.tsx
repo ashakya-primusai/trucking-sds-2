@@ -469,7 +469,7 @@ export function BentoShowcase() {
         <div className="page-wrap bento-scroll-content">
 
           <div className="mb-8 sm:mb-12 max-w-[760px] shrink-0">
-            <Eyebrow>With Enrout.ai</Eyebrow>
+            <Eyebrow>With Enrout AI</Eyebrow>
             {/* Desktop: scroll-driven highlight animation */}
             <ScrollHighlightHeading
               lines={BENTO_HEADLINE_LINES}

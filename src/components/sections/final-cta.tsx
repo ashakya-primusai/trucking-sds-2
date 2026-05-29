@@ -89,7 +89,7 @@ export function FinalCTA() {
                 style={{ fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgba(255,255,255,0.55)" }}
               >
                 Whether you&apos;re running 5 trucks or 500, we&apos;d love to show you
-                what Enrout.ai can do for your operation.
+                what Enrout AI can do for your operation.
               </p>
             </Reveal>
 
@@ -147,7 +147,7 @@ export function FinalCTA() {
                   </span>
                   <div>
                     <span className="block text-[14px] font-medium text-white/90 group-hover:text-sds-accent transition-colors">
-                      enrout.ai
+                      Enrout AI
                     </span>
                     <span className="block text-[12px] text-white/35 mt-0.5">
                       Explore our platform
