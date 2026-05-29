@@ -258,7 +258,7 @@ function IndustryCard({
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onToggle(); } }}
       >
-        <div className="industry-card__preview p-5 pb-0 min-h-0">
+        <div className="industry-card__preview p-5 pb-0 min-h-0 hidden sm:block">
           <Preview isOpen={isOpen} />
         </div>
         <div className="flex flex-col flex-1 p-6 pt-5 gap-4 min-h-0">

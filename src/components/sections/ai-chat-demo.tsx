@@ -271,7 +271,7 @@ export function AIChatDemo({ fill = false, mobile = false }: { fill?: boolean; m
         ref={scrollRef}
         className={`overflow-y-auto flex flex-col ${
           mobile
-            ? "flex-1 min-h-[200px] p-4 gap-3"
+            ? "flex-1 min-h-[180px] max-h-[50svh] p-4 gap-3"
             : fill
               ? "flex-1 min-h-0 p-[18px] gap-3.5"
               : "h-[440px] p-[18px] gap-3.5"

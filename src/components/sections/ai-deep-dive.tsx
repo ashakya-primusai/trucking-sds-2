@@ -4,6 +4,7 @@ import { useRef, useEffect, useCallback } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { AIChatDemo } from "./ai-chat-demo";
+import { MOBILE_PREVIEWS } from "./ai-mobile-previews";
 
 import screenshotDashboard from "@/assets/screenshots/load_dashboard.png";
 import screenshotLoadMgmt from "@/assets/screenshots/load_management.png";
@@ -280,7 +281,7 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
         if (pill) {
           pill.className = i === active
             ? `${PILL_BASE} bg-ink text-bg shadow-sm`
-            : `${PILL_BASE} text-ink-3 hover:text-ink`;
+            : `${PILL_BASE} text-ink-3 hover:text-ink hidden sm:block`;
         }
       }
 
@@ -363,7 +364,22 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
                       }}
                       aria-hidden={!(isActive && i === 0)}
                     >
-                      <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
+                      {/* Desktop: screenshot */}
+                      <div className="hidden sm:block h-full">
+                        <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
+                      </div>
+                      {/* Mobile: coded UI preview */}
+                      <div className="sm:hidden h-full overflow-hidden">
+                        {MOBILE_PREVIEWS[d.id] ? (
+                          <div className="h-full origin-top-left" style={{ zoom: 1.35 }}>
+                            <div className="h-full p-2">
+                              {MOBILE_PREVIEWS[d.id]()}
+                            </div>
+                          </div>
+                        ) : (
+                          <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
+                        )}
+                      </div>
                     </div>
                   ));
                 })}
@@ -442,7 +458,7 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
                         onClick={() => scrollToSlide(i)}
                         className={`h-8 px-3 sm:px-4 rounded-full text-[11px] sm:text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap ${i === 0
                           ? "bg-ink text-bg shadow-sm"
-                          : "text-ink-3 hover:text-ink"
+                          : "text-ink-3 hover:text-ink hidden sm:block"
                           }`}
                       >
                         {d.label}

@@ -237,7 +237,8 @@ section#bento.bento-scroll-section {
 
 section#about,
 section#pain,
-section#industries {
+section#industries,
+section#contact {
   height: auto;
   overflow: visible;
 }
@@ -636,7 +637,8 @@ section#bella > .page-wrap {
   section#about,
   section#pain,
   section#industries,
-  section#demo {
+  section#demo,
+  section#contact {
     min-height: 0;
   }
 
@@ -728,7 +730,7 @@ section#bella > .page-wrap {
   .bella-chat-wrap {
     width: 100%;
     max-width: 100%;
-    height: min(400px, 55svh);
+    height: auto;
     margin-inline: auto;
   }
 
@@ -765,6 +767,12 @@ section#bella > .page-wrap {
 
   .ai-scroll-pin {
     padding-block: clamp(16px, 3vh, 28px);
+  }
+
+  .demo-carousel-wrap .demo-frame {
+    aspect-ratio: 3 / 4;
+    max-height: min(52svh, 480px);
+    min-height: clamp(260px, 60vw, 400px);
   }
 
   .bella-caps-grid {

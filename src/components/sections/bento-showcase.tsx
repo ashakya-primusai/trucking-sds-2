@@ -6,8 +6,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
 
 const BENTO_HEADLINE_LINES = [
-  ["Your", "entire", "operation.", "One", "screen."],
-  ["No", "tab", "juggling."],
+  ["How", "we", "solved", "it."],
 ] as const;
 
 /* ── Mini UI components ──────────────────────────────────────────── */
@@ -364,23 +363,69 @@ type FeatureCardProps = {
   title: string;
   desc: string;
   index: number;
+  number: number;
   children: React.ReactNode;
 };
 
-function FeatureCard({ id, title, desc, index, children }: FeatureCardProps) {
+function FeatureCard({ id, title, desc, index, number, children }: FeatureCardProps) {
+  const [open, setOpen] = useState(false);
+
   return (
     <Reveal
       id={id}
       delay={index * 65}
       variant="scale"
-      className="scroll-mt-24 shrink-0 sm:snap-start w-full sm:w-[min(420px,calc(100vw-80px))] flex flex-col gap-4 sm:gap-6 bento-feature-card"
+      className="scroll-mt-24 shrink-0 sm:snap-start w-full sm:w-[min(420px,calc(100vw-80px))] bento-feature-card"
     >
-      <div className="h-[220px] sm:h-[280px] md:h-[330px] w-full">
-        {children}
+      {/* Desktop: always expanded */}
+      <div className="hidden sm:flex flex-col gap-6">
+        <div className="h-[280px] md:h-[330px] w-full">{children}</div>
+        <div>
+          <h3 className="bento-feature-card__title text-[22px] md:text-[24px] font-semibold text-ink tracking-tight leading-snug"><span className="font-mono text-[11.5px] text-ink-3 tracking-[0.08em] mr-2 align-middle">{String(number).padStart(2, "0")}</span>{title}</h3>
+          <p className="bento-feature-card__desc mt-1.5 text-[17px] md:text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
+        </div>
       </div>
-      <div>
-        <h3 className="bento-feature-card__title text-[18px] sm:text-[22px] md:text-[24px] font-semibold text-ink tracking-tight leading-snug">{title}</h3>
-        <p className="bento-feature-card__desc mt-1.5 text-[15px] sm:text-[17px] md:text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
+
+      {/* Mobile: collapsed = title + one-line desc + "Read more"; expanded = full desc + preview */}
+      <div className="sm:hidden border border-line rounded-2xl overflow-hidden bg-bg-card">
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="w-full text-left px-5 pt-5 pb-4 flex flex-col items-start"
+          aria-expanded={open}
+        >
+          <h3 className="text-[17px] font-semibold text-ink tracking-tight">
+            <span className="font-mono text-[17px] text-ink-3 tracking-[0.08em] mr-2">
+              {String(number).padStart(2, "0")}.  
+            </span>
+            {title}
+          </h3>
+
+          {!open && (
+            <p className="mt-1 text-[14px] text-ink-2 leading-relaxed truncate w-full">
+              {desc}
+            </p>
+          )}
+          {!open && (
+            <span className="mt-2 inline-flex items-center gap-1 text-[12px] font-medium text-sds-accent">
+              Read more
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          )}
+        </button>
+        <div
+          className="grid transition-[grid-template-rows] duration-200 ease-out"
+          style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+        >
+          <div className="overflow-hidden">
+            <div className="px-5 pb-5 flex flex-col gap-3">
+              <p className="text-[14px] text-ink-2 leading-relaxed">{desc}</p>
+              <div className="h-[220px] w-full">{children}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </Reveal>
   );
@@ -397,10 +442,7 @@ export function BentoShowcase() {
 
     const onScroll = () => {
       const scrollable = section.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) {
-        setScrollProgress(0);
-        return;
-      }
+      if (scrollable <= 0) return; // handled by IntersectionObserver on mobile
       const progress = Math.min(
         1,
         Math.max(0, (window.scrollY - section.offsetTop) / scrollable),
@@ -424,97 +466,116 @@ export function BentoShowcase() {
       id="bento"
     >
       <div className="bento-scroll-pin">
-      <div className="page-wrap bento-scroll-content">
+        <div className="page-wrap bento-scroll-content">
 
-        <div className="mb-8 sm:mb-12 max-w-[760px] shrink-0">
-          <Eyebrow>With Enrout.ai</Eyebrow>
-          <ScrollHighlightHeading
-            lines={BENTO_HEADLINE_LINES}
-            progress={scrollProgress}
-            theme="light"
-            accentWords={["One"]}
-            as="h2"
-            className="mt-4"
-            style={{
-              fontSize: "var(--sz-h2)",
-              fontWeight: 540,
-              letterSpacing: "-0.025em",
-              lineHeight: 1.05,
-              textWrap: "balance",
-            }}
-          />
-          <p className="mt-5 text-ink-2 max-w-[560px]" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
-            Dashboard, load management, tracking, communication, leads, and documents — every dispatcher need solved in one connected platform.
-          </p>
-        </div>
-
-        {/* Scrollable card row */}
-        <div className="relative min-h-0 flex-1 flex flex-col">
-          {/* Fade edge right */}
-          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
-            style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} />
-
-          <div className="bento-card-row flex flex-col sm:flex-row gap-6 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:snap-x sm:snap-mandatory sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
-
-            <FeatureCard
-              id="dashboard"
-              index={0}
-              title="Live Dashboard"
-              desc="Full lifecycle visibility across loads, dispatch, and delivery — everything that needs your attention, right now."
+          <div className="mb-8 sm:mb-12 max-w-[760px] shrink-0">
+            <Eyebrow>With Enrout.ai</Eyebrow>
+            {/* Desktop: scroll-driven highlight animation */}
+            <ScrollHighlightHeading
+              lines={BENTO_HEADLINE_LINES}
+              progress={scrollProgress}
+              theme="light"
+              accentWords={["One"]}
+              as="h2"
+              className="mt-4 hidden sm:block"
+              style={{
+                fontSize: "var(--sz-h2)",
+                fontWeight: 540,
+                letterSpacing: "-0.025em",
+                lineHeight: 1.05,
+                textWrap: "balance",
+              }}
+            />
+            {/* Mobile: plain heading, no animation */}
+            <h2
+              className="mt-4 sm:hidden"
+              style={{
+                fontSize: "var(--sz-h2)",
+                fontWeight: 540,
+                letterSpacing: "-0.025em",
+                lineHeight: 1.05,
+                textWrap: "balance",
+              }}
             >
-              <PreviewDashboard />
-            </FeatureCard>
+              How we solved it.
+            </h2>
+            <p className="mt-5 text-ink-2 max-w-[560px]" style={{ fontSize: "var(--sz-body)", lineHeight: 1.5 }}>
+              Dashboard, load management, tracking, communication, leads, and documents — every dispatcher need solved in one connected platform.
+            </p>
+          </div>
 
-            <FeatureCard
-              id="lead-management"
-              index={4}
-              title="Lead Management"
-              desc="Track your sales pipeline from discovery through agreement. See every lead's priority, stage, and rate at a glance."
-            >
-              <PreviewLeadManagement />
-            </FeatureCard>
+          {/* Scrollable card row */}
+          <div className="relative min-h-0 flex-1 flex flex-col">
+            {/* Fade edge right */}
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
+              style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} />
 
+            <div className="bento-card-row flex flex-col sm:flex-row gap-3 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:snap-x sm:snap-mandatory sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
 
-            <FeatureCard
-              id="load-management"
-              index={1}
-              title="Load Management"
-              desc="Every confirmed load from creation to settlement. Track stages, rates, drivers, and actions — all in one table."
-            >
-              <PreviewLoadManagement />
-            </FeatureCard>
+              <FeatureCard
+                id="dashboard"
+                index={0}
+                number={1}
+                title="Live Dashboard"
+                desc="Full lifecycle visibility across loads, dispatch, and delivery — everything that needs your attention, right now."
+              >
+                <PreviewDashboard />
+              </FeatureCard>
 
-            <FeatureCard
-              id="load-tracking"
-              index={2}
-              title="Load Tracking"
-              desc="See all loads on the map with routes, stops, and real-time progress. Select any load to view pickup and delivery status."
-            >
-              <PreviewLoadTracking />
-            </FeatureCard>
+              <FeatureCard
+                id="lead-management"
+                index={4}
+                number={2}
+                title="Lead Management"
+                desc="Track your sales pipeline from discovery through agreement. See every lead's priority, stage, and rate at a glance."
+              >
+                <PreviewLeadManagement />
+              </FeatureCard>
 
-            <FeatureCard
-              id="communication"
-              index={3}
-              title="Communication Hub"
-              desc="Every conversation with clients, carriers, and drivers in one place. AI summarizes context so you never miss what matters."
-            >
-              <PreviewCommunication />
-            </FeatureCard>
+              <FeatureCard
+                id="load-management"
+                index={1}
+                number={3}
+                title="Load Management"
+                desc="Every confirmed load from creation to settlement. Track stages, rates, drivers, and actions — all in one table."
+              >
+                <PreviewLoadManagement />
+              </FeatureCard>
 
-            <FeatureCard
-              id="document-management"
-              index={5}
-              title="Document Management"
-              desc="BOLs, rate confirmations, agreements, and PODs — all organized by type and load. No more digging through email."
-            >
-              <PreviewDocManagement />
-            </FeatureCard>
+              <FeatureCard
+                id="load-tracking"
+                index={2}
+                number={4}
+                title="Load Tracking"
+                desc="See all loads on the map with routes, stops, and real-time progress. Select any load to view pickup and delivery status."
+              >
+                <PreviewLoadTracking />
+              </FeatureCard>
 
+              <FeatureCard
+                id="communication"
+                index={3}
+                number={5}
+                title="Communication Hub"
+                desc="Every conversation with clients, carriers, and drivers in one place. AI summarizes context so you never miss what matters."
+              >
+                <PreviewCommunication />
+              </FeatureCard>
+
+              <FeatureCard
+                id="document-management"
+                index={5}
+                number={6}
+                title="Document Management"
+                desc="BOLs, rate confirmations, agreements, and PODs — all organized by type and load. No more digging through email."
+              >
+                <PreviewDocManagement />
+              </FeatureCard>
+
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );
