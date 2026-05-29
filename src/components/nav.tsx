@@ -3,9 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FontSwitcher } from "./font-switcher";
-import { HeroBackgroundSwitcher } from "./hero-background-switcher";
-import { TypeScaleTweaker } from "./type-scale-tweaker";
 import { Logo } from "./logo";
 
 const navLinks = [
@@ -130,26 +127,12 @@ export function Nav() {
             </nav>
 
             <div className="flex gap-2 items-center shrink-0">
-              <div className="hidden md:flex gap-2 items-center nav-dev-tools">
-                <TypeScaleTweaker />
-                <FontSwitcher />
-                <HeroBackgroundSwitcher />
-              </div>
-
-              <a
-                href={isHome ? "#login" : "/#login"}
-                className="font-mono text-[12px] text-ink-2 hover:text-ink transition-colors hidden sm:inline"
-              >
-                Sign in
-              </a>
-
-              <a
-                href={isHome ? "#demo" : "/#demo"}
+              <Link
+                href="/contact"
                 className="inline-flex items-center gap-1.5 h-9 sm:h-11 px-3.5 sm:px-5 rounded-full bg-ink text-bg text-[13px] sm:text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-ink-2 hover:-translate-y-px"
               >
-                <span className="hidden sm:inline">Book a </span>demo
-                <span aria-hidden="true">→</span>
-              </a>
+                Contact Us
+              </Link>
 
               <button
                 type="button"
@@ -202,19 +185,14 @@ export function Nav() {
               ))}
             </nav>
 
-            <div className="mt-auto p-4 border-t border-line flex flex-col gap-4">
-              <div className="flex flex-wrap gap-2 nav-dev-tools">
-                <TypeScaleTweaker />
-                <FontSwitcher />
-                <HeroBackgroundSwitcher />
-              </div>
-              <a
-                href={isHome ? "#login" : "/#login"}
-                className="font-mono text-[13px] text-ink-2 hover:text-ink transition-colors"
+            <div className="mt-auto p-4 border-t border-line">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-ink text-bg text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-ink-2 hover:-translate-y-px"
                 onClick={closeMenu}
               >
-                Sign in
-              </a>
+                Contact Us
+              </Link>
             </div>
           </div>
         </div>

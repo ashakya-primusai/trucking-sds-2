@@ -16,6 +16,7 @@ const footerLinks = {
     { label: "Blog", href: "#" },
   ],
   "Get in touch": [
+    { label: "Contact Us", href: "/#contact" },
     { label: "mahluwalia@primustechnologiesai.onmicrosoft.com", href: "mailto:mahluwalia@primustechnologiesai.onmicrosoft.com" },
     { label: "System status", href: "#" },
     { label: "Docs & API", href: "#" },
