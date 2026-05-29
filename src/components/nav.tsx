@@ -128,7 +128,7 @@ export function Nav() {
 
             <div className="flex gap-2 items-center shrink-0">
               <Link
-                href="/contact"
+                href="/#contact"
                 className="inline-flex items-center gap-1.5 h-9 sm:h-11 px-3.5 sm:px-5 rounded-full bg-ink text-bg text-[13px] sm:text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-ink-2 hover:-translate-y-px"
               >
                 Contact Us
@@ -187,7 +187,7 @@ export function Nav() {
 
             <div className="mt-auto p-4 border-t border-line">
               <Link
-                href="/contact"
+                href="/#contact"
                 className="inline-flex items-center gap-1.5 h-11 px-5 rounded-full bg-ink text-bg text-[14.5px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:bg-ink-2 hover:-translate-y-px"
                 onClick={closeMenu}
               >
