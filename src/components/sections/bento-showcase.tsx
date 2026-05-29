@@ -467,6 +467,16 @@ export function BentoShowcase() {
             </FeatureCard>
 
             <FeatureCard
+              id="lead-management"
+              index={4}
+              title="Lead Management"
+              desc="Track your sales pipeline from discovery through agreement. See every lead's priority, stage, and rate at a glance."
+            >
+              <PreviewLeadManagement />
+            </FeatureCard>
+
+
+            <FeatureCard
               id="load-management"
               index={1}
               title="Load Management"
@@ -491,15 +501,6 @@ export function BentoShowcase() {
               desc="Every conversation with clients, carriers, and drivers in one place. AI summarizes context so you never miss what matters."
             >
               <PreviewCommunication />
-            </FeatureCard>
-
-            <FeatureCard
-              id="lead-management"
-              index={4}
-              title="Lead Management"
-              desc="Track your sales pipeline from discovery through agreement. See every lead's priority, stage, and rate at a glance."
-            >
-              <PreviewLeadManagement />
             </FeatureCard>
 
             <FeatureCard

@@ -6,9 +6,9 @@ import { Footer } from "@/components/footer";
 import { Hero } from "@/components/sections/hero";
 import { SocialProof } from "@/components/sections/social-proof";
 import { BentoShowcase } from "@/components/sections/bento-showcase";
-import { Industries } from "@/components/sections/industries";
+import { IndustriesWithDeepDive } from "@/components/sections/industries-deep-dive";
 import { PainPoints } from "@/components/sections/pain-points";
-import { AIDeepDive, BellaAISection } from "@/components/sections/ai-deep-dive";
+import { BellaAISection } from "@/components/sections/ai-deep-dive";
 import { StatsStrip } from "@/components/sections/stats-strip";
 import { Testimonial } from "@/components/sections/testimonial";
 import { Integrations } from "@/components/sections/integrations";
@@ -24,8 +24,7 @@ export default function Home() {
             <Hero />
             <PainPoints />
             <BentoShowcase />
-            <Industries />
-            <AIDeepDive />
+            <IndustriesWithDeepDive />
             <BellaAISection />
             <FinalCTA />
           </main>

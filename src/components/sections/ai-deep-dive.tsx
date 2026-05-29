@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 import { AIChatDemo } from "./ai-chat-demo";
@@ -13,6 +13,15 @@ import screenshotCreateLead from "@/assets/screenshots/create_lead.png";
 import screenshotComms from "@/assets/screenshots/communication_hub.png";
 import screenshotScheduling from "@/assets/screenshots/scheduling.png";
 import screenshotPdUpdates from "@/assets/screenshots/p&dupdates.png";
+
+import lDashboard from "@/assets/last_mile/l_dashboard.png";
+import lLoadDashboard from "@/assets/last_mile/l_load_dashboard.png";
+import lLoadMgmt from "@/assets/last_mile/l_load_management.png";
+import lTracking from "@/assets/last_mile/l_load_tracking.png";
+import lDriverAssign from "@/assets/last_mile/l_driver_assignment.png";
+import lComms from "@/assets/last_mile/l_communication.png";
+import lBudget from "@/assets/last_mile/l_budget.png";
+import lDocs from "@/assets/last_mile/l_documents.png";
 
 function ScreenshotSlide({
   src,
@@ -48,6 +57,14 @@ const DEMOS = [
     screenshot: screenshotDashboard,
   },
   {
+    id: "leads",
+    label: "Lead Management",
+    tag: "Sales pipeline",
+    title: "No lead falls through the cracks.",
+    desc: "Track every opportunity from discovery through agreement. Priority, stage, rate, and customer — all at a glance.",
+    screenshot: screenshotLeads,
+  },
+  {
     id: "loads",
     label: "Load Management",
     tag: "Full lifecycle",
@@ -63,22 +80,8 @@ const DEMOS = [
     desc: "Routes, stops, and real-time progress on a map. Select any load to see pickup and delivery status instantly.",
     screenshot: screenshotTracking,
   },
-  {
-    id: "leads",
-    label: "Lead Management",
-    tag: "Sales pipeline",
-    title: "No lead falls through the cracks.",
-    desc: "Track every opportunity from discovery through agreement. Priority, stage, rate, and customer — all at a glance.",
-    screenshot: screenshotLeads,
-  },
-  {
-    id: "create-lead",
-    label: "Create Lead",
-    tag: "Faster intake",
-    title: "New leads in seconds, not spreadsheets.",
-    desc: "Capture customer, route, equipment, and rate details in one form — ready for negotiation and dispatch.",
-    screenshot: screenshotCreateLead,
-  },
+
+
   {
     id: "comms",
     label: "Comm Hub",
@@ -95,101 +98,240 @@ const DEMOS = [
     desc: "Visual scheduling across drivers and windows — see conflicts before they become late loads.",
     screenshot: screenshotScheduling,
   },
+
+];
+
+const LASTMILE_DEMOS = [
   {
-    id: "pd-updates",
-    label: "P&D Updates",
-    tag: "Pickup & delivery",
-    title: "Stop-level visibility in real time.",
-    desc: "Pickup and delivery updates flow in automatically — status, exceptions, and proof tied to every stop.",
-    screenshot: screenshotPdUpdates,
+    id: "lm-ops-dashboard",
+    label: "Operations",
+    tag: "Command center",
+    title: "Your delivery pulse at a glance.",
+    desc: "Active loads, stuck deliveries, critical messages, and driver status — everything you need to run the day from one screen.",
+    screenshot: lLoadDashboard,
+  },
+  {
+    id: "lm-live-map",
+    label: "Live Map",
+    tag: "Fleet visibility",
+    title: "Every driver, every route, one map.",
+    desc: "Track your entire fleet in real time — see who's en route, who's delayed, and where every delivery stands across all zones.",
+    screenshot: lDashboard,
+  },
+
+  {
+    id: "lm-route-mgmt",
+    label: "Route Management",
+    tag: "Full lifecycle",
+    title: "Every route, pickup to proof.",
+    desc: "Manage loads from creation through delivery. Track stages, assign drivers, and monitor rates — all in one table view.",
+    screenshot: lLoadMgmt,
+  },
+  {
+    id: "lm-assign",
+    label: "Driver Assignment",
+    tag: "AI-powered matching",
+    title: "The right driver, every time.",
+    desc: "AI recommends the best driver based on location, HOS, and route efficiency. Select a load, review options, assign in one click.",
+    screenshot: lDriverAssign,
+  },
+  {
+    id: "lm-comms",
+    label: "Communication",
+    tag: "Unified messaging",
+    title: "All channels, one hub.",
+    desc: "Email, WhatsApp, SMS — every conversation in one place. AI summarizes threads, flags urgency, and drafts replies.",
+    screenshot: lComms,
   },
 ];
 
-export function AIDeepDive() {
+const ALL_INDUSTRIES = [
+  { key: "trucking", slides: DEMOS },
+  { key: "last-mile", slides: LASTMILE_DEMOS },
+] as const;
+
+export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }) {
+  const slides = ALL_INDUSTRIES.find((ind) => ind.key === activeIndustry)?.slides ?? DEMOS;
+  const isVisible = activeIndustry !== null;
   const sectionRef = useRef<HTMLElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const count = DEMOS.length;
-  // Map 0→1 scroll to 0→(count-1) so each slide index lands exactly on an integer
-  const slideProgress = scrollProgress * (count - 1);
-  const active = Math.min(count - 1, Math.round(slideProgress));
+  // Refs keyed per industry so they persist across switches
+  const demoSlidesRef = useRef<Record<string, (HTMLDivElement | null)[]>>({});
+  const copySlidesRef = useRef<Record<string, (HTMLDivElement | null)[]>>({});
+  const dotsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const pillsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const stateRef = useRef({ progress: 0, active: 0 });
+  const count = slides.length;
+  const industryKey = activeIndustry ?? "trucking";
 
   const scrollToSlide = useCallback(
     (index: number) => {
       const section = sectionRef.current;
       if (!section) return;
       const clamped = Math.max(0, Math.min(count - 1, index));
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
       const scrollable = section.offsetHeight - window.innerHeight;
       const target =
-        section.offsetTop + (count <= 1 ? 0 : (clamped / (count - 1)) * scrollable);
+        sectionTop + (count <= 1 ? 0 : (clamped / (count - 1)) * scrollable);
       window.scrollTo({ top: target, behavior: "smooth" });
     },
     [count],
   );
 
-  const goTo = (index: number) => {
-    scrollToSlide((index + count) % count);
-  };
+  const goTo = useCallback(
+    (index: number) => {
+      scrollToSlide((index + count) % count);
+    },
+    [count, scrollToSlide],
+  );
+
+  // On industry switch, scroll to top of section to reset to slide 0 (skip initial mount)
+  const hasMountedRef = useRef(false);
+  useEffect(() => {
+    if (!isVisible) return;
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+    const section = sectionRef.current;
+    if (!section) return;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: sectionTop, behavior: "smooth" });
+  }, [isVisible, activeIndustry]);
 
   useEffect(() => {
+    if (!isVisible) return;
     const section = sectionRef.current;
     if (!section) return;
     let snapTimer: ReturnType<typeof setTimeout> | null = null;
     let isSnapping = false;
+    let rafId: number | null = null;
+    const currentKey = industryKey;
+
+    const PILL_BASE = "h-8 px-3 sm:px-4 rounded-full text-[11px] sm:text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap";
+
+    // Toggle visibility of industry slide sets
+    for (const ind of ALL_INDUSTRIES) {
+      const isActive = ind.key === currentKey;
+      const dSlides = demoSlidesRef.current[ind.key] ?? [];
+      const cSlides = copySlidesRef.current[ind.key] ?? [];
+      for (const el of dSlides) {
+        if (el) el.style.visibility = isActive ? "visible" : "hidden";
+      }
+      for (const el of cSlides) {
+        if (el) el.style.visibility = isActive ? "visible" : "hidden";
+      }
+    }
+
+    const getSectionTop = () => section.getBoundingClientRect().top + window.scrollY;
 
     const getProgress = () => {
       const scrollable = section.offsetHeight - window.innerHeight;
       if (scrollable <= 0) return 0;
-      return Math.min(1, Math.max(0, (window.scrollY - section.offsetTop) / scrollable));
+      return Math.min(1, Math.max(0, (window.scrollY - getSectionTop()) / scrollable));
+    };
+
+    const slideMotion = (slideProgress: number, index: number, layer: "demo" | "copy") => {
+      const offset = slideProgress - index;
+      const abs = Math.abs(offset);
+      const fadeStart = Math.max(0, abs - 0.1) / 0.4;
+      const opacity = Math.max(0, 1 - fadeStart);
+
+      if (layer === "demo") {
+        return { opacity, translateY: offset * -14, scale: 0.97 + opacity * 0.03 };
+      }
+      return { opacity, translateY: offset * 20, scale: 0.98 + opacity * 0.02 };
+    };
+
+    const applyStyles = (progress: number) => {
+      const slideProgress = progress * (count - 1);
+      const active = Math.min(count - 1, Math.round(slideProgress));
+      stateRef.current = { progress, active };
+
+      const demos = demoSlidesRef.current[currentKey] ?? [];
+      const copies = copySlidesRef.current[currentKey] ?? [];
+      const dots = dotsRef.current;
+      const pills = pillsRef.current;
+
+      for (let i = 0; i < count; i++) {
+        const dEl = demos[i];
+        if (dEl) {
+          const { opacity, translateY, scale } = slideMotion(slideProgress, i, "demo");
+          dEl.style.cssText = `opacity:${opacity};transform:translateY(${translateY}px) scale(${scale});pointer-events:${opacity > 0.3 ? "auto" : "none"};z-index:${opacity > 0.5 ? 2 : 1}`;
+          dEl.ariaHidden = String(opacity < 0.5);
+        }
+
+        const cEl = copies[i];
+        if (cEl) {
+          const { opacity, translateY, scale } = slideMotion(slideProgress, i, "copy");
+          cEl.style.cssText = `opacity:${opacity};transform:translateY(${translateY}px) scale(${scale});pointer-events:${opacity > 0.3 ? "auto" : "none"};position:absolute;inset:0`;
+          cEl.ariaHidden = String(opacity < 0.5);
+        }
+
+        const dot = dots[i];
+        if (dot) {
+          const fill = Math.max(0, 1 - Math.abs(slideProgress - i));
+          dot.style.width = `${6 + fill * 18}px`;
+          dot.style.background = fill > 0.4 ? "var(--sds-accent)" : "var(--line)";
+          dot.style.opacity = String(0.35 + fill * 0.65);
+        }
+
+        const pill = pills[i];
+        if (pill) {
+          pill.className = i === active
+            ? `${PILL_BASE} bg-ink text-bg shadow-sm`
+            : `${PILL_BASE} text-ink-3 hover:text-ink`;
+        }
+      }
+
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
+      }
     };
 
     const snapToNearest = () => {
       const progress = getProgress();
-      // Only snap if we're actually inside the section
       if (progress <= 0 || progress >= 1) return;
       const slidePos = progress * (count - 1);
       const nearest = Math.round(slidePos);
-      // Only snap if we're meaningfully between slides (not already close to one)
       if (Math.abs(slidePos - nearest) < 0.08) return;
       isSnapping = true;
-      scrollToSlide(nearest);
-      // Release snap lock after animation settles
+      const sectionTop = getSectionTop();
+      const scrollable = section.offsetHeight - window.innerHeight;
+      const target = sectionTop + (count <= 1 ? 0 : (nearest / (count - 1)) * scrollable);
+      window.scrollTo({ top: target, behavior: "smooth" });
       setTimeout(() => { isSnapping = false; }, 600);
     };
 
     const onScroll = () => {
-      setScrollProgress(getProgress());
-      if (isSnapping) return;
-      if (snapTimer) clearTimeout(snapTimer);
-      snapTimer = setTimeout(snapToNearest, 150);
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        applyStyles(getProgress());
+        if (isSnapping) return;
+        if (snapTimer) clearTimeout(snapTimer);
+        snapTimer = setTimeout(snapToNearest, 150);
+      });
     };
 
-    onScroll();
+    const initId = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        applyStyles(getProgress());
+      });
+    });
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     return () => {
+      cancelAnimationFrame(initId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (snapTimer) clearTimeout(snapTimer);
+      if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [count, scrollToSlide]);
+  }, [isVisible, activeIndustry, industryKey, count]);
 
-  const slideMotion = (index: number, layer: "demo" | "copy" = "demo") => {
-    const offset = slideProgress - index;
-    const abs = Math.abs(offset);
-    // Hold full opacity in center 20% of each slide's zone, then fade quickly
-    const fadeStart = Math.max(0, abs - 0.1) / 0.4; // 0 until |offset|>0.1, then ramps to 1
-    const opacity = Math.max(0, 1 - fadeStart);
-
-    if (layer === "demo") {
-      const scale = 0.97 + opacity * 0.03;
-      const translateY = offset * -14;
-      return { opacity, translateY, scale };
-    }
-
-    const translateY = offset * 20;
-    const scale = 0.98 + opacity * 0.02;
-    return { opacity, translateY, scale };
-  };
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <section
@@ -199,143 +341,146 @@ export function AIDeepDive() {
       style={{ "--ai-slide-count": count } as React.CSSProperties}
     >
       <div className="ai-scroll-pin">
-        <Reveal className="page-wrap section-stack">
-        <div className="section-stack__column">
-          <div className="demo-carousel-wrap">
-            <div className="demo-frame">
-              {DEMOS.map((d, i) => {
-                const { opacity, translateY, scale } = slideMotion(i, "demo");
-                return (
-                  <div
-                    key={d.id}
-                    className="demo-slide will-change-[transform,opacity]"
-                    style={{
-                      opacity,
-                      transform: `translateY(${translateY}px) scale(${scale})`,
-                      pointerEvents: opacity > 0.3 ? "auto" : "none",
-                      zIndex: opacity > 0.5 ? 2 : 1,
-                      transition: "opacity 0.15s ease-out",
-                    }}
-                    aria-hidden={opacity < 0.5}
-                  >
-                    <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
-                  </div>
-                );
-              })}
-            </div>
+        <div className="page-wrap section-stack">
+          <div className="section-stack__column">
+            <div className="demo-carousel-wrap">
+              <div className="demo-frame">
+                {/* Pre-render all industry slides; hide inactive sets */}
+                {ALL_INDUSTRIES.map((ind) => {
+                  const isActive = ind.key === industryKey;
+                  if (!demoSlidesRef.current[ind.key]) demoSlidesRef.current[ind.key] = [];
+                  return ind.slides.map((d, i) => (
+                    <div
+                      key={d.id}
+                      ref={(el) => { demoSlidesRef.current[ind.key]![i] = el; }}
+                      className="demo-slide"
+                      style={{
+                        opacity: isActive && i === 0 ? 1 : 0,
+                        transform: "translateY(0) scale(1)",
+                        pointerEvents: isActive && i === 0 ? "auto" : "none",
+                        zIndex: isActive && i === 0 ? 2 : 0,
+                        visibility: isActive ? "visible" : "hidden",
+                      }}
+                      aria-hidden={!(isActive && i === 0)}
+                    >
+                      <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
+                    </div>
+                  ));
+                })}
+              </div>
 
-            <div className="shrink-0 flex justify-center gap-2 mt-3">
-              {DEMOS.map((d, i) => {
-                const fill = Math.max(0, 1 - Math.abs(slideProgress - i));
-                return (
-                <button
-                  key={d.id}
-                  type="button"
-                  aria-label={`Go to ${d.label}`}
-                  aria-current={i === active ? "true" : undefined}
-                  onClick={() => scrollToSlide(i)}
-                  className="h-1.5 rounded-full"
-                  style={{
-                    width: 6 + fill * 18,
-                    background: fill > 0.4 ? "var(--sds-accent)" : "var(--line)",
-                    opacity: 0.35 + fill * 0.65,
-                  }}
-                />
-              );
-              })}
-            </div>
-          </div>
-
-          <div className="carousel-content">
-            <div className="carousel-content__slide">
-              {DEMOS.map((d, i) => {
-                const { opacity, translateY, scale } = slideMotion(i, "copy");
-                return (
-                <div
-                  key={d.id}
-                  className="will-change-[transform,opacity] absolute inset-0"
-                  style={{
-                    opacity,
-                    transform: `translateY(${translateY}px) scale(${scale})`,
-                    pointerEvents: opacity > 0.3 ? "auto" : "none",
-                    transition: "opacity 0.15s ease-out",
-                  }}
-                  aria-hidden={opacity < 0.5}
-                >
-                  <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
-                    {d.tag}
-                  </span>
-                  <h3
-                    className="mt-1 font-semibold"
-                    style={{
-                      fontSize: "var(--sz-h3)",
-                      letterSpacing: "-0.02em",
-                      lineHeight: 1.1,
-                    }}
-                  >
-                    {d.title}
-                  </h3>
-                  <p
-                    className="mt-2 text-ink-2 max-w-[640px]"
-                    style={{ fontSize: "var(--sz-body)", lineHeight: 1.45 }}
-                  >
-                    {d.desc}
-                  </p>
-                </div>
-              );
-              })}
-            </div>
-
-            <div className="carousel-content__nav">
-              <div className="carousel-content__nav-pills overflow-x-auto max-w-full pb-1 -mx-1 px-1">
-              <div className="flex gap-1 rounded-full border border-line bg-bg-soft p-1 w-max min-w-0">
-                {DEMOS.map((d, i) => (
+              <div className="shrink-0 flex justify-center gap-2 mt-3">
+                {slides.map((d, i) => (
                   <button
                     key={d.id}
+                    ref={(el) => { dotsRef.current[i] = el; }}
                     type="button"
+                    aria-label={`Go to ${d.label}`}
                     onClick={() => scrollToSlide(i)}
-                    aria-pressed={i === active}
-                    className={`h-8 px-3 sm:px-4 rounded-full text-[11px] sm:text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap ${
-                      i === active
-                        ? "bg-ink text-bg shadow-sm"
-                        : "text-ink-3 hover:text-ink"
-                    }`}
-                  >
-                    {d.label}
-                  </button>
+                    className="h-1.5 rounded-full"
+                    style={{
+                      width: i === 0 ? 24 : 6,
+                      background: i === 0 ? "var(--sds-accent)" : "var(--line)",
+                      opacity: i === 0 ? 1 : 0.35,
+                    }}
+                  />
                 ))}
               </div>
+            </div>
+
+            <div className="carousel-content">
+              <div className="carousel-content__slide">
+                {/* Pre-render all industry copy slides; hide inactive sets */}
+                {ALL_INDUSTRIES.map((ind) => {
+                  const isActive = ind.key === industryKey;
+                  if (!copySlidesRef.current[ind.key]) copySlidesRef.current[ind.key] = [];
+                  return ind.slides.map((d, i) => (
+                    <div
+                      key={d.id}
+                      ref={(el) => { copySlidesRef.current[ind.key]![i] = el; }}
+                      className="absolute inset-0"
+                      style={{
+                        opacity: isActive && i === 0 ? 1 : 0,
+                        transform: "translateY(0) scale(1)",
+                        pointerEvents: isActive && i === 0 ? "auto" : "none",
+                        visibility: isActive ? "visible" : "hidden",
+                      }}
+                      aria-hidden={!(isActive && i === 0)}
+                    >
+                      <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
+                        {d.tag}
+                      </span>
+                      <h3
+                        className="mt-1 font-semibold"
+                        style={{
+                          fontSize: "var(--sz-h3)",
+                          letterSpacing: "-0.02em",
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {d.title}
+                      </h3>
+                      <p
+                        className="mt-2 text-ink-2 max-w-[640px]"
+                        style={{ fontSize: "var(--sz-body)", lineHeight: 1.45 }}
+                      >
+                        {d.desc}
+                      </p>
+                    </div>
+                  ));
+                })}
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  aria-label="Previous demo"
-                  onClick={() => goTo(active - 1)}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg text-ink-2 transition-colors hover:border-ink-4 hover:text-ink"
-                >
-                  ←
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next demo"
-                  onClick={() => goTo(active + 1)}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg text-ink-2 transition-colors hover:border-ink-4 hover:text-ink"
-                >
-                  →
-                </button>
+              <div className="carousel-content__nav">
+                <div className="carousel-content__nav-pills overflow-x-auto max-w-full pb-1 -mx-1 px-1">
+                  <div className="flex gap-1 rounded-full border border-line bg-bg-soft p-1 w-max min-w-0">
+                    {slides.map((d, i) => (
+                      <button
+                        key={d.id}
+                        ref={(el) => { pillsRef.current[i] = el; }}
+                        type="button"
+                        onClick={() => scrollToSlide(i)}
+                        className={`h-8 px-3 sm:px-4 rounded-full text-[11px] sm:text-[12.5px] font-medium transition-all duration-150 whitespace-nowrap ${i === 0
+                          ? "bg-ink text-bg shadow-sm"
+                          : "text-ink-3 hover:text-ink"
+                          }`}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    aria-label="Previous demo"
+                    onClick={() => goTo(stateRef.current.active - 1)}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg text-ink-2 transition-colors hover:border-ink-4 hover:text-ink"
+                  >
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Next demo"
+                    onClick={() => goTo(stateRef.current.active + 1)}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg text-ink-2 transition-colors hover:border-ink-4 hover:text-ink"
+                  >
+                    →
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div
-          className="ai-scroll-progress"
-          aria-hidden
-          style={{ transform: `scaleX(${scrollProgress})` }}
-        />
-      </Reveal>
-    </div>
+          <div
+            ref={progressBarRef}
+            className="ai-scroll-progress"
+            aria-hidden
+            style={{ transform: "scaleX(0)" }}
+          />
+        </div>
+      </div>
     </section>
   );
 }
@@ -346,7 +491,7 @@ const BELLA_CAPABILITIES = [
     solution: "Negotiates & locks rates",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M10 2v16M6 6c0-1.66 1.79-3 4-3s4 1.34 4 3-1.79 3-4 3-4 1.34-4 3 1.79 3 4 3 4-1.34 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <path d="M10 2v16M6 6c0-1.66 1.79-3 4-3s4 1.34 4 3-1.79 3-4 3-4 1.34-4 3 1.79 3 4 3 4-1.34 4-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -355,8 +500,8 @@ const BELLA_CAPABILITIES = [
     solution: "Monitors every shipment",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
+        <circle cx="10" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -365,10 +510,10 @@ const BELLA_CAPABILITIES = [
     solution: "Dispatches the right driver",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <path d="M3 13l2-6h10l2 6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
-        <rect x="3" y="13" width="14" height="4" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
-        <circle cx="6" cy="17" r="1.5" fill="currentColor"/>
-        <circle cx="14" cy="17" r="1.5" fill="currentColor"/>
+        <path d="M3 13l2-6h10l2 6" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <rect x="3" y="13" width="14" height="4" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="6" cy="17" r="1.5" fill="currentColor" />
+        <circle cx="14" cy="17" r="1.5" fill="currentColor" />
       </svg>
     ),
   },
@@ -377,8 +522,8 @@ const BELLA_CAPABILITIES = [
     solution: "Replies around the clock",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5"/>
-        <path d="M10 6v4l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <circle cx="10" cy="10" r="7" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M10 6v4l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },

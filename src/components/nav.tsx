@@ -116,9 +116,7 @@ export function Nav() {
       >
         <div className="page-wrap">
           <div className="h-14 sm:h-16 flex items-center justify-between gap-3">
-            <Link href={isHome ? "#hero" : "/"} aria-label="Enrout.ai home" onClick={closeMenu}>
-              <Logo />
-            </Link>
+            <Logo />
 
             <nav className="hidden lg:flex gap-1" aria-label="Primary">
               {navLinks.map((link) => (
