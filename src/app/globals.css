@@ -328,6 +328,8 @@ section > .page-wrap {
 section#ai.ai-scroll-section {
   height: calc(var(--ai-slide-count, 2) * 100svh);
   overflow: visible;
+  padding-top: var(--nav-height);
+  box-sizing: border-box;
 }
 
 .ai-scroll-pin {
@@ -707,6 +709,20 @@ section#bella > .page-wrap {
 
   .section-stack__column {
     gap: clamp(10px, 2vh, 16px);
+    justify-content: flex-start;
+  }
+
+  .ai-scroll-pin .section-stack,
+  .ai-scroll-pin .section-stack__column {
+    justify-content: flex-start;
+  }
+
+  .ai-scroll-pin .demo-carousel-wrap {
+    flex: 0 0 auto;
+  }
+
+  .ai-scroll-pin .carousel-content {
+    flex: 0 0 auto;
   }
 
   .demo-carousel-wrap .demo-frame {
@@ -717,13 +733,14 @@ section#bella > .page-wrap {
 
   .ai-scroll-pin .demo-carousel-wrap .demo-frame {
     max-height: min(
-      calc(100svh - var(--nav-height) - 13rem),
-      380px
+      calc(100svh - var(--nav-height) - 16rem),
+      320px
     );
+    min-height: clamp(160px, 38vw, 220px);
   }
 
   .carousel-content__slide {
-    min-height: 130px;
+    min-height: clamp(120px, 22vh, 160px);
   }
 
   .carousel-content {
@@ -809,24 +826,33 @@ section#bella > .page-wrap {
 
 @media (max-width: 639px) {
   section#ai.ai-scroll-section {
-    height: calc(var(--ai-slide-count, 2) * 85svh);
+    height: calc(var(--ai-slide-count, 2) * 100svh);
   }
 
   .ai-scroll-pin {
-    padding-block: clamp(16px, 3vh, 28px);
+    padding-block: clamp(12px, 2vh, 20px);
   }
 
   .demo-carousel-wrap .demo-frame {
-    aspect-ratio: 3 / 4;
-    max-height: min(52svh, 480px);
-    min-height: clamp(260px, 60vw, 400px);
+    aspect-ratio: 4 / 3;
+    max-height: min(36svh, 280px);
+    min-height: clamp(160px, 40vw, 220px);
   }
 
   .ai-scroll-pin .demo-carousel-wrap .demo-frame {
     max-height: min(
-      calc(100svh - var(--nav-height) - 12rem),
-      420px
+      calc(100svh - var(--nav-height) - 17rem),
+      260px
     );
+    min-height: clamp(150px, 36vw, 200px);
+  }
+
+  .carousel-content__slide {
+    min-height: clamp(108px, 20vh, 140px);
+  }
+
+  .carousel-content {
+    gap: 8px;
   }
 
   .bella-caps-grid {

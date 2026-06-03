@@ -1,10 +1,16 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { Reveal } from "@/components/ui/reveal";
+import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
 import { AIChatDemo } from "./ai-chat-demo";
 import { MOBILE_PREVIEWS } from "./ai-mobile-previews";
+import {
+  getSectionScrollState,
+  scrollToSectionProgress,
+} from "@/lib/scroll-section";
+import { HIGHLIGHT_SCROLL_END } from "@/lib/scroll-highlight";
 
 import screenshotDashboard from "@/assets/screenshots/load_dashboard.png";
 import screenshotLoadMgmt from "@/assets/screenshots/load_management.png";
@@ -23,6 +29,40 @@ import lDriverAssign from "@/assets/last_mile/l_driver_assignment.png";
 import lComms from "@/assets/last_mile/l_communication.png";
 import lBudget from "@/assets/last_mile/l_budget.png";
 import lDocs from "@/assets/last_mile/l_documents.png";
+
+function CarouselTitle({
+  title,
+  slideIndex,
+  slidePosition,
+  scrollProgress,
+}: {
+  title: string;
+  slideIndex: number;
+  slidePosition: number;
+  scrollProgress: number;
+}) {
+  const words = title.split(" ");
+  const distance = Math.abs(slidePosition - slideIndex);
+  const localProgress =
+    distance > 0.45
+      ? 0
+      : Math.min(1, scrollProgress / HIGHLIGHT_SCROLL_END);
+
+  return (
+    <ScrollHighlightHeading
+      words={words}
+      progress={localProgress}
+      theme="light"
+      as="h3"
+      className="mt-1 font-semibold block sm:hidden"
+      style={{
+        fontSize: "var(--sz-h3)",
+        letterSpacing: "-0.02em",
+        lineHeight: 1.1,
+      }}
+    />
+  );
+}
 
 function ScreenshotSlide({
   src,
@@ -162,6 +202,7 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
   const pillsRef = useRef<(HTMLButtonElement | null)[]>([]);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const stateRef = useRef({ progress: 0, active: 0 });
+  const [scrollProgress, setScrollProgress] = useState(0);
   const count = slides.length;
   const industryKey = activeIndustry ?? "trucking";
 
@@ -170,11 +211,8 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
       const section = sectionRef.current;
       if (!section) return;
       const clamped = Math.max(0, Math.min(count - 1, index));
-      const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-      const scrollable = section.offsetHeight - window.innerHeight;
-      const target =
-        sectionTop + (count <= 1 ? 0 : (clamped / (count - 1)) * scrollable);
-      window.scrollTo({ top: target, behavior: "smooth" });
+      const progress = count <= 1 ? 0 : clamped / (count - 1);
+      scrollToSectionProgress(section, progress, "smooth");
     },
     [count],
   );
@@ -196,8 +234,7 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
     }
     const section = sectionRef.current;
     if (!section) return;
-    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: sectionTop, behavior: "smooth" });
+    scrollToSectionProgress(section, 0, "smooth");
   }, [isVisible, activeIndustry]);
 
   useEffect(() => {
@@ -224,30 +261,31 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
       }
     }
 
-    const getSectionTop = () => section.getBoundingClientRect().top + window.scrollY;
+    const getProgress = () => getSectionScrollState(section).progress;
 
-    const getProgress = () => {
-      const scrollable = section.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return 0;
-      return Math.min(1, Math.max(0, (window.scrollY - getSectionTop()) / scrollable));
-    };
+    const isMobileLayout = () =>
+      window.matchMedia("(max-width: 639px)").matches;
 
     const slideMotion = (slideProgress: number, index: number, layer: "demo" | "copy") => {
       const offset = slideProgress - index;
       const abs = Math.abs(offset);
       const fadeStart = Math.max(0, abs - 0.1) / 0.4;
       const opacity = Math.max(0, 1 - fadeStart);
+      const mobile = isMobileLayout();
+      const demoY = mobile ? offset * -4 : offset * -14;
+      const copyY = mobile ? offset * 6 : offset * 20;
 
       if (layer === "demo") {
-        return { opacity, translateY: offset * -14, scale: 0.97 + opacity * 0.03 };
+        return { opacity, translateY: demoY, scale: mobile ? 1 : 0.97 + opacity * 0.03 };
       }
-      return { opacity, translateY: offset * 20, scale: 0.98 + opacity * 0.02 };
+      return { opacity, translateY: copyY, scale: mobile ? 1 : 0.98 + opacity * 0.02 };
     };
 
     const applyStyles = (progress: number) => {
       const slideProgress = progress * (count - 1);
       const active = Math.min(count - 1, Math.round(slideProgress));
       stateRef.current = { progress, active };
+      setScrollProgress(progress);
 
       const demos = demoSlidesRef.current[currentKey] ?? [];
       const copies = copySlidesRef.current[currentKey] ?? [];
@@ -297,10 +335,8 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
       const nearest = Math.round(slidePos);
       if (Math.abs(slidePos - nearest) < 0.08) return;
       isSnapping = true;
-      const sectionTop = getSectionTop();
-      const scrollable = section.offsetHeight - window.innerHeight;
-      const target = sectionTop + (count <= 1 ? 0 : (nearest / (count - 1)) * scrollable);
-      window.scrollTo({ top: target, behavior: "smooth" });
+      const snapProgress = count <= 1 ? 0 : nearest / (count - 1);
+      scrollToSectionProgress(section, snapProgress, "smooth");
       setTimeout(() => { isSnapping = false; }, 600);
     };
 
@@ -369,12 +405,10 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
                         <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
                       </div>
                       {/* Mobile: coded UI preview */}
-                      <div className="sm:hidden h-full overflow-hidden">
+                      <div className="sm:hidden h-full min-h-0 overflow-hidden">
                         {MOBILE_PREVIEWS[d.id] ? (
-                          <div className="h-full origin-top-left" style={{ zoom: 1.35 }}>
-                            <div className="h-full p-2">
-                              {MOBILE_PREVIEWS[d.id]()}
-                            </div>
+                          <div className="h-full min-h-0 overflow-hidden p-2">
+                            {MOBILE_PREVIEWS[d.id]()}
                           </div>
                         ) : (
                           <ScreenshotSlide src={d.screenshot} alt={d.label} priority={i === 0} />
@@ -426,8 +460,14 @@ export function AIDeepDive({ activeIndustry }: { activeIndustry: string | null }
                       <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
                         {d.tag}
                       </span>
+                      <CarouselTitle
+                        title={d.title}
+                        slideIndex={i}
+                        slidePosition={scrollProgress * (count - 1)}
+                        scrollProgress={scrollProgress}
+                      />
                       <h3
-                        className="mt-1 font-semibold"
+                        className="mt-1 font-semibold hidden sm:block"
                         style={{
                           fontSize: "var(--sz-h3)",
                           letterSpacing: "-0.02em",
