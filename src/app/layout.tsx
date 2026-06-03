@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import enroutLogo from "@/assets/enrout_logo.png";
 import {
   Geist,
   Geist_Mono,
@@ -58,6 +59,10 @@ export const metadata: Metadata = {
   title: "Enrout AI — Make your dispatchers superhuman",
   description:
     "The AI-powered dispatch platform built for trucking teams who need to move faster, with less.",
+  icons: {
+    icon: enroutLogo.src,
+    apple: enroutLogo.src,
+  },
 };
 
 export const viewport = {

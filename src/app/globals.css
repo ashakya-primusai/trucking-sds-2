@@ -58,6 +58,7 @@
   /* Layout */
   --content-w: 1500px;
   --content-px: clamp(20px, 4vw, 56px);
+  --nav-height: 4.5rem;
 
   /* Typography scale — controlled by TypeScaleProvider */
   --sz-h1:   clamp(56px, 7vw, 94px);
@@ -107,6 +108,12 @@
   --input: oklch(90% 0.006 60);
   --ring: oklch(70% 0.165 55);
   --radius: 0.625rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nav-height: 5rem;
+  }
 }
 
 @layer base {
@@ -312,10 +319,10 @@ section#ai.ai-scroll-section {
 
 .ai-scroll-pin {
   position: sticky;
-  top: 0;
-  height: 100svh;
+  top: var(--nav-height);
+  height: calc(100svh - var(--nav-height));
   overflow: hidden;
-  padding-block: clamp(24px, 3vh, 48px);
+  padding-block: clamp(16px, 2vh, 32px);
 }
 
 .ai-scroll-progress {
@@ -372,6 +379,18 @@ section#ai.ai-scroll-section > .ai-scroll-pin > .page-wrap {
   max-height: min(72svh, 820px);
   min-height: clamp(220px, 42vw, 520px);
   height: auto;
+}
+
+.ai-scroll-pin .section-stack {
+  justify-content: flex-start;
+  padding-top: clamp(4px, 0.8vh, 12px);
+}
+
+.ai-scroll-pin .demo-carousel-wrap .demo-frame {
+  max-height: min(
+    calc(100svh - var(--nav-height) - 15rem),
+    780px
+  );
 }
 
 .carousel-content {
@@ -469,15 +488,20 @@ section#bella > .page-wrap {
 
 .bella-chat-wrap {
   width: 340px;
-  height: 440px;
+  height: min(520px, 72svh);
+  min-height: 480px;
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--bg-card);
   box-shadow: 0 8px 32px -8px oklch(20% 0.02 60 / 0.12);
+  display: flex;
+  flex-direction: column;
 }
 
 .bella-chat-wrap > * {
+  flex: 1 1 auto;
+  min-height: 0;
   height: 100%;
 }
 
@@ -676,6 +700,13 @@ section#bella > .page-wrap {
     min-height: clamp(180px, 48vw, 300px);
   }
 
+  .ai-scroll-pin .demo-carousel-wrap .demo-frame {
+    max-height: min(
+      calc(100svh - var(--nav-height) - 13rem),
+      380px
+    );
+  }
+
   .carousel-content__slide {
     min-height: 130px;
   }
@@ -730,7 +761,8 @@ section#bella > .page-wrap {
   .bella-chat-wrap {
     width: 100%;
     max-width: 100%;
-    height: auto;
+    height: min(560px, 78svh);
+    min-height: 420px;
     margin-inline: auto;
   }
 
@@ -775,6 +807,13 @@ section#bella > .page-wrap {
     min-height: clamp(260px, 60vw, 400px);
   }
 
+  .ai-scroll-pin .demo-carousel-wrap .demo-frame {
+    max-height: min(
+      calc(100svh - var(--nav-height) - 12rem),
+      420px
+    );
+  }
+
   .bella-caps-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -791,11 +830,5 @@ section#bella > .page-wrap {
 
 /* Anchor offset for sticky nav */
 [id] {
-  scroll-margin-top: 4.5rem;
-}
-
-@media (min-width: 640px) {
-  [id] {
-    scroll-margin-top: 5rem;
-  }
+  scroll-margin-top: var(--nav-height);
 }

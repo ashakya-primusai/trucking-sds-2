@@ -1,21 +1,32 @@
+import Image from "next/image";
 import Link from "next/link";
+import enroutLogo from "@/assets/enrout_logo.png";
+import { cn } from "@/lib/utils";
 
-export function Logo() {
+const sizeClasses = {
+  sm: "h-14 w-auto",
+  md: "h-16 sm:h-[4.5rem] w-auto",
+  lg: "h-[4.5rem] sm:h-[5.5rem] w-auto",
+} as const;
+
+type LogoProps = {
+  className?: string;
+  size?: keyof typeof sizeClasses;
+};
+
+export function Logo({ className, size = "md" }: LogoProps) {
   return (
     <Link
       href="/"
-      className="inline-flex items-center gap-2.5 font-semibold tracking-tight text-base"
+      className={cn("inline-flex items-center shrink-0", className)}
       aria-label="Enrout AI home"
     >
-      <span
-        className="w-7 h-7 rounded-lg bg-ink text-bg grid place-items-center font-mono text-[10px] font-semibold"
-        aria-hidden="true"
-      >
-        E
-      </span>
-      <span>
-        Enrout <span className="text-sds-accent font-[520]">AI</span>
-      </span>
+      <Image
+        src={enroutLogo}
+        alt="Enrout AI"
+        className={cn(sizeClasses[size], "object-contain object-left")}
+        priority
+      />
     </Link>
   );
 }

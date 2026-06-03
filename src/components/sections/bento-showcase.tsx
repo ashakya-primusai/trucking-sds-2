@@ -396,7 +396,7 @@ function FeatureCard({ id, title, desc, index, number, children }: FeatureCardPr
         >
           <h3 className="text-[17px] font-semibold text-ink tracking-tight">
             <span className="font-mono text-[17px] text-ink-3 tracking-[0.08em] mr-2">
-              {String(number).padStart(2, "0")}.  
+              {String(number).padStart(2, "0")}.
             </span>
             {title}
           </h3>
@@ -507,8 +507,8 @@ export function BentoShowcase() {
           {/* Scrollable card row */}
           <div className="relative min-h-0 flex-1 flex flex-col">
             {/* Fade edge right */}
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
-              style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} />
+            {/* <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
+              style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} /> */}
 
             <div className="bento-card-row flex flex-col sm:flex-row gap-3 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:snap-x sm:snap-mandatory sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>

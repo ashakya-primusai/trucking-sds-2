@@ -108,7 +108,7 @@ export function Nav() {
         style={{ background: "color-mix(in oklch, var(--bg) 78%, transparent)" }}
       >
         <div className="page-wrap">
-          <div className="h-14 sm:h-16 flex items-center justify-between gap-3">
+          <div className="h-18 sm:h-20 flex items-center justify-between gap-3">
             <Logo />
 
             <nav className="hidden lg:flex gap-1" aria-label="Primary">
@@ -168,7 +168,7 @@ export function Nav() {
             aria-label="Close menu"
             onClick={closeMenu}
           />
-          <div className="absolute top-14 sm:top-16 left-0 right-0 bottom-0 bg-bg border-t border-line flex flex-col overflow-y-auto">
+          <div className="absolute top-18 sm:top-20 left-0 right-0 bottom-0 bg-bg border-t border-line flex flex-col overflow-y-auto">
             <nav className="flex flex-col p-4 gap-1" aria-label="Mobile primary">
               {navLinks.map((link) => (
                 <NavLink
