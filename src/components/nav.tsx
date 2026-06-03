@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "./logo";
 
 const navLinks = [
@@ -54,9 +54,31 @@ function NavLink({
 export function Nav() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const headerRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const syncNavHeight = () => {
+      document.documentElement.style.setProperty(
+        "--nav-height",
+        `${header.offsetHeight}px`,
+      );
+    };
+
+    syncNavHeight();
+    const ro = new ResizeObserver(syncNavHeight);
+    ro.observe(header);
+    window.addEventListener("resize", syncNavHeight);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", syncNavHeight);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -103,6 +125,7 @@ export function Nav() {
   return (
     <>
       <header
+        ref={headerRef}
         className={`sticky top-0 z-50 backdrop-blur-[14px] backdrop-saturate-[160%] transition-[border-color] duration-200 border-b ${scrolled || menuOpen ? "border-line" : "border-transparent"
           }`}
         style={{ background: "color-mix(in oklch, var(--bg) 78%, transparent)" }}
@@ -168,7 +191,10 @@ export function Nav() {
             aria-label="Close menu"
             onClick={closeMenu}
           />
-          <div className="absolute top-18 sm:top-20 left-0 right-0 bottom-0 bg-bg border-t border-line flex flex-col overflow-y-auto">
+          <div
+            className="absolute left-0 right-0 bottom-0 bg-bg border-t border-line flex flex-col overflow-y-auto"
+            style={{ top: "var(--nav-height)" }}
+          >
             <nav className="flex flex-col p-4 gap-1" aria-label="Mobile primary">
               {navLinks.map((link) => (
                 <NavLink

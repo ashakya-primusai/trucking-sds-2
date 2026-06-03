@@ -225,21 +225,34 @@ section#hero.hero-scroll-section {
 section#bento.bento-scroll-section {
   height: 200svh;
   overflow: visible;
+  padding-top: var(--nav-height);
+  box-sizing: border-box;
 }
 
 .bento-scroll-pin {
   position: sticky;
-  top: 0;
-  height: 100svh;
+  top: var(--nav-height);
+  height: calc(100svh - var(--nav-height));
   overflow: hidden;
-  padding-block: clamp(40px, 5vh, 72px);
+  padding-block: clamp(16px, 2.5vh, 32px);
+  box-sizing: border-box;
+}
+
+.bento-scroll-pin > .page-wrap.bento-scroll-content {
+  height: 100%;
+  padding-block: 0;
 }
 
 .bento-scroll-content {
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   min-height: 0;
+}
+
+.bento-scroll-content .bento-card-preview {
+  height: clamp(200px, 26vh, 260px);
 }
 
 section#about,
@@ -673,10 +686,12 @@ section#bella > .page-wrap {
   section#bento.bento-scroll-section {
     height: auto;
     overflow: visible;
+    padding-top: 0;
   }
 
   .bento-scroll-pin {
     position: relative;
+    top: auto;
     height: auto;
     overflow: visible;
     padding-block: clamp(48px, 7vh, 80px);

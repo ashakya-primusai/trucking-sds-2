@@ -1,8 +1,11 @@
+/** Scroll progress (0–1) at which headline highlight animation completes */
+export const HIGHLIGHT_SCROLL_END = 0.82;
+
 export function wordFill(
   index: number,
   progress: number,
   count: number,
-  highlightEnd = 0.82,
+  highlightEnd = HIGHLIGHT_SCROLL_END,
 ) {
   const p = Math.min(1, progress / highlightEnd);
   const segment = 1 / count;

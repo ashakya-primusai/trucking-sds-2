@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { ScrollHighlightHeading } from "@/components/ui/scroll-highlight-heading";
+import { HIGHLIGHT_SCROLL_END } from "@/lib/scroll-highlight";
 
 const BENTO_HEADLINE_LINES = [
   ["How", "we", "solved", "it."],
@@ -379,7 +380,7 @@ function FeatureCard({ id, title, desc, index, number, children }: FeatureCardPr
     >
       {/* Desktop: always expanded */}
       <div className="hidden sm:flex flex-col gap-6">
-        <div className="h-[280px] md:h-[330px] w-full">{children}</div>
+        <div className="bento-card-preview w-full">{children}</div>
         <div>
           <h3 className="bento-feature-card__title text-[22px] md:text-[24px] font-semibold text-ink tracking-tight leading-snug"><span className="font-mono text-[11.5px] text-ink-3 tracking-[0.08em] mr-2 align-middle">{String(number).padStart(2, "0")}</span>{title}</h3>
           <p className="bento-feature-card__desc mt-1.5 text-[17px] md:text-[20.25px] text-ink-2 leading-relaxed">{desc}</p>
@@ -435,27 +436,47 @@ function FeatureCard({ id, title, desc, index, number, children }: FeatureCardPr
 
 export function BentoShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
+  const cardRowRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  const syncCardRowScroll = (progress: number) => {
+    const row = cardRowRef.current;
+    if (!row) return;
+    const maxScroll = row.scrollWidth - row.clientWidth;
+    if (maxScroll <= 0) return;
+    const p = Math.min(1, progress / HIGHLIGHT_SCROLL_END);
+    row.scrollLeft = p * maxScroll;
+  };
+
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const onScroll = () => {
       const scrollable = section.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) return; // handled by IntersectionObserver on mobile
+      if (scrollable <= 0) return; // mobile: stacked layout, no scroll-sync
+      const sectionTop =
+        section.getBoundingClientRect().top + window.scrollY;
       const progress = Math.min(
         1,
-        Math.max(0, (window.scrollY - section.offsetTop) / scrollable),
+        Math.max(0, (window.scrollY - sectionTop) / scrollable),
       );
       setScrollProgress(progress);
+      syncCardRowScroll(progress);
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+
+    const row = cardRowRef.current;
+    const ro = row ? new ResizeObserver(onScroll) : null;
+    if (row && ro) ro.observe(row);
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      ro?.disconnect();
     };
   }, []);
 
@@ -510,8 +531,11 @@ export function BentoShowcase() {
             {/* <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-10 hidden sm:block"
               style={{ background: "linear-gradient(to left, var(--bg), transparent)" }} /> */}
 
-            <div className="bento-card-row flex flex-col sm:flex-row gap-3 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:snap-x sm:snap-mandatory sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
+            <div
+              ref={cardRowRef}
+              className="bento-card-row flex flex-col sm:flex-row gap-3 sm:gap-5 sm:overflow-x-auto pb-4 sm:pb-6 sm:-mx-[clamp(20px,4vw,56px)] sm:px-[clamp(20px,4vw,56px)] sm:scroll-pl-[clamp(20px,4vw,56px)]"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}
+            >
 
               <FeatureCard
                 id="dashboard"
