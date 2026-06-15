@@ -12,7 +12,7 @@ export default function AboutPage() {
           <Nav />
           <main>
             {/* Hero */}
-            <section className="bg-bg border-b border-line scroll-mt-16" style={{ paddingBlock: "clamp(56px, 8vh, 140px)" }}>
+            <section className="content-section bg-bg border-b border-line scroll-mt-16" style={{ paddingBlock: "clamp(56px, 8vh, 140px)" }}>
               <div className="page-wrap">
                 <div className="max-w-[800px]">
                   <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
@@ -44,7 +44,7 @@ export default function AboutPage() {
             </section>
 
             {/* Our Story */}
-            <section className="bg-bg-soft border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
+            <section className="content-section bg-bg-soft border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
               <div className="page-wrap">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
                   <div>
@@ -86,7 +86,7 @@ export default function AboutPage() {
             </section>
 
             {/* Numbers */}
-            <section className="bg-bg border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
+            <section className="content-section bg-bg border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
               <div className="page-wrap">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                   {[
@@ -112,7 +112,7 @@ export default function AboutPage() {
             </section>
 
             {/* What We Believe */}
-            <section className="bg-bg-soft border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
+            <section className="content-section bg-bg-soft border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
               <div className="page-wrap">
                 <span className="font-mono text-[11px] tracking-[0.1em] uppercase text-sds-accent">
                   What We Believe
@@ -173,7 +173,7 @@ export default function AboutPage() {
             </section>
 
             {/* Compliance */}
-            <section className="bg-bg border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
+            <section className="content-section bg-bg border-b border-line" style={{ paddingBlock: "clamp(64px, 8vh, 112px)" }}>
               <div className="page-wrap">
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 items-center">
                   <div>
@@ -214,7 +214,7 @@ export default function AboutPage() {
             </section>
 
             {/* CTA */}
-            <section className="bg-ink text-bg" style={{ paddingBlock: "clamp(72px, 9vh, 120px)" }}>
+            <section className="content-section bg-ink text-bg" style={{ paddingBlock: "clamp(72px, 9vh, 120px)" }}>
               <div className="page-wrap text-center">
                 <h2
                   style={{

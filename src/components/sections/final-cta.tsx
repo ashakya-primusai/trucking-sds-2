@@ -94,7 +94,7 @@ export function FinalCTA() {
             </Reveal>
 
             <Reveal delay={120} variant="fade">
-              <div className="mt-10 flex flex-col gap-5">
+              <div className="mt-10">
                 <a
                   href="mailto:info@enroutops.com"
                   className="group flex items-center gap-4 transition-transform duration-200 hover:translate-x-1"
@@ -121,36 +121,6 @@ export function FinalCTA() {
                     </span>
                     <span className="block text-[12px] text-white/35 mt-0.5">
                       We respond within 24 hours
-                    </span>
-                  </div>
-                </a>
-
-                <a
-                  href="https://enrout.ai"
-                  className="group flex items-center gap-4 transition-transform duration-200 hover:translate-x-1"
-                >
-                  <span className="w-11 h-11 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-sds-accent/20 group-hover:border-sds-accent/30 transition-all duration-200">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="text-white/50 group-hover:text-sds-accent transition-colors"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                    </svg>
-                  </span>
-                  <div>
-                    <span className="block text-[14px] font-medium text-white/90 group-hover:text-sds-accent transition-colors">
-                      Enrout AI
-                    </span>
-                    <span className="block text-[12px] text-white/35 mt-0.5">
-                      Explore our platform
                     </span>
                   </div>
                 </a>

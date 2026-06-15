@@ -258,9 +258,15 @@ section#bento.bento-scroll-section {
 section#about,
 section#pain,
 section#industries,
-section#contact {
+section#contact,
+section.content-section {
   height: auto;
   overflow: visible;
+  min-height: 0;
+}
+
+section.content-section > .page-wrap {
+  height: auto;
 }
 
 section > .page-wrap {
@@ -677,7 +683,8 @@ section#bella > .page-wrap {
   section#pain,
   section#industries,
   section#demo,
-  section#contact {
+  section#contact,
+  section.content-section {
     min-height: 0;
   }
 

@@ -16,11 +16,7 @@ const footerLinks = {
     { label: "Blog", href: "#" },
   ],
   "Get in touch": [
-    { label: "Contact Us", href: "/#contact" },
     { label: "info@enroutops.com", href: "mailto:info@enroutops.com" },
-    { label: "System status", href: "#" },
-    { label: "Docs & API", href: "#" },
-    { label: "Security", href: "#" },
   ],
 };
 
@@ -69,7 +65,7 @@ export function Footer() {
             © 2026 Enrout AI · All rights reserved
           </span>
           <span className="flex gap-5">
-            <a href="#" className="hover:text-ink transition-colors">
+            <a href="/privacy" className="hover:text-ink transition-colors">
               Privacy
             </a>
             <a href="#" className="hover:text-ink transition-colors">
