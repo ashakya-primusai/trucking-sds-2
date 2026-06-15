@@ -11,6 +11,7 @@ import {
   Sora,
 } from "next/font/google";
 import "./globals.css";
+import { LinkedInInsightTag } from "@/components/linkedin-insight-tag";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -80,7 +81,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${inter.variable} ${playfair.variable} ${dmSerif.variable} ${sora.variable} ${poppins.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <LinkedInInsightTag />
+      </body>
     </html>
   );
 }
