@@ -238,7 +238,7 @@ export default function AboutPage() {
                     <span aria-hidden="true">→</span>
                   </a>
                   <a
-                    href="mailto:hello@enrout.ai"
+                    href="mailto:info@enroutops.com"
                     className="inline-flex items-center gap-2 h-12 px-7 rounded-full border border-white/20 text-white/80 text-[15px] font-medium tracking-tight whitespace-nowrap transition-all duration-150 hover:border-white/40 hover:text-white"
                   >
                     Contact us

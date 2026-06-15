@@ -17,7 +17,7 @@ const footerLinks = {
   ],
   "Get in touch": [
     { label: "Contact Us", href: "/#contact" },
-    { label: "mahluwalia@primustechnologiesai.onmicrosoft.com", href: "mailto:mahluwalia@primustechnologiesai.onmicrosoft.com" },
+    { label: "info@enroutops.com", href: "mailto:info@enroutops.com" },
     { label: "System status", href: "#" },
     { label: "Docs & API", href: "#" },
     { label: "Security", href: "#" },

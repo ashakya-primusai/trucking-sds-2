@@ -96,7 +96,7 @@ export function FinalCTA() {
             <Reveal delay={120} variant="fade">
               <div className="mt-10 flex flex-col gap-5">
                 <a
-                  href="mailto:hello@enrout.ai"
+                  href="mailto:info@enroutops.com"
                   className="group flex items-center gap-4 transition-transform duration-200 hover:translate-x-1"
                 >
                   <span className="w-11 h-11 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-sds-accent/20 group-hover:border-sds-accent/30 transition-all duration-200">
@@ -117,7 +117,7 @@ export function FinalCTA() {
                   </span>
                   <div>
                     <span className="block text-[14px] font-medium text-white/90 group-hover:text-sds-accent transition-colors">
-                      hello@enrout.ai
+                      info@enroutops.com
                     </span>
                     <span className="block text-[12px] text-white/35 mt-0.5">
                       We respond within 24 hours
