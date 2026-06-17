@@ -16,6 +16,15 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Documentation
+
+EnroutAI product docs are React pages at **`/docs`**:
+
+- `/docs` — introduction
+- `/docs/overview`, `/getting-started`, `/how-it-helps`, `/configuration`, `/workflows`, `/modules`, `/lifecycle`
+
+Page components live in `src/components/docs/pages/`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

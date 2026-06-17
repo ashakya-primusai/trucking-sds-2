@@ -259,13 +259,15 @@ section#about,
 section#pain,
 section#industries,
 section#contact,
-section.content-section {
+section.content-section,
+section.docs-section {
   height: auto;
   overflow: visible;
   min-height: 0;
 }
 
-section.content-section > .page-wrap {
+section.content-section > .page-wrap,
+section.docs-section > .page-wrap {
   height: auto;
 }
 

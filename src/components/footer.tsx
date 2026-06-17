@@ -2,6 +2,7 @@ import { Logo } from "./logo";
 
 const footerLinks = {
   Product: [
+    { label: "Documentation", href: "/docs" },
     { label: "Dispatch board", href: "#" },
     { label: "Live tracking", href: "#" },
     { label: "Auto invoicing", href: "#" },
@@ -65,6 +66,9 @@ export function Footer() {
             © 2026 Enrout AI · All rights reserved
           </span>
           <span className="flex gap-5">
+            <a href="/docs" className="hover:text-ink transition-colors">
+              Docs
+            </a>
             <a href="/privacy" className="hover:text-ink transition-colors">
               Privacy
             </a>

@@ -7,6 +7,7 @@ import { Logo } from "./logo";
 
 const navLinks = [
   { href: "/about", label: "About Us", sectionId: "" },
+  { href: "/docs", label: "Docs", sectionId: "" },
   { href: "/#bento", label: "Features", sectionId: "bento" },
   { href: "/#industries", label: "Products", sectionId: "industries" },
   { href: "/#ai", label: "AI", sectionId: "ai" },
@@ -140,7 +141,11 @@ export function Nav() {
                   key={link.label}
                   href={link.href}
                   label={link.label}
-                  isActive={isHome && activeSection === link.sectionId}
+                  isActive={
+                    link.href === "/docs"
+                      ? pathname === "/docs" || pathname.startsWith("/docs/")
+                      : isHome && activeSection === link.sectionId
+                  }
                 />
               ))}
             </nav>
@@ -201,7 +206,11 @@ export function Nav() {
                   key={link.label}
                   href={link.href}
                   label={link.label}
-                  isActive={isHome && activeSection === link.sectionId}
+                  isActive={
+                    link.href === "/docs"
+                      ? pathname === "/docs" || pathname.startsWith("/docs/")
+                      : isHome && activeSection === link.sectionId
+                  }
                   onNavigate={closeMenu}
                 />
               ))}
