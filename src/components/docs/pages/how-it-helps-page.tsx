@@ -12,12 +12,12 @@ export function HowItHelpsPage() {
   return (
     <div className="max-w-[760px]">
       <DocPageHeader
-        title="How EnroutAI Helps You"
+        title="How Enrout Ops Helps You"
         description="What the platform and AI do for your dispatch team every day"
       />
 
       <DocP>
-        EnroutAI is built to cut the busywork out of dispatch — fewer tabs, fewer
+        Enrout Ops is built to cut the busywork out of dispatch — fewer tabs, fewer
         missed messages, and faster decisions from lead to delivery. You stay in
         control; the software and AI handle the repetitive parts.
       </DocP>
@@ -34,7 +34,7 @@ export function HowItHelpsPage() {
 
       <DocH2>AI and automation</DocH2>
       <DocP>
-        EnroutAI uses AI where it saves you the most time — communication,
+        Enrout Ops uses AI where it saves you the most time — communication,
         monitoring, and early pipeline work — while you approve important decisions.
       </DocP>
 
@@ -75,7 +75,7 @@ export function HowItHelpsPage() {
 
       <DocH2>Dispatch decisions made faster</DocH2>
       <DocTable
-        headers={["Situation", "How EnroutAI helps"]}
+        headers={["Situation", "How Enrout Ops helps"]}
         rows={[
           [
             "Choosing a driver",
@@ -104,7 +104,7 @@ export function HowItHelpsPage() {
       <DocP>
         AI suggests and automates — it does not replace your judgment on rates,
         driver choice, or customer commitments. You promote leads, assign drivers,
-        approve messages, and close loads. EnroutAI removes friction so you can focus
+        approve messages, and close loads. Enrout Ops removes friction so you can focus
         on moving freight.
       </DocP>
 

@@ -2,7 +2,7 @@ import { WorkflowsPage } from "@/components/docs/pages/workflows-page";
 import { DocRoute } from "@/components/docs/doc-route";
 
 export const metadata = {
-  title: "Workflows — EnroutAI Docs",
+  title: "Workflows — Enrout Ops Docs",
   description: "Lead-to-delivery operational flows",
 };
 

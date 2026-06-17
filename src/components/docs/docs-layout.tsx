@@ -39,7 +39,7 @@ export function DocsLayout({
                     lineHeight: 1.05,
                   }}
                 >
-                  EnroutAI
+                  Enrout Ops
                 </h1>
                 <p
                   className="mt-4 max-w-[640px] text-ink-2"

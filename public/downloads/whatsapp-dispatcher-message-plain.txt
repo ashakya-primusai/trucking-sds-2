@@ -1,0 +1,67 @@
+Hi!
+
+Enrout Ops is an AI dispatch platform for trucking teams — leads, loads, drivers, messages and tracking on one screen.
+
+HOW TO SIGN IN
+1. Open the Enrout Ops login page
+2. Enter your work email address, then tap Send OTP
+3. Check your inbox for a 6-digit code
+4. Enter the code, then tap Verify & sign in
+5. You land on the Dashboard — your home screen
+
+SIDEBAR — WHERE EVERYTHING LIVES
+- Dashboard — KPIs, critical messages, pipeline summary
+- Leads — sales pipeline (negotiate, approve, promote)
+- Load Management — all active loads, docs and actions
+- Load Tracking — map, route and stop progress
+- Communication — email, broker and driver WhatsApp in one inbox
+- P&D Updates — pickup/delivery ETAs and delays
+- Driver Management — add and edit your driver roster
+- Configuration — company, fleet, drivers and broker setup
+- Create Lead / Create Load — wizards to enter freight
+- Assign Load — match loads to available drivers
+
+FIRST-TIME SETUP (DO THIS ONCE)
+Sidebar → Configuration
+Work through each section and tap Save & Continue:
+1. Company Info — business details and fleet lot address
+2. Fleet — trucks and trailer types
+3. Drivers — your roster (needed before assignment)
+4. Broker Emails — inbound broker addresses
+5. Documents — company compliance files
+6. AI Automation — how Bella handles email and chat
+
+Then: Sidebar → Driver Management → confirm every active driver is listed.
+
+CREATE A LOAD (CONFIRMED FREIGHT)
+Sidebar → Create Load
+- Step 1 — Load Info: customer, source (broker, load board, etc.), priority and description
+- Step 2 — Route & Stops: pickup and delivery addresses, dates and times
+- Step 3 — Package Details: commodity, weight, trailer type, special requirements
+- Step 4 — Driver & Cost: rate, fuel surcharge and charges, then submit
+Load appears in Load Management.
+
+CREATE A LEAD (OPPORTUNITY TO NEGOTIATE)
+Sidebar → Create Lead — same 4-step wizard
+- Pick the current lifecycle stage — earlier stages auto-complete
+- No driver assignment on a lead
+- When Approved → open in Leads → tap Promote to Load
+
+ASSIGN A DRIVER
+Sidebar → Assign Load
+- Select an eligible load on the left (docs uploaded, pickup still in the future)
+- Review ranked drivers on the right (schedule fit and travel time)
+- Tap to assign, then track in Load Tracking and P&D Updates
+
+DAILY ROUTINE
+1. Dashboard — check critical messages and pipeline
+2. Leads or Load Management — work your freight
+3. Assign Load — match drivers to ready loads
+4. P&D Updates — watch ETAs and delays (tap a card to open Communication)
+5. Communication — reply to brokers and drivers (AI-suggested replies available)
+6. Ask Bella on the Dashboard for load summaries, delays and stats
+
+You stay in control — AI helps with follow-ups and replies. You approve rates, assign drivers and close loads.
+
+Full guides: enroutops.com/docs
+Questions or demo: info@enroutops.com

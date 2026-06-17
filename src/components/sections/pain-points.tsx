@@ -98,7 +98,7 @@ export function PainPoints() {
     <section id="pain" className="scroll-mt-16" style={{ paddingBlock: "clamp(64px, 8vh, 128px)" }}>
       <div className="page-wrap">
         <Reveal className="mb-14">
-          <Eyebrow>Without Enrout AI</Eyebrow>
+          <Eyebrow>Without Enrout Ops</Eyebrow>
           <h2
             className="mt-4 max-w-[720px]"
             style={{

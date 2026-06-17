@@ -18,8 +18,9 @@ export function GettingStartedPage() {
       <DocH2>Sign in</DocH2>
       <DocOl
         items={[
-          "Open EnroutAI and go to the login page",
-          "Sign in with the email and password provided by your administrator",
+          "Open Enrout Ops and go to the login page",
+          "Enter your work email and click Send OTP",
+          "Check your inbox for the 6-digit code, enter it, and click Verify & sign in",
           "After login you land on the Dashboard — your home screen for leads, loads, and alerts",
         ]}
       />

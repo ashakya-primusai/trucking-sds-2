@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Enrout Ops — Dispatcher Brief</title>
+  <style>
+    @page { size: letter; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 8.25pt;
+      line-height: 1.35;
+      color: #1a1a1a;
+      background: #fff;
+    }
+    .page {
+      width: 8.5in;
+      height: 11in;
+      padding: 0.5in 0.58in 0.42in;
+      page-break-after: always;
+      display: flex;
+      flex-direction: column;
+    }
+    .page:last-child { page-break-after: auto; }
+    .page-body { flex: 1; }
+    .page-foot {
+      margin-top: auto;
+      padding-top: 8px;
+      border-top: 1.5px solid #1a1a1a;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 8pt;
+      flex-shrink: 0;
+    }
+    .page-foot strong { display: block; font-size: 9.5pt; }
+    .page-foot a { color: #c45f00; text-decoration: none; }
+    .page-num { font-size: 7.5pt; color: #999; }
+    .eyebrow {
+      font-size: 7.5pt;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #c45f00;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    h1 {
+      font-size: 22pt;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 4px;
+    }
+    .tagline {
+      font-size: 9.5pt;
+      color: #444;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    h2 {
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #c45f00;
+      margin: 9px 0 4px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #e8e4dc;
+    }
+    h3 {
+      font-size: 8.25pt;
+      font-weight: 700;
+      color: #222;
+      margin: 6px 0 2px;
+    }
+    p { margin-bottom: 4px; color: #333; }
+    ul, ol { margin: 0 0 5px 15px; color: #333; }
+    li { margin-bottom: 1px; }
+    .intro {
+      background: #f7f5f0;
+      border-left: 2px solid #c45f00;
+      padding: 6px 10px;
+      margin-bottom: 2px;
+      font-size: 8pt;
+      line-height: 1.4;
+    }
+    .nav-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px 10px;
+      font-size: 7.75pt;
+      margin: 3px 0 6px;
+    }
+    .nav-grid div { color: #333; }
+    .nav-grid b { color: #1a1a1a; }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .flow {
+      background: #f7f5f0;
+      border: 1px solid #e8e4dc;
+      border-radius: 4px;
+      padding: 5px 8px;
+      font-size: 7.75pt;
+      margin: 3px 0 6px;
+      text-align: center;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+    .mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 7.75pt;
+      margin: 3px 0 5px;
+    }
+    .mini-table th {
+      text-align: left;
+      background: #f0ede6;
+      padding: 3px 6px;
+      border: 1px solid #e0dbd0;
+    }
+    .mini-table td {
+      padding: 2px 6px;
+      border: 1px solid #e8e4dc;
+      vertical-align: top;
+    }
+    .benefits {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px 14px;
+      font-size: 7.75pt;
+      margin: 2px 0 4px;
+      list-style: disc;
+      padding-left: 14px;
+    }
+    .compact-list { margin-bottom: 3px; }
+    .compact-list li { margin-bottom: 0; }
+    @media print {
+      body { margin: 0; }
+      .page { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <div class="page-body">
+      <p class="eyebrow">Dispatcher guide · 1 of 2</p>
+      <h1>Enrout Ops</h1>
+      <p class="tagline">
+        AI-powered dispatch — leads, loads, drivers, communication, and tracking on one screen.
+      </p>
+
+      <div class="intro">
+        Use the <b>left sidebar</b> to reach every page. After sign-in you land on the
+        <b>Dashboard</b>. Bella AI helps with status, delays, follow-ups, and reply suggestions.
+      </div>
+
+      <h2>Sign in</h2>
+      <ol class="compact-list">
+        <li>Open the Enrout Ops login page</li>
+        <li>Enter your work email → click <b>Send OTP</b></li>
+        <li>Check inbox for the <b>6-digit code</b></li>
+        <li>Enter code → click <b>Verify &amp; sign in</b></li>
+        <li>You arrive on the <b>Dashboard</b></li>
+      </ol>
+
+      <h2>Sidebar — every page</h2>
+      <div class="nav-grid">
+        <div><b>Dashboard</b> — KPIs, alerts, Bella</div>
+        <div><b>Leads</b> — pipeline, promote</div>
+        <div><b>Load Management</b> — docs, close</div>
+        <div><b>Load Tracking</b> — map &amp; route</div>
+        <div><b>Communication</b> — email &amp; WhatsApp</div>
+        <div><b>P&amp;D Updates</b> — ETAs &amp; delays</div>
+        <div><b>Driver Management</b> — roster</div>
+        <div><b>Configuration</b> — company setup</div>
+        <div><b>Create Lead</b> — new opportunity</div>
+        <div><b>Create Load</b> — confirmed freight</div>
+        <div><b>Assign Load</b> — match drivers</div>
+        <div><b>Scheduling</b> — calendar</div>
+        <div><b>Recurring Loads</b> — templates</div>
+      </div>
+
+      <h2>First-time setup</h2>
+      <p>Sidebar → <b>Configuration</b> — complete each section, click <b>Save &amp; Continue</b>:</p>
+      <div class="grid-2">
+        <ol class="compact-list">
+          <li><b>Company Info</b> — business &amp; fleet lot</li>
+          <li><b>Fleet</b> — trucks &amp; trailers</li>
+          <li><b>Drivers</b> — roster (required)</li>
+        </ol>
+        <ol class="compact-list" start="4">
+          <li><b>Broker Emails</b> — inbound offers</li>
+          <li><b>Documents</b> — compliance files</li>
+          <li><b>AI Automation</b> — Bella rules</li>
+        </ol>
+      </div>
+      <p>Then confirm drivers in <b>Driver Management</b>.</p>
+
+      <h2>How Enrout Ops helps</h2>
+      <ul class="benefits">
+        <li><b>One inbox</b> — email, brokers, WhatsApp</li>
+        <li><b>Clear pipeline</b> — every stage tracked</li>
+        <li><b>Smart assignment</b> — ranked by schedule &amp; travel</li>
+        <li><b>Live tracking</b> — map, ETAs, delay alerts</li>
+        <li><b>Bella AI</b> — summaries, delays, alerts</li>
+        <li><b>Auto follow-up</b> — stage-based emails</li>
+        <li><b>Draft replies</b> — AI in conversations</li>
+        <li><b>Critical alerts</b> — Dashboard flags urgency</li>
+      </ul>
+
+      <h2>Create a lead or load</h2>
+      <p>Both wizards use the same 4 steps. Sidebar → <b>Create Lead</b> (opportunity) or <b>Create Load</b> (confirmed).</p>
+      <table class="mini-table">
+        <thead>
+          <tr><th>Step</th><th>Lead</th><th>Load</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Lead Info — customer, source, stage</td><td>Load Info — customer, source, priority</td></tr>
+          <tr><td>2</td><td>Route &amp; Stops</td><td>Route &amp; Stops — dates &amp; times</td></tr>
+          <tr><td>3</td><td>Package Details</td><td>Package Details — commodity, weight, trailer</td></tr>
+          <tr><td>4</td><td>Driver &amp; Cost — rate &amp; charges</td><td>Driver &amp; Cost → submit</td></tr>
+        </tbody>
+      </table>
+      <ul class="compact-list">
+        <li>Leads: no driver assignment; pick lifecycle stage; appears on <b>Leads</b> page</li>
+        <li>Loads: skip pipeline; appears in <b>Load Management</b> after submit</li>
+      </ul>
+    </div>
+
+    <div class="page-foot">
+      <div>
+        <strong>Enrout Ops</strong>
+        AI dispatch for modern trucking teams
+      </div>
+      <span class="page-num">Page 1 of 2</span>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <div class="page-body">
+      <p class="eyebrow">Dispatcher guide · 2 of 2</p>
+      <h1 style="font-size: 17pt;">Workflows &amp; daily use</h1>
+
+      <h2>Lead-to-delivery flow</h2>
+      <div class="flow">
+        Create Lead → Negotiate → Approve → Promote to Load → Upload Docs →
+        Assign Driver → Track P&amp;D → Close
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Manage leads</h3>
+          <p>Sidebar → <b>Leads</b> — filter by stage, priority, source. Click a row for details, chat, activity, financials.</p>
+          <p>When <b>Approved</b> or <b>Agreement Pending</b> → <b>Promote to Load</b>. Stage becomes Docs Pending.</p>
+
+          <h3>Load management</h3>
+          <p>Sidebar → <b>Load Management</b> — click a row for the detail panel:</p>
+          <ul class="compact-list">
+            <li><b>Documents</b> — upload rate cons, BOL</li>
+            <li><b>Route / Financials</b> — full load info</li>
+            <li><b>Chat &amp; Activity</b> — messages &amp; history</li>
+            <li><b>Notify driver</b> — WhatsApp from panel</li>
+            <li><b>Close load</b> — mark complete</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Assign a driver</h3>
+          <p>Sidebar → <b>Assign Load</b> — load on left, ranked drivers on right.</p>
+          <p><b>Eligible loads:</b></p>
+          <ul class="compact-list">
+            <li>Stage: Docs Pending, Border Approval, or Ready to Assign</li>
+            <li>No driver assigned; pickup still in the future</li>
+          </ul>
+          <p><b>Drivers ranked by:</b> schedule fit, travel time from last stop. Off-duty excluded.</p>
+
+          <h3>Tracking &amp; communication</h3>
+          <ul class="compact-list">
+            <li><b>Load Tracking</b> — map, route, stop progress</li>
+            <li><b>P&amp;D Updates</b> — ETAs, delays; click card → Communication</li>
+            <li><b>Communication</b> — email, WhatsApp, Bella; AI replies; mark resolved</li>
+            <li><b>Recurring Loads</b> — templates for repeat lanes</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Your daily routine</h2>
+      <table class="mini-table">
+        <thead>
+          <tr><th>#</th><th>Page</th><th>What to do</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><b>Dashboard</b></td><td>Critical messages, pipeline; ask Bella about delays</td></tr>
+          <tr><td>2</td><td><b>Leads</b></td><td>Negotiate; promote when approved</td></tr>
+          <tr><td>3</td><td><b>Load Management</b></td><td>Upload docs; review route &amp; financials</td></tr>
+          <tr><td>4</td><td><b>Assign Load</b></td><td>Match ready loads to best driver</td></tr>
+          <tr><td>5</td><td><b>P&amp;D / Tracking</b></td><td>Monitor ETAs and delays on active freight</td></tr>
+          <tr><td>6</td><td><b>Communication</b></td><td>Reply to brokers &amp; drivers; resolve threads</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Quick reference</h2>
+      <div class="grid-2">
+        <div>
+          <p><b>Create freight:</b> Create Lead (negotiate) or Create Load (confirmed)</p>
+          <p><b>Assign driver:</b> Assign Load after docs uploaded</p>
+          <p><b>Track delivery:</b> Load Tracking + P&amp;D Updates</p>
+        </div>
+        <div>
+          <p><b>Reply to messages:</b> Communication (or floating chat)</p>
+          <p><b>Setup company:</b> Configuration (one-time)</p>
+          <p><b>Repeat lanes:</b> Recurring Loads templates</p>
+        </div>
+      </div>
+
+      <p style="margin-top: 8px; font-size: 8pt; color: #555;">
+        You stay in control — AI suggests and automates repetitive work. You approve rates,
+        choose drivers, assign loads, and close freight.
+      </p>
+    </div>
+
+    <div class="page-foot">
+      <div>
+        <strong>Enrout Ops</strong>
+        Full guides: <a href="https://enroutops.com/docs">enroutops.com/docs</a>
+        &nbsp;·&nbsp; <a href="mailto:info@enroutops.com">info@enroutops.com</a>
+      </div>
+      <span class="page-num">Page 2 of 2</span>
+    </div>
+  </div>
+
+</body>
+</html>

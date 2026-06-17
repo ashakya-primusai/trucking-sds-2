@@ -18,7 +18,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Documentation
 
-EnroutAI product docs are React pages at **`/docs`**:
+Enrout Ops product docs are React pages at **`/docs`**:
 
 - `/docs` — introduction
 - `/docs/overview`, `/getting-started`, `/how-it-helps`, `/configuration`, `/workflows`, `/modules`, `/lifecycle`

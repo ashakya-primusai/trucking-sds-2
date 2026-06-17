@@ -89,7 +89,7 @@ export function FinalCTA() {
                 style={{ fontSize: "clamp(15px, 1.2vw, 18px)", color: "rgba(255,255,255,0.55)" }}
               >
                 Whether you&apos;re running 5 trucks or 500, we&apos;d love to show you
-                what Enrout AI can do for your operation.
+                what Enrout Ops can do for your operation.
               </p>
             </Reveal>
 

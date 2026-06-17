@@ -101,7 +101,7 @@ export function Hero() {
               letterSpacing: "-0.005em",
             }}
           >
-            Enrout AI is the AI-powered dispatch platform for trucking teams who need to move
+            Enrout Ops is the AI-powered dispatch platform for trucking teams who need to move
             faster, with less. Dispatch, track, bill, and forecast — on one screen.
           </p>
 

@@ -20,7 +20,7 @@ const DOC_CATALOG: DocMeta[] = [
   },
   {
     slug: "how-it-helps",
-    title: "How EnroutAI Helps You",
+    title: "How Enrout Ops Helps You",
     description: "AI and platform features that save dispatch time",
     order: 3,
   },

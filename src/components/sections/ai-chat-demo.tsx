@@ -316,7 +316,7 @@ export function AIChatDemo({ fill = false, mobile = false }: { fill?: boolean; m
       >
         <input
           type="text"
-          placeholder={mobile ? "Ask Bella anything…" : "Ask Enrout AI about anything in your operation…"}
+          placeholder={mobile ? "Ask Bella anything…" : "Ask Enrout Ops about anything in your operation…"}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className={`flex-1 min-w-0 border border-line rounded-full bg-bg-card text-ink outline-none focus:border-ink-3 ${mobile ? "h-10 px-3.5 text-[14px]" : "h-10 px-3.5 text-sm"

@@ -6,7 +6,7 @@ export function AboutUs() {
       <div className="page-wrap" style={{ paddingBlock: "clamp(72px, 9vh, 112px)" }}>
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 items-start">
           <div className="max-w-[520px]">
-            <Eyebrow>About Enrout AI</Eyebrow>
+            <Eyebrow>About Enrout Ops</Eyebrow>
             <h2
               className="mt-4"
               style={{
@@ -23,9 +23,9 @@ export function AboutUs() {
 
           <div className="flex flex-col gap-5 max-w-[640px]">
             <p className="text-ink-2 m-0" style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}>
-              Enrout AI started on the dispatch floor — not in a boardroom. We saw teams
+              Enrout Ops started on the dispatch floor — not in a boardroom. We saw teams
               juggling spreadsheets, phone calls, and legacy TMS tools just to move one load.
-              Enrout AI is the system we wished existed.
+              Enrout Ops is the system we wished existed.
             </p>
             <p className="text-ink-2 m-0" style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}>
               Today we help trucking carriers and last-mile fleets run dispatch, tracking,

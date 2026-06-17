@@ -3,9 +3,9 @@ import { DocsLayout } from "@/components/docs/docs-layout";
 import { getDocCatalog } from "@/lib/enroutai-docs";
 
 export const metadata = {
-  title: "Documentation — EnroutAI",
+  title: "Documentation — Enrout Ops",
   description:
-    "EnroutAI guides for dispatchers: setup, workflows, and daily operations.",
+    "Enrout Ops guides for dispatchers: setup, workflows, and daily operations.",
 };
 
 export default function DocsIndexPage() {
@@ -24,7 +24,7 @@ export default function DocsIndexPage() {
           className="mt-4 text-ink-2"
           style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}
         >
-          EnroutAI helps your team manage leads, loads, drivers, and
+          Enrout Ops helps your team manage leads, loads, drivers, and
           customer communication from one screen. These guides walk through setup,
           how the platform and AI support your work, daily workflows, and every module
           in the app.

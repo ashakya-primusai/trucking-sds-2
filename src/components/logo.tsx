@@ -19,11 +19,11 @@ export function Logo({ className, size = "md" }: LogoProps) {
     <Link
       href="/"
       className={cn("inline-flex items-center shrink-0", className)}
-      aria-label="Enrout AI home"
+      aria-label="Enrout Ops home"
     >
       <Image
         src={enroutLogo}
-        alt="Enrout AI"
+        alt="Enrout Ops"
         className={cn(sizeClasses[size], "object-contain object-left")}
         priority
       />

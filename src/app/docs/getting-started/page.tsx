@@ -2,7 +2,7 @@ import { GettingStartedPage } from "@/components/docs/pages/getting-started-page
 import { DocRoute } from "@/components/docs/doc-route";
 
 export const metadata = {
-  title: "Getting Started — EnroutAI Docs",
+  title: "Getting Started — Enrout Ops Docs",
   description: "Sign in, set up your company, and start dispatching",
 };
 

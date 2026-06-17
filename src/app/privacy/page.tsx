@@ -6,9 +6,9 @@ import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Enrout AI",
+  title: "Privacy Policy — Enrout Ops",
   description:
-    "How Enrout AI collects, uses, discloses, and protects personal information across our website and dispatch platform.",
+    "How Enrout Ops collects, uses, discloses, and protects personal information across our website and dispatch platform.",
 };
 
 function PolicySection({
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
                     className="mt-6 text-ink-2 max-w-[640px] mx-auto"
                     style={{ fontSize: "var(--sz-body)", lineHeight: 1.55 }}
                   >
-                    This Privacy Policy describes how Enrout AI Inc. (&ldquo;Enrout AI,&rdquo;
+                    This Privacy Policy describes how Enrout Ops Inc. (&ldquo;Enrout Ops,&rdquo;
                     &ldquo;Enrout,&rdquo; &ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;)
                     collects, uses, discloses, and otherwise processes personal information in
                     connection with our website at enroutops.com, our platform at enrout.ai, and
@@ -133,7 +133,7 @@ export default function PrivacyPage() {
                       <li>
                         <strong className="font-medium text-ink">Customer data</strong> means
                         personal information and business data that our customers and their
-                        authorized users submit to, store in, or process through the Enrout AI
+                        authorized users submit to, store in, or process through the Enrout Ops
                         platform.
                       </li>
                       <li>
@@ -157,13 +157,13 @@ export default function PrivacyPage() {
                   <PolicySection title="3. Who is responsible for your information">
                     <p className="m-0">
                       For personal information collected through our marketing website, sales
-                      process, and direct relationships with individual contacts, Enrout AI Inc.
+                      process, and direct relationships with individual contacts, Enrout Ops Inc.
                       acts as the data controller.
                     </p>
                     <p className="m-0">
-                      For Customer data processed within the Enrout AI platform on behalf of a
+                      For Customer data processed within the Enrout Ops platform on behalf of a
                       subscribing organization, that organization is generally the data controller
-                      and Enrout AI acts as a data processor. In those cases, our processing is
+                      and Enrout Ops acts as a data processor. In those cases, our processing is
                       governed by our customer agreements and Data Processing Addendum (DPA),
                       which supplement this policy.
                     </p>
@@ -372,14 +372,14 @@ export default function PrivacyPage() {
                       <li>Complying with legal obligations and enforcing our agreements.</li>
                       <li>
                         With consent or as permitted by law, sending marketing communications
-                        about Enrout AI products, events, and resources.
+                        about Enrout Ops products, events, and resources.
                       </li>
                     </ul>
                   </PolicySection>
 
                   <PolicySection title="8. AI and automated processing">
                     <p className="m-0">
-                      Enrout AI uses machine learning and artificial intelligence to deliver
+                      Enrout Ops uses machine learning and artificial intelligence to deliver
                       features such as load recommendations, ETA forecasting, communication
                       assistance, and operational insights. These features process data you or your
                       organization provide or authorize, including load details, communications,
@@ -432,7 +432,7 @@ export default function PrivacyPage() {
                       <li>
                         <strong className="font-medium text-ink">Authorities and law enforcement</strong>{" "}
                         when required by law, regulation, legal process, or to protect the rights,
-                        property, safety, and security of Enrout AI, our customers, or others.
+                        property, safety, and security of Enrout Ops, our customers, or others.
                       </li>
                       <li>
                         <strong className="font-medium text-ink">Business transferees</strong> in
@@ -543,7 +543,7 @@ export default function PrivacyPage() {
 
                   <PolicySection title="13. International data transfers">
                     <p className="m-0">
-                      Enrout AI is headquartered in North America. We and our service providers may
+                      Enrout Ops is headquartered in North America. We and our service providers may
                       process personal information in the United States, Canada, and other
                       countries where we or our subprocessors maintain facilities.
                     </p>
@@ -583,7 +583,7 @@ export default function PrivacyPage() {
 
                     <PolicySubheading>Platform users</PolicySubheading>
                     <p className="m-0">
-                      If you use Enrout AI through an employer or customer account, operational
+                      If you use Enrout Ops through an employer or customer account, operational
                       data is typically controlled by that organization. Please contact your
                       organization&apos;s administrator first for access, correction, or deletion
                       requests relating to platform data. We will assist our customers in
@@ -646,7 +646,7 @@ export default function PrivacyPage() {
 
                   <PolicySection title="15. Marketing communications">
                     <p className="m-0">
-                      We may send marketing emails about Enrout AI products, webinars, and
+                      We may send marketing emails about Enrout Ops products, webinars, and
                       industry resources to business contacts who have expressed interest or with
                       whom we have an existing business relationship, where permitted by law. You
                       may opt out at any time by clicking the unsubscribe link in our emails or by
@@ -700,7 +700,7 @@ export default function PrivacyPage() {
                       or our privacy practices, contact:
                     </p>
                     <p className="m-0">
-                      <strong className="font-medium text-ink">Enrout AI Inc.</strong>
+                      <strong className="font-medium text-ink">Enrout Ops Inc.</strong>
                       <br />
                       Privacy Team
                       <br />
@@ -726,7 +726,7 @@ export default function PrivacyPage() {
                     </p>
                     <p className="m-0 text-ink-3 text-[14px]">
                       This Privacy Policy is provided for informational purposes and does not
-                      constitute legal advice. Organizations using Enrout AI should review this
+                      constitute legal advice. Organizations using Enrout Ops should review this
                       policy alongside their own privacy notices and our customer agreements.
                     </p>
                   </PolicySection>

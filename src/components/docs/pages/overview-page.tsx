@@ -12,12 +12,12 @@ export function OverviewPage() {
     <div className="max-w-[760px]">
       <DocPageHeader
         title="Overview"
-        description="What EnroutAI does and how your team uses it"
+        description="What Enrout Ops does and how your team uses it"
       />
 
       <DocH2>Product summary</DocH2>
       <DocP>
-        EnroutAI helps your dispatch team run freight from first
+        Enrout Ops helps your dispatch team run freight from first
         contact through delivery. Manage leads, convert them to loads, assign drivers,
         communicate with brokers and customers, and track pickups and deliveries — all
         in one place.

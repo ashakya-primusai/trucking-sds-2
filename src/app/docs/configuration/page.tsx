@@ -2,7 +2,7 @@ import { ConfigurationPage } from "@/components/docs/pages/configuration-page";
 import { DocRoute } from "@/components/docs/doc-route";
 
 export const metadata = {
-  title: "Configuration — EnroutAI Docs",
+  title: "Configuration — Enrout Ops Docs",
   description: "Tenant setup and settings reference",
 };
 
