@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/#industries", label: "Products", sectionId: "industries" },
   { href: "/#ai", label: "AI", sectionId: "ai" },
   { href: "/#bella", label: "Bella", sectionId: "bella" },
+  { href: "/#pricing", label: "Pricing", sectionId: "pricing" },
 ] as const;
 
 function NavLink({

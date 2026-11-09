@@ -882,3 +882,12 @@ section#bella > .page-wrap {
 [id] {
   scroll-margin-top: var(--nav-height);
 }
+
+/* Ad funnel (/get-started): sections size to their content, not one screen each */
+.funnel section,
+.funnel section > .page-wrap {
+  height: auto;
+  min-height: 0;
+  overflow-x: clip;
+  overflow-y: visible;
+}

@@ -13,6 +13,7 @@ import { StatsStrip } from "@/components/sections/stats-strip";
 import { Testimonial } from "@/components/sections/testimonial";
 import { Integrations } from "@/components/sections/integrations";
 import { FinalCTA } from "@/components/sections/final-cta";
+import { Pricing } from "@/components/sections/pricing";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
             <BentoShowcase />
             <IndustriesWithDeepDive />
             <BellaAISection />
+            <Pricing />
             <FinalCTA />
           </main>
           <Footer />
