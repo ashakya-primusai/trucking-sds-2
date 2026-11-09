@@ -102,37 +102,68 @@ function HeroMock() {
   );
 }
 
-/* Cost-of-doing-nothing calculator */
-function CostCalculator() {
-  const [trucks, setTrucks] = useState(10);
-  const [minutes, setMinutes] = useState(20);
-  const hoursPerMonth = Math.round((trucks * minutes * 22) / 60); // 22 working days
-  const cost = hoursPerMonth * 25; // $25/hr dispatcher time
+/* Hours-back calculator: fleet size → office hours saved each week */
+const MIN_PER_TRUCK_DAY = 23; // calls + typing load info + paperwork, typical small fleet
+const SAVED_SHARE = 0.75; // estimate: share of that work Enrout Ops removes
+const WORKDAYS_WEEK = 5;
+
+const sizes = [
+  { label: "1–5", trucks: 3 },
+  { label: "6–20", trucks: 12 },
+  { label: "21–50", trucks: 35 },
+  { label: "50+", trucks: 75 },
+];
+
+function HoursBack() {
+  const [trucks, setTrucks] = useState(12);
+  const before = Math.round((trucks * MIN_PER_TRUCK_DAY * WORKDAYS_WEEK) / 60);
+  const after = Math.round(before * (1 - SAVED_SHARE));
+  const saved = before - after;
 
   return (
-    <div className="rounded-2xl border border-line bg-bg-card p-7 sm:p-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-      <div className="flex flex-col gap-8">
-        <label className="block">
-          <span className="flex justify-between text-[14px] text-ink-2 font-medium">
-            Trucks in your fleet <span className="text-ink font-semibold">{trucks}</span>
-          </span>
-          <input type="range" min={1} max={100} value={trucks} onChange={(e) => setTrucks(+e.target.value)} className="mt-3 w-full accent-[var(--sds-accent)]" />
-        </label>
-        <label className="block">
-          <span className="flex justify-between text-[14px] text-ink-2 font-medium">
-            Minutes per truck, per day, on calls & paperwork <span className="text-ink font-semibold">{minutes}</span>
-          </span>
-          <input type="range" min={5} max={60} step={5} value={minutes} onChange={(e) => setMinutes(+e.target.value)} className="mt-3 w-full accent-[var(--sds-accent)]" />
-        </label>
-      </div>
-      <div className="rounded-2xl p-8 text-center" style={darkBg}>
-        <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-white/45">Manual work costs you about</span>
-        <div className="mt-3 text-white font-semibold" style={{ fontSize: "clamp(44px, 5vw, 64px)", letterSpacing: "-0.04em" }}>
-          ${cost.toLocaleString()}
-          <span className="text-[16px] font-normal text-white/50"> / month</span>
+    <div className="rounded-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-line bg-bg-card shadow-[0_24px_48px_-24px_oklch(30%_0.05_55/0.25)]">
+      <div className="p-8 sm:p-12 flex flex-col justify-center">
+        <span className="text-[16px] text-ink-2 font-medium">How many trucks?</span>
+        <div className="mt-4 grid grid-cols-4 gap-2">
+          {sizes.map((z) => (
+            <button
+              key={z.label}
+              type="button"
+              onClick={() => setTrucks(z.trucks)}
+              aria-pressed={trucks === z.trucks}
+              className={`h-14 rounded-xl text-[17px] font-semibold tabular-nums transition-all duration-200 ${
+                trucks === z.trucks ? "bg-ink text-white shadow-md" : "bg-bg-soft text-ink-2 hover:bg-line-2"
+              }`}
+            >
+              {z.label}
+            </button>
+          ))}
         </div>
-        <p className="mt-2 text-[14px] text-white/55">{hoursPerMonth} hours of dispatcher time</p>
-        <p className="mt-6 text-[14px] text-white/80">Enrout Ops starts at <b className="text-sds-accent">$20/month</b>.</p>
+
+        <div className="mt-10 flex flex-col gap-5">
+          {[
+            { label: "Today", h: before, bg: "var(--ink-4)" },
+            { label: "With Enrout Ops", h: after, bg: "var(--sds-accent)" },
+          ].map((b) => (
+            <div key={b.label}>
+              <div className="flex justify-between text-[14px]">
+                <span className="text-ink-3">{b.label}</span>
+                <span className="text-ink font-semibold tabular-nums">{b.h} hrs/week</span>
+              </div>
+              <div className="mt-2 h-3 rounded-full bg-bg-soft overflow-hidden">
+                <div className="h-full rounded-full transition-[width] duration-300" style={{ width: `${before ? (b.h / before) * 100 : 0}%`, background: b.bg }} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="p-8 sm:p-12 flex flex-col justify-center items-center text-center" style={darkBg}>
+        <div className="text-white font-semibold tabular-nums leading-none" style={{ fontSize: "clamp(72px, 9vw, 128px)", letterSpacing: "-0.05em" }}>
+          {saved}
+        </div>
+        <span className="mt-3 text-[20px] text-white font-medium">hours back every week</span>
+        <div className="mt-10"><CTA to="fit">Find my plan</CTA></div>
       </div>
     </div>
   );
@@ -193,17 +224,18 @@ export function Funnel() {
         </section>
 
         {/* 2 — Problem: make the cost of doing nothing concrete */}
-        <section className="page-wrap" style={pad}>
+        <section style={{ background: "var(--bg-soft)" }}>
+          <div className="page-wrap" style={pad}>
           <SectionHead
             eyebrow="The problem"
-            title={<>Phone calls and paperwork <span className="text-ink-4">are eating your margin</span></>}
-            sub="Every check call, every rate con typed by hand, every missing POD is time you pay for. See what it costs you:"
+            title="Get your week back"
           />
-          <Reveal><div className="mt-14 max-w-[1120px] mx-auto"><CostCalculator /></div></Reveal>
+          <Reveal><div className="mt-14 max-w-[1120px] mx-auto"><HoursBack /></div></Reveal>
+          </div>
         </section>
 
         {/* 3 — Solution: features as outcomes, with the plan they come in */}
-        <section style={{ background: "var(--bg-soft)" }}>
+        <section>
           <div className="page-wrap" style={pad}>
             <SectionHead eyebrow="The fix" title="One screen that does the busywork for you" />
             <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1120px] mx-auto">
@@ -231,7 +263,7 @@ export function Funnel() {
         </section>
 
         {/* 4 — Fit: self-select fleet size → recommended plan */}
-        <section id="fit" className="scroll-mt-16 page-wrap" style={pad}>
+        <section id="fit" className="scroll-mt-16" style={{ background: "var(--bg-soft)" }}><div className="page-wrap" style={pad}>
           <SectionHead eyebrow="Find your plan" title="Which describes you?" sub="Pick one and we'll highlight the plan that fits." />
           <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-5 max-w-[1120px] mx-auto">
             {fleetTypes.map((t, i) => {
@@ -254,10 +286,11 @@ export function Funnel() {
               );
             })}
           </div>
+        </div>
         </section>
 
         {/* 5 — Offer: plans + checkout, recommended plan highlighted */}
-        <section id="plans" className="scroll-mt-16" style={{ background: "var(--bg-soft)" }}>
+        <section id="plans" className="scroll-mt-16">
           <div className="page-wrap" style={pad}>
             <SectionHead eyebrow="Plans" title="Simple pricing. No surprises." />
             <div className="mt-8 flex justify-center">
@@ -290,7 +323,7 @@ export function Funnel() {
         </section>
 
         {/* 6 — Remove switching fear */}
-        <section className="page-wrap" style={pad}>
+        <section style={{ background: "var(--bg-soft)" }}><div className="page-wrap" style={pad}>
           <SectionHead eyebrow="Switching is easy" title="We do the setup. You keep driving." />
           <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-[1120px] mx-auto">
             {switching.map((s, i) => (
@@ -303,10 +336,11 @@ export function Funnel() {
               </Reveal>
             ))}
           </div>
+        </div>
         </section>
 
         {/* 7 — Objections */}
-        <section style={{ background: "var(--bg-soft)" }}>
+        <section>
           <div className="page-wrap" style={pad}>
             <SectionHead eyebrow="Questions" title="Before you buy" />
             <div className="mt-10 max-w-[760px] mx-auto divide-y divide-line border-y border-line">
